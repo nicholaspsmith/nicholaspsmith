@@ -1,5 +1,6 @@
+---
 [![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)](https://www.statsforgit.com/nicholaspsmith)
-
+---
 <!-- 
 See full stats: https://www.statsforgit.com/nicholaspsmith
 ## Contributions This Week
