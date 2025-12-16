@@ -1,7 +1,5 @@
-## Github Stats
 ![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)
 
-## Github Archetype
 ![Github Archetype](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/archtype)
 
 <!-- 
