@@ -15,6 +15,10 @@ AI Focused Full Stack JavaScript/TypeScript Engineer.
 
 ---
 
+![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)
+
+---
+
 ## Technologies
 
 <!-- [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=nicholaspsmith&stats_format=bytes&layout=donut)](https://github.com/anuraghazra/github-readme-stats) -->
