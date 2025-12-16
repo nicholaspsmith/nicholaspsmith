@@ -21,6 +21,3 @@ AI Focused Full Stack JavaScript/TypeScript Engineer.
 
 AWS, Apollo, Bootstrap, CSS, Contentstack, Cypress, D3, Docker, DynamoDB, EBS, EC2, EFS, Express, Figma, FreeBSD, Git, GitHub, GraphQL, HTML, Heroku, IAM, JavaScript, Jest, Jira, LESS, Linux, macOS, Meteor, MongoDB, Next.js, Nginx, Node.js, PHP, Python, React, React Native, Recharts, Redux, S3, SASS, SCSS, SQL, Sketch, Tailwind CSS, TypeScript, Typography, Vue.js, Webpack
 
----
-
-Built with [Angular v20](https://angular.dev/)
