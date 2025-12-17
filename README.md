@@ -23,6 +23,81 @@
 
 ![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Full+Stack+JavaScript+Developer;Full+Stack+TypeScript+Developer;React+Developer;Angular+Developer;Prompt+Engineer;Automation+Engineer;Scripting+Engineer;DevOps+Engineer;Multi+OS+Power+User;LLM+Fine+Tuner&font=Fira%20Code¢er=true&width=380&height=50)
 
+---
+
+## Languages & Frameworks
+
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?logo=vuedotjs&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
+![GraphQL](https://img.shields.io/badge/GraphQL-E10098?logo=graphql&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+
+<details>
+<summary>🎨 Styling & Design</summary>
+
+> - CSS
+> - SASS
+> - SCSS
+> - LESS
+> - Bootstrap
+> - Figma
+> - Sketch
+> - Typography
+> - D3
+> - Recharts
+
+</details>
+
+<details>
+<summary>☁️ Cloud & Infrastructure</summary>
+
+> - AWS (EC2, S3, EBS, EFS, IAM, DynamoDB)
+> - Docker
+> - Nginx
+> - Heroku
+
+</details>
+
+<details>
+<summary>🗄️ Databases & CMS</summary>
+
+> - MongoDB
+> - SQL
+> - DynamoDB
+> - Contentstack
+
+</details>
+
+<details>
+<summary>🛠️ Tools & Testing</summary>
+
+> - Git
+> - GitHub
+> - Jira
+> - Webpack
+> - Jest
+> - Cypress
+> - Apollo
+
+</details>
+
+<details>
+<summary>💻 Operating Systems</summary>
+
+> - Linux
+> - macOS
+> - FreeBSD
+
+</details>
 
 ---
 
@@ -32,17 +107,21 @@
 
 ---
 
+<!--
+Using img tags instead of md so I can style it
 [![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
-
----
-
 [![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)](https://www.statsforgit.com/nicholaspsmith)
+-->
 
----
+<table>
+  <tr>
+    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
+  </tr>
+  <tr>
+    <td><img src="https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats" style="width:900px" /></td>
+  </tr>
+</table>
 
-## Technologies
-
-AWS, Apollo, Bootstrap, CSS, Contentstack, Cypress, D3, Docker, DynamoDB, EBS, EC2, EFS, Express, Figma, FreeBSD, Git, GitHub, GraphQL, HTML, Heroku, IAM, JavaScript, Jest, Jira, LESS, Linux, macOS, Meteor, MongoDB, Next.js, Nginx, Node.js, PHP, Python, React, React Native, Recharts, Redux, S3, SASS, SCSS, SQL, Sketch, Tailwind CSS, TypeScript, Typography, Vue.js, Webpack
 
 ---
 
