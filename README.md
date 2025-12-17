@@ -3,11 +3,11 @@
 
 ---
 
-<!-- 
+
 See full stats: https://www.statsforgit.com/nicholaspsmith
 ## Contributions This Week
 [![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=14&theme=merko)](https://github.com/ashutosh00710/github-readme-activity-graph)
--->
+
 ## About
 
 AI Focused Full Stack JavaScript/TypeScript Engineer.
