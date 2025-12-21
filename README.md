@@ -102,7 +102,7 @@
 ---
 
 ## Current Projects
-![Repo Card](https://github-readme-stats.vercel.app/api/pin/?username=nicholaspsmith&repo=memoryloop)
+[![Repo Card](https://github-readme-stats.vercel.app/api/pin/?username=nicholaspsmith&repo=memoryloop)](https://github.com/nicholaspsmith/memoryloop)
 ![Repo Card](https://github-readme-stats.vercel.app/api/pin/?username=nicholaspsmith&repo=vidsnatch)
 
 ---
