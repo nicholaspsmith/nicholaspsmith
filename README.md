@@ -115,11 +115,13 @@ Using img tags instead of md so I can style it
 
 <table>
   <tr>
-    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
+    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=7&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
   </tr>
+ <!-- greptile-status lost it's github api access
   <tr>
     <td><img src="https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats" style="width:900px" /></td>
   </tr>
+ -->
 </table>
 
 
