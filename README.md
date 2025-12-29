@@ -49,7 +49,7 @@ Hiding these for now to keep it more focused
 ---
 
 
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true)](https://github.com/nicholaspsmith)
 
 
 <table>
@@ -140,3 +140,5 @@ Unhide when it becomes an A (lol)
 This one never works well. Shows languages from 12 years ago that aren't relevant
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=nicholaspsmith&layout=compact)
 -->
+
+> _Credit for activity graph: https://github.com/ashutosh00710/github-readme-activity-graph_
