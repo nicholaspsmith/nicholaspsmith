@@ -48,11 +48,10 @@ Hiding these for now to keep it more focused
 
 ---
 
-<!--
-Using img tags instead of md so I can style it
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+
+[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
 [![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)](https://www.statsforgit.com/nicholaspsmith)
--->
+
 
 <table>
   <tr>
