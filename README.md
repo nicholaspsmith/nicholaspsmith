@@ -51,12 +51,7 @@ Hiding these for now to keep it more focused
 
 [![Github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true)](https://github.com/nicholaspsmith)
 
-
-<table>
-  <tr>
-    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
-  </tr>
-</table>
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true" style="width:900px" />
 
 
 ---
