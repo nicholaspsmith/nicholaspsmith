@@ -41,6 +41,30 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 
+
+---
+
+<!--
+Using img tags instead of md so I can style it
+[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)](https://www.statsforgit.com/nicholaspsmith)
+-->
+
+<table>
+  <tr>
+    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
+  </tr>
+ <!-- greptile-status lost it's github api access
+  <tr>
+    <td><img src="https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats" style="width:900px" /></td>
+  </tr>
+ -->
+</table>
+
+
+---
+
+
 <details>
 <summary>🎨 Styling & Design</summary>
 
@@ -102,26 +126,6 @@
 
 ---
 
-<!--
-Using img tags instead of md so I can style it
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=5&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
-[![Github Stats](https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats)](https://www.statsforgit.com/nicholaspsmith)
--->
-
-<table>
-  <tr>
-    <td><img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=7&theme=tokyo-night&radius=8&custom_title=Contributions%20This%20Week&height=375&area=true" style="width:900px" /></td>
-  </tr>
- <!-- greptile-status lost it's github api access
-  <tr>
-    <td><img src="https://greptile-stats.vercel.app/api/widget/nicholaspsmith/stats" style="width:900px" /></td>
-  </tr>
- -->
-</table>
-
-
----
-
 ## Contact
 
 [nicholaspsmith.com](https://nicholaspsmith.com) | [Linkedin](https://linkedin.com/in/nps90) | [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.software@gmail.com)
@@ -131,7 +135,7 @@ Using img tags instead of md so I can style it
 
 <!--
 Github Rating
-Unhide when it becomes an A
+Unhide when it becomes an A (lol)
 ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=nicholaspsmith&show_icons=true&theme=radical)
 -->
 
