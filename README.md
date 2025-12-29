@@ -21,7 +21,7 @@
 
 
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=human&#63;Software+Engineer;Senior+Software+Engineer;Full+Stack+JavaScript+Engineer;Full+Stack+TypeScript+Engineer;React+Developer;Angular+Developer;Prompt+Engineer;Scripting+Engineer;DevOps+Engineer;LLM+Fine+Tuner&font=Fira%20Code¢er=true&width=380&height=50)
+![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Software+Engineer;Senior+Software+Engineer;human&#63;;Full+Stack+JavaScript+Engineer;Full+Stack+TypeScript+Engineer;React+Developer;Angular+Developer;Prompt+Engineer;Scripting+Engineer;DevOps+Engineer;LLM+Fine+Tuner&font=Fira%20Code¢er=true&width=380&height=50)
 
 ---
 
