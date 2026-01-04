@@ -71,6 +71,11 @@ html:not(.dark) h1.home-heading {
   color: #85e8ff !important;
 }
 
+/* Form labels light mode */
+html:not(.dark) label {
+  color: #f3f4f6 !important;
+}
+
 /* Content boxes light mode */
 html:not(.dark) .content-box {
   transition: all .2s ease-in-out;
