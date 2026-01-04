@@ -60,6 +60,12 @@ html.dark label {
 
 /* Light Mode Overrides */
 
+/* Nav and footer light mode */
+html:not(.dark) nav,
+html:not(.dark) footer {
+  opacity: 0.8;
+}
+
 /* Home page name heading light mode */
 html:not(.dark) h1.home-heading {
   color: #85e8ff !important;
