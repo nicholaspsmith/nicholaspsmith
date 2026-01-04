@@ -24,6 +24,21 @@ html.dark .content-box {
   background: color-mix(in oklab, rgb(16, 36, 33) 80%, transparent) !important;
 }
 
+html.dark .content-box h2,
+html.dark .content-box h3 {
+  color: var(--color-gray-100);
+}
+
+html.dark .content-box p,
+html.dark .content-box a {
+  color: var(--color-gray-200);
+}
+
+html.dark .content-box span,
+html.dark .content-box li {
+  color: var(--color-gray-300);
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
