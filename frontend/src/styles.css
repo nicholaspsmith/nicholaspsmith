@@ -53,6 +53,11 @@ html.dark .text-blue-600 {
   color: #04c766 !important;
 }
 
+/* Dark mode form label overrides */
+html.dark label {
+  color: #f3f4f6 !important;
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
