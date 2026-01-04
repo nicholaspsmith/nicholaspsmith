@@ -2,9 +2,9 @@ a.desktop.nav-link-active {
   transform: translateY(3px);
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.7),
-    0 1px 0 #00134c,
+    0 1px 0 #039952,
     0 2px 4px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to b, #1f2937, #111827) !important;
+  background: #1ad97a !important;
 }
 
 a.desktop {
@@ -12,14 +12,14 @@ a.desktop {
   position: relative;
   transform: translateY(0);
   box-shadow:
-    0 4px 0 #00134c,
+    0 4px 0 #039952,
     0 6px 8px rgba(106, 106, 106, 0.5);
 }
 
 a.desktop:active:not(.nav-link-active) {
   transform: translateY(2px);
   box-shadow:
-    0 2px 0 #00134c,
+    0 2px 0 #039952,
     0 4px 6px rgba(0, 0, 0, 0.4);
 }
 

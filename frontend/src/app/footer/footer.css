@@ -1,6 +1,5 @@
 footer {
-  transition: background 250ms ease-in-out;
-  background: var(--color-gray-800);
+  transition: background 250ms ease-in-out, box-shadow 250ms ease-in-out;
 }
 
 :host-context(html:not(.dark)) footer {
