@@ -16,6 +16,19 @@ a.desktop {
     0 6px 8px rgba(106, 106, 106, 0.5);
 }
 
+/* Dark Mode Styles */
+:host-context(html.dark) a.desktop {
+  background: #04c766 !important;
+}
+
+:host-context(html.dark) a.desktop:hover:not(.nav-link-active) {
+  background: #05d875 !important;
+}
+
+:host-context(html.dark) a.desktop.nav-link-active {
+  background: #1ad97a !important;
+}
+
 a.desktop:active:not(.nav-link-active) {
   transform: translateY(2px);
   box-shadow:
