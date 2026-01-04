@@ -43,6 +43,11 @@ html.dark .content-box:hover {
   border-left-color: #86efac !important;
 }
 
+/* Dark mode gradient overrides */
+html.dark .bg-linear-to-r.from-blue-600.to-cyan-500 {
+  background: linear-gradient(to right, #04c766, #027a3f) !important;
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
