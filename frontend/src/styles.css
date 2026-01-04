@@ -16,6 +16,14 @@ html:not(.dark) {
   color-scheme: light;
 }
 
+/* Dark Mode Overrides */
+
+/* Content boxes dark mode */
+html.dark .content-box {
+  transition: all .2s ease-in-out;
+  background: color-mix(in oklab, rgb(16, 36, 33) 80%, transparent) !important;
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
