@@ -40,7 +40,7 @@ html.dark .content-box li {
 }
 
 html.dark .content-box:hover {
-  border-color: var(--color-green-200) !important;
+  border-left-color: #86efac !important;
 }
 
 /* Light Mode Overrides */
