@@ -39,6 +39,10 @@ html.dark .content-box li {
   color: var(--color-gray-300);
 }
 
+html.dark .content-box:hover {
+  border-color: var(--color-green-200) !important;
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
