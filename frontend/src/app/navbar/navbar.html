@@ -22,7 +22,7 @@
       <div class="flex flex-1 items-center justify-center sm:items-center sm:justify-start h-full">
         <a routerLink="/">
           <div class="flex shrink-0 items-center w-[45px] h-[45px]">
-            <img src="musictree_green.svg" alt="Nicholas P Smith" class="h-full w-auto" />
+            <img [src]="themeService.isDarkMode() ? 'musictree_green.svg' : 'musictree_lightblue.svg'" alt="Nicholas P Smith" class="h-full w-auto" />
           </div>
         </a>
         <div class="hidden sm:ml-6 sm:flex items-center">
