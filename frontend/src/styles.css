@@ -48,6 +48,11 @@ html.dark .bg-linear-to-r.from-blue-600.to-cyan-500 {
   background: linear-gradient(to right, #04c766, #027a3f) !important;
 }
 
+/* Dark mode icon color overrides */
+html.dark .text-blue-600 {
+  color: #04c766 !important;
+}
+
 /* Light Mode Overrides */
 
 /* Content boxes light mode */
