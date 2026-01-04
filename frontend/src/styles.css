@@ -99,6 +99,10 @@ html:not(.dark) .content-box li {
   color: var(--color-gray-300);
 }
 
+.content-box .bg-green-50 span {
+  color: #374151 !important;
+}
+
 html:not(.dark) #mobile-menu a {
   color: var(--color-gray-800);
   transition: background 100ms ease-in-out;

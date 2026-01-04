@@ -92,7 +92,7 @@
         <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
           <!-- Success Message -->
           <div *ngIf="showSuccessMessage"
-            class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
+            class="bg-green-50 border border-green-200 text-gray-700 dark:text-gray-700 px-4 py-3 rounded-lg">
             <div class="flex items-center">
               <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
@@ -191,3 +191,53 @@
     </div>
   </div>
 </section>
+
+<!-- Calendar Modal -->
+<div *ngIf="showCalendarModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-4">
+  <!-- Backdrop -->
+  <div class="modal-backdrop absolute inset-0 bg-black/60" (click)="closeCalendarModal()"></div>
+
+  <!-- Modal Content -->
+  <div class="modal-content relative bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full p-4 md:p-8">
+    <!-- Close Button -->
+    <button (click)="closeCalendarModal()"
+      class="absolute top-3 right-3 md:top-4 md:right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+      <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Success Icon -->
+    <div class="flex justify-center mb-3 md:mb-4">
+      <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <h3 class="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 text-center mb-2">
+      Message Sent Successfully!
+    </h3>
+    <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center mb-4 md:mb-6">
+      Thank you for reaching out. If you'd like to schedule a call, feel free to book a time on my calendar.
+    </p>
+
+    <!-- Calendar Button -->
+    <a href="https://cal.com/nicholas-p-smith" target="_blank" rel="noopener noreferrer"
+      class="flex items-center justify-center gap-2 w-full bg-linear-to-r from-blue-600 to-cyan-500 dark:from-[#04c766] dark:to-[#027a3f] text-white font-semibold text-sm md:text-base px-4 md:px-6 py-2.5 md:py-3 rounded-lg hover:opacity-90 transition-opacity">
+      <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      Schedule a Call
+    </a>
+
+    <!-- Close Link -->
+    <button (click)="closeCalendarModal()"
+      class="w-full mt-2 md:mt-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-xs md:text-sm transition-colors">
+      Maybe later
+    </button>
+  </div>
+</div>

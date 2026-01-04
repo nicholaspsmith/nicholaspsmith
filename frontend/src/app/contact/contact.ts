@@ -16,6 +16,7 @@ export class Contact implements OnInit {
   isSubmitting = false;
   showSuccessMessage = false;
   showErrorMessage = false;
+  showCalendarModal = false;
   errorText = 'There was an error sending your message. Please try again or email me directly.';
 
   constructor(
@@ -79,12 +80,8 @@ export class Contact implements OnInit {
 
       // Success
       this.showSuccessMessage = true;
+      this.showCalendarModal = true;
       this.contactForm.reset();
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        this.showSuccessMessage = false;
-      }, 5000);
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -115,5 +112,9 @@ export class Contact implements OnInit {
 
   get message() {
     return this.contactForm.get('message');
+  }
+
+  closeCalendarModal(): void {
+    this.showCalendarModal = false;
   }
 }
