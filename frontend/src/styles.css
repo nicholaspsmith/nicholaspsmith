@@ -63,7 +63,7 @@ html.dark label {
 /* Nav and footer light mode */
 html:not(.dark) nav,
 html:not(.dark) footer {
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 /* Home page name heading light mode */
