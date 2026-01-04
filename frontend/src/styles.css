@@ -60,6 +60,11 @@ html.dark label {
 
 /* Light Mode Overrides */
 
+/* Home page name heading light mode */
+html:not(.dark) h1.home-heading {
+  color: #85e8ff !important;
+}
+
 /* Content boxes light mode */
 html:not(.dark) .content-box {
   transition: all .2s ease-in-out;
