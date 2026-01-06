@@ -7,6 +7,8 @@
 
 main {
   scrollbar-width: none;
+  position: relative;
+  z-index: 2;
 }
 
 #matrix-background {
@@ -17,7 +19,7 @@ main {
   bottom: 0;
   max-height: unset;
   max-width: unset;
-  z-index: -99;
+  z-index: 0;
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -34,7 +36,7 @@ main {
   position: absolute;
   bottom: 132px;
   left: 6px;
-  z-index: -98;
+  z-index: 1;
   color: #ddd;
 }
 
@@ -49,9 +51,10 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -98;
+  z-index: 1;
   transition: background-color 0.3s ease;
   background-color: rgba(30, 41, 56, 0.5);
+  pointer-events: none;
 }
 
 :host-context(html:not(.dark)) #background-overlay {
