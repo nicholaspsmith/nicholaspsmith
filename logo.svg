@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Classic Mac body -->
+  <rect x="140" y="100" width="232" height="280" rx="20" fill="#0891b2"/>
+
+  <!-- Screen area (all white) -->
+  <rect x="165" y="125" width="182" height="140" rx="8" fill="#ffffff"/>
+
+  <!-- Double music notes on screen (centered) -->
+  <!-- First note stem -->
+  <rect x="226" y="160" width="5" height="50" fill="#333333" rx="1"/>
+
+  <!-- Second note stem -->
+  <rect x="286" y="160" width="5" height="50" fill="#333333" rx="1"/>
+
+  <!-- First note head (ellipse to LEFT of stem) -->
+  <ellipse cx="222" cy="210" rx="12" ry="8" fill="#333333" transform="rotate(-20 222 210)"/>
+
+  <!-- Second note head (ellipse to LEFT of stem) -->
+  <ellipse cx="282" cy="210" rx="12" ry="8" fill="#333333" transform="rotate(-20 282 210)"/>
+
+  <!-- Tie (curved line connecting note heads underneath, lowered) -->
+  <path d="M 228 224 Q 252 236 276 224"
+        stroke="#333333"
+        stroke-width="3"
+        fill="none"
+        stroke-linecap="round"/>
+
+  <!-- Disk drive slot -->
+  <rect x="175" y="280" width="90" height="8" rx="2" fill="#ffffff"/>
+
+  <!-- Apple logo area -->
+  <circle cx="325" cy="300" r="12" fill="#ffffff"/>
+
+  <!-- Base/foot -->
+  <rect x="200" y="380" width="112" height="15" rx="4" fill="#0891b2"/>
+</svg>
