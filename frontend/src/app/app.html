@@ -1,12 +1,30 @@
-<!-- Video Background -->
+<!-- Video Background - Preview (loads fast) -->
 <video
   autoplay
   muted
   loop
   playsinline
   preload="auto"
-  id="matrix-background"
-  #matrixVideo
+  id="matrix-background-preview"
+  class="matrix-background"
+  [class.hidden]="isHdReady()"
+  #previewVideo
+  disablePictureInPicture
+  disableRemotePlayback
+>
+  <source src="matrix-background-preview.mp4" type="video/mp4" />
+</video>
+
+<!-- Video Background - HD (preloads in background) -->
+<video
+  muted
+  loop
+  playsinline
+  preload="auto"
+  id="matrix-background-hd"
+  class="matrix-background"
+  [class.visible]="isHdReady()"
+  #hdVideo
   disablePictureInPicture
   disableRemotePlayback
 >
