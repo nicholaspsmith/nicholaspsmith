@@ -25,20 +25,22 @@
     <!-- CTA Links -->
     <div class="home-buttons pt-12 flex gap-2 sm:gap-4">
       <a
-        routerLink="/contact"
-        class="hidden flex border border-green-400 text-gray-200 hover:text-gray-800 px-7 py-4 rounded hover:bg-green-400 transition-colors font-mono text-xs md:text-sm group contact-button h-10 sm:h-auto"
+        href="https://nicksmith.software"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sm:flex border border-green-500 bg-none text-white hover:bg-green-700 hover:bg-opacity-60 px-4 py-2 md:px-7 md:py-4 rounded transition-colors font-mono text-xs md:text-sm group portfolio-button h-10 sm:h-auto"
       >
         <span class="inline-flex items-center gap-0 group-hover:gap-2">
           <svg
-            class="w-0 group-hover:w-5 h-5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0"
+            class="w-0 group-hover:w-5 h-5 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
             <path
-              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+              d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"
             />
           </svg>
-          Contact&nbsp;Me
+          Portfolio
         </span>
       </a>
       <a
@@ -60,23 +62,22 @@
           GitHub
         </span>
       </a>
+
       <a
-        href="https://nicksmith.software"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="sm:flex border border-purple-500 bg-none text-white hover:bg-purple-500 px-7 py-4 rounded transition-colors font-mono text-xs md:text-sm group portfolio-button h-10 sm:h-auto"
+        routerLink="/contact"
+        class="hidden sm:flex border border-white text-gray-200 hover:text-gray-800 px-7 py-4 rounded hover:bg-gray-500 transition-colors font-mono text-xs md:text-sm group contact-button h-10 sm:h-auto"
       >
         <span class="inline-flex items-center gap-0 group-hover:gap-2">
           <svg
-            class="w-0 group-hover:w-5 h-5 transition-all opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0"
+            class="w-0 group-hover:w-5 h-5 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
             <path
-              d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15h8v2H8v-2zm0-4h8v2H8v-2z"
+              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
             />
           </svg>
-          Portfolio
+          Contact&nbsp;Me
         </span>
       </a>
     </div>
