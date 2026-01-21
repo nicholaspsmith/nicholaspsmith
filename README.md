@@ -56,8 +56,9 @@ Hiding these for now to keep it more focused
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true" style="width:900px" />
 </p>
 
-![GitHub Stats](https://streak-stats.demolab.com?user=nicholaspsmith&theme=default&hide_border=true)
-
+<p style="text-align: center;">
+ <img src="https://streak-stats.demolab.com?user=nicholaspsmith&theme=default&hide_border=true" style="width:900px" />
+</p>
 ---
 
 
