@@ -21,7 +21,7 @@
 
 
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Senior+Software+Engineer;AI-Integrations-Expert;JavaScript/TypeScript+Engineer;Node/Python+Developer;Solutions+Architect;Site+Reliability+Engineer;Prompt+Engineer;Shell+Scripter&font=Fira%20Code¢er=true&width=380&height=50)
+![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Senior+Software+Engineer;AI+Integrations+Expert;JavaScript/TypeScript+Engineer;Node/Python+Developer;Solutions+Architect;Site+Reliability+Engineer;Prompt+Engineer;Shell+Scripter&font=Fira%20Code¢er=true&width=380&height=50)
 
 ---
 
