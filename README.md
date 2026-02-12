@@ -53,7 +53,7 @@ Hiding these for now to keep it more focused
 -->
 
 <p style="text-align: center;">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=30&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true" style="width:900px" />
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=30&theme=tokyo-night&radius=8&custom_title=Commits%20in%20Last%2030%20Days&height=375&area=true" style="width:900px" />
 </p>
 ---
 
