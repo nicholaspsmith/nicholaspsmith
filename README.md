@@ -38,25 +38,7 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
 
-<!--
-Hiding these for now to keep it more focused
-![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white)
-![GraphQL](https://img.shields.io/badge/GraphQL-E10098?logo=graphql&logoColor=white)
-![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?logo=vuedotjs&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
--->
-
----
-
-<!--
-[![Github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=10&theme=tokyo-night&radius=8&custom_title=Recent%20Contributions&height=375&area=true)](https://github.com/nicholaspsmith)
--->
-
-<p style="text-align: center;">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=nicholaspsmith&days=14&theme=tokyo-night&radius=8&custom_title=Contributions%20in%20Last%202%20Weeks&height=375&area=true" style="width:900px" />
-</p>
----
-
+[![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api?username=nicholaspsmith)](https://github.com/stats-organization/github-stats-extended)
 
 <details>
 <summary>🎨 Styling & Design</summary>
