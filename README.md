@@ -9,9 +9,7 @@
  \___|\____\)(__\_|_)\_______)(__|  \__)    (_______/  |___|\__/|___|(__\_|_)  \__|    \__|  |__/  
                                                                                                    
 ```
-Only visit this site if you're NOT on mobile! 
-
-It's WAY better on desktop: [nicksmith☉software](https://nicksmith.software/)
+ Click to boot: [☉](https://nicksmith.software/)
 
 
 ---
