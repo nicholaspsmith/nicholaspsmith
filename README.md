@@ -22,13 +22,6 @@ It is my homage to the two user interfaces that impacted my life in such a deep 
 
 _Best viewed on a laptop or larger_
 
-**I am a**
-
-
-
-
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=Software+Engineer;JavaScript/TypeScript+Engineer;Node/Python+Engineer&font=Fira%20Code¢er=true&width=380&height=50)
-
 ---
 
 ## My Work
