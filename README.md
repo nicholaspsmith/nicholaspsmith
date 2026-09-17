@@ -16,16 +16,18 @@ _Best viewed on a laptop or larger_
 
 ---
 
-## My Work
+### My Work
 
 
-[![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api/?username=nicholaspsmith&show_icons=true&theme=calm&rank_icon=github&include_all_commits=true&custom_title=Nick%27s+Stats&disable_animations=true&number_format=long&show=prs_merged_percentage,prs_reviewed)
+![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api/?username=nicholaspsmith&show_icons=true&theme=calm&rank_icon=github&include_all_commits=true&custom_title=Nick%27s+Stats&disable_animations=true&number_format=long&show=prs_merged_percentage,prs_reviewed)
 
 ---
 
-## Contact
+### Contact
 
-[nicholaspsmith.com](https://nicholaspsmith.com) | [Linkedin](https://linkedin.com/in/nps90) | [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.software@gmail.com)
+My Personal Site: https://nicksmith.software
+My Professional Profile: [Linkedin](https://linkedin.com/in/nps90)
+My Electronic Carrier Pigeon's name: [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.software@gmail.com)
 
 ---
 
