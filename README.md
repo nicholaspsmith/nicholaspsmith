@@ -29,66 +29,7 @@ _Best viewed on a laptop or larger_
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
 
-[![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api?username=nicholaspsmith)](https://github.com/stats-organization/github-stats-extended)
-
-<details>
-<summary>🎨 Styling & Design</summary>
-
-> - CSS
-> - SASS
-> - SCSS
-> - LESS
-> - Bootstrap
-> - Figma
-> - Sketch
-> - Typography
-> - D3
-> - Recharts
-
-</details>
-
-<details>
-<summary>☁️ Cloud & Infrastructure</summary>
-
-> - AWS (EC2, S3, EBS, EFS, IAM, DynamoDB)
-> - Docker
-> - Nginx
-> - Heroku
-
-</details>
-
-<details>
-<summary>🗄️ Databases & CMS</summary>
-
-> - MongoDB
-> - SQL
-> - DynamoDB
-> - Contentstack
-
-</details>
-
-<details>
-<summary>🛠️ Tools & Testing</summary>
-
-> - Git
-> - GitHub
-> - Jira
-> - Webpack
-> - Jest
-> - Cypress
-> - Apollo
-
-</details>
-
-<details>
-<summary>💻 Operating Systems</summary>
-
-> - Linux
-> - macOS
-> - FreeBSD
-
-</details>
-
+[![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api/?username=nicholaspsmith&show_icons=true&theme=calm&rank_icon=github&include_all_commits=true&custom_title=Nick%27s+Stats&disable_animations=true&number_format=long&show=prs_merged_percentage,prs_reviewed)
 
 ---
 
