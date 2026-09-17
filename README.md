@@ -11,9 +11,7 @@
 ```
 Only visit this site if you're NOT on mobile! 
 
-It's WAY better on desktop!
-
-[nicksmith☉software](https://nicksmith.software/)
+It's WAY better on desktop: [nicksmith☉software](https://nicksmith.software/)
 
 
 ---
