@@ -1,23 +1,17 @@
 
 ```                                
- _   _ _      _           _             _____           _ _   _     
-| \ | (_)    | |         | |           /  ___|         (_) | | |    
-|  \| |_  ___| |__   ___ | | __ _ ___  \ `--. _ __ ___  _| |_| |__  
-| . ` | |/ __| '_ \ / _ \| |/ _` / __|  `--. \ '_ ` _ \| | __| '_ \ 
-| |\  | | (__| | | | (_) | | (_| \__ \ /\__/ / | | | | | | |_| | | |
-\_| \_/_|\___|_| |_|\___/|_|\__,_|___/ \____/|_| |_| |_|_|\__|_| |_|
+ _____  ___    __     ______   __   ___       ________  ___      ___   __  ___________  __    __   
+(\"   \|"  \  |" \   /" _  "\ |/"| /  ")     /"       )|"  \    /"  | |" \("     _   ")/" |  | "\  
+|.\\   \    | ||  | (: ( \___)(: |/   /     (:   \___/  \   \  //   | ||  |)__/  \\__/(:  (__)  :) 
+|: \.   \\  | |:  |  \/ \     |    __/       \___  \    /\\  \/.    | |:  |   \\_ /    \/      \/  
+|.  \    \. | |.  |  //  \ _  (// _  \        __/  \\  |: \.        | |.  |   |.  |    //  __  \\  
+|    \    \ | /\  |\(:   _) \ |: | \  \      /" \   :) |.  \    /:  | /\  |\  \:  |   (:  (  )  :) 
+ \___|\____\)(__\_|_)\_______)(__|  \__)    (_______/  |___|\__/|___|(__\_|_)  \__|    \__|  |__/  
+                                                                                                   
 ```
 
 Visit my site! [nicksmith☉software](https://nicksmith.software/)
 
-It is my homage to the two user interfaces that impacted my life in such a deep way that fundamentally changed my life in ways beyond what one would think possible for something as seemingly trivial as "some buttons and windows".
-
----
-
-### My Work
-
-
-![Anurag's GitHub stats](https://github-stats-extended.vercel.app/api/?username=nicholaspsmith&show_icons=true&theme=calm&rank_icon=github&include_all_commits=true&custom_title=Nick%27s+Stats&disable_animations=true&number_format=long&show=prs_merged_percentage,prs_reviewed)
 
 ---
 
