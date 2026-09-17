@@ -16,7 +16,8 @@
 \_| \_/_|\___|_| |_|\___/|_|\__,_|___/ \____/|_| |_| |_|_|\__|_| |_|
 ```
 
-[nick smith software](https://nicksmith.software/)
+[Visit my site: nicksmith(d0t)software](https://nicksmith.software/)
+_Best viewed on a laptop or larger_
 
 **I am a**
 
