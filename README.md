@@ -16,7 +16,7 @@
 \_| \_/_|\___|_| |_|\___/|_|\__,_|___/ \____/|_| |_| |_|_|\__|_| |_|
 ```
 
-Visit my site! [nicksmith(d0t)software](https://nicksmith.software/)
+Visit my site! [nicksmith☉software](https://nicksmith.software/)
 
 It is my homage to the two user interfaces that impacted my life in such a deep way that in retrospect, fundamentally changed my life in ways beyond what one would think possible for something as seemingly trivial as "some buttons and windows".
 
