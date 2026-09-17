@@ -12,8 +12,6 @@ Visit my site! [nicksmith☉software](https://nicksmith.software/)
 
 It is my homage to the two user interfaces that impacted my life in such a deep way that fundamentally changed my life in ways beyond what one would think possible for something as seemingly trivial as "some buttons and windows".
 
-_Best viewed on a laptop or larger_
-
 ---
 
 ### My Work
