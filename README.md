@@ -25,11 +25,10 @@ _Best viewed on a laptop or larger_
 
 ### Contact
 
-My Personal Site: https://nicksmith.software
 
 My Professional Profile: [Linkedin](https://linkedin.com/in/nps90)
 
-My Electronic Carrier Pigeon's name: [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.software@gmail.com)
+My Email address: [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.software@gmail.com)
 
 
 ---
