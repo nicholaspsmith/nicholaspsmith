@@ -9,8 +9,10 @@
  \___|\____\)(__\_|_)\_______)(__|  \__)    (_______/  |___|\__/|___|(__\_|_)  \__|    \__|  |__/  
                                                                                                    
 ```
- Click to boot: [☉](https://nicksmith.software/)
+ Portfolio: [nicksmith☉software](https://nicksmith.software/)
 
+
+[![GitHub Stats](https://github-stats-extended.vercel.app/api/top-langs?username=nicholaspsmith&layout=donut&hide_title=true&langs_count=7&hide_values=true&theme=great-gatsby)](https://github-stats-extended.vercel.app/api/top-langs?username=nicholaspsmith&layout=donut&hide_title=true&langs_count=7&hide_values=true&theme=great-gatsby)
 
 ---
 
