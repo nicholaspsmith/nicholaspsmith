@@ -71,6 +71,10 @@ test.describe('metadata', () => {
     expect(titles.size).toBe(PAGES.length);
   });
 
+  test('robots.txt points at the sitemap', async ({ request }) => {
+    expect(await (await request.get('/robots.txt')).text()).toContain('sitemap-index.xml');
+  });
+
   test('the share image exists', async ({ request }) => {
     const res = await request.get('/og.png');
     expect(res.status()).toBe(200);

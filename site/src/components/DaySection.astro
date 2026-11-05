@@ -6,7 +6,7 @@ type Props = { stop: string; id?: string; heading: string; level?: 1 | 2; palm?:
 const { stop, id, heading, level = 2, palm = false, wide = false } = Astro.props;
 const sky = STOPS.find((s) => s.id === stop);
 if (!sky) throw new Error(`Unknown sky stop: ${stop}`);
-const Heading = `h${level}`;
+const Heading = (level === 1 ? 'h1' : 'h2') as 'h1' | 'h2';
 const hasTry = Astro.slots.has('try');
 ---
 <section

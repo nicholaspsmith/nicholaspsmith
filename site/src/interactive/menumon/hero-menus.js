@@ -71,14 +71,14 @@
   const sep = () => h("div", { class: "hm-sep", role: "separator" });
   const head = (text, cls) => h("div", { class: "hm-head" + (cls ? ` ${cls}` : ""), role: "presentation" }, text);
   // A grey, inert row (macOS draws informational items as disabled).
-  const info = (text, o = {}) => h("div", { class: `hm-row hm-dis ${o.cls || ""}`, role: "menuitem", "aria-disabled": "true" },
+  const info = (text, o = {}) => h("div", { class: `hm-row hm-dis ${o.cls || ""}` },
     o.dot && dot(o.dot), h("span", { class: "hm-label" }, text), o.right);
   // A full-contrast row that isn't a menu item: a label and its controls.
   const line = (label, ...right) => h("div", { class: "hm-row", role: "none" }, h("span", { class: "hm-label" }, label), right);
   // A heading that folds what follows it: chevron down while folded, up while
   // open (Panes's sections, Homestead's later views).
   const fold = (key, label, detail, open, toggle) => h("button", {
-    type: "button", class: "hm-row hm-act hm-disc", role: "menuitem", "data-k": key,
+    type: "button", class: "hm-row hm-act hm-disc", "data-k": key,
     "aria-expanded": String(open), onclick: () => { toggle(); render(); },
   }, h("span", { class: "hm-label" }, label), detail && h("span", { class: "hm-detail" }, detail), svg(ICON.chevDown));
 
@@ -86,7 +86,7 @@
   // `radio` a radio; `close` closes the menu as most macOS items do. Anything
   // else stays open so the reader can keep playing, and the menu re-renders.
   function item(o) {
-    const role = o.check == null ? "menuitem" : o.radio ? "menuitemradio" : "menuitemcheckbox";
+    const role = o.check == null ? "button" : o.radio ? "radio" : "checkbox";
     const el = h("button", {
       type: "button",
       class: `hm-row ${o.disabled ? "hm-dis" : "hm-act"} ${o.cls || ""}`,
@@ -119,7 +119,7 @@
   // opens it with a mouse (as macOS does); a tap, Enter or → opens it too.
   function sub(o, build) {
     const btn = item({ ...o, sub: true });
-    btn.setAttribute("aria-haspopup", "menu");
+    btn.setAttribute("aria-haspopup", "dialog");
     btn.setAttribute("aria-expanded", "false");
     const w = h("div", { class: "hm-subwrap", role: "none" }, btn);
     w._build = build;
@@ -146,7 +146,7 @@
     const parent = w.parentElement.closest(".hm-menu");
     if (parent._sub && parent._sub !== w) closeSub(parent._sub);
     if (!w._fly) {
-      const fly = h("div", { class: "hm-menu hm-fly", role: "menu", "aria-label": w._label, tabindex: "-1" }, w._build());
+      const fly = h("div", { class: "hm-menu hm-fly", role: "dialog", "aria-label": w._label, tabindex: "-1" }, w._build());
       w.append(fly);
       w._fly = fly;
       parent._sub = w;
@@ -826,7 +826,7 @@
     onOpen() { hs.tv = false; },
     build() {
       const picker = h("button", {
-        type: "button", class: "hm-row hm-act hm-picker", role: "menuitem", "data-k": "picker",
+        type: "button", class: "hm-row hm-act hm-picker", "data-k": "picker",
         "aria-expanded": String(hs.picking), "aria-label": `Dashboard: ${DASHES.find((d) => d[0] === hs.dash)[1]}`,
         onclick: () => { hs.picking = !hs.picking; render(); },
       }, h("span", { class: "hm-label" }, DASHES.find((d) => d[0] === hs.dash)[1]), svg(ICON.chevDown));
@@ -1084,7 +1084,7 @@
     closeMenu(false);
     const m = MENUS[id];
     if (m.onOpen) m.onOpen();
-    const el = h("div", { class: "hm-menu", id: "hm-menu", role: "menu", "aria-label": m.name, tabindex: "-1", style: { width: `${m.width}px` } });
+    const el = h("div", { class: "hm-menu", id: "hm-menu", role: "dialog", "aria-label": m.name, tabindex: "-1", style: { width: `${m.width}px` } });
     cur = { id, hit, el, scroll: bezel.scrollLeft };
     el.append(...rows(id));
     fig.append(el);
@@ -1166,7 +1166,7 @@
       .sort((a, b) => (icons[a] || states[a]).x - (icons[b] || states[b]).x);
     for (const id of ids) {
       const b = h("button", {
-        type: "button", class: "hm-hit", "aria-label": `${MENUS[id].name} menu`, "aria-haspopup": "menu",
+        type: "button", class: "hm-hit", "aria-label": `${MENUS[id].name} menu`, "aria-haspopup": "dialog",
         "aria-expanded": "false", style: pill(icons[id] || states[id], 5),
       });
       b.addEventListener("click", () => (cur && cur.id === id ? closeMenu(true) : openMenu(id, b)));
@@ -1174,9 +1174,18 @@
       hits[id] = b;
     }
 
-    // Land with Homestead's menu open on its Spa dashboard, so the page
-    // opens on a real menu. No focus moves: the page keeps its own.
-    if (hits.homestead) openMenu("homestead", hits.homestead, { focus: false });
+    // Show Homestead's menu, on its Spa dashboard, the first time the bar comes
+    // into view. No focus moves: the page keeps its own. A menu closes once the
+    // bar has scrolled away, so none is left hanging over another section.
+    let shown = false;
+    new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) {
+        if (cur) closeMenu(false);
+      } else if (!shown && hits.homestead) {
+        shown = true;
+        openMenu("homestead", hits.homestead, { focus: false });
+      }
+    }).observe(fig);
 
     // Close on a press anywhere else (capture phase, so it runs before
     // another icon's click opens that one), on Escape, and when the phone

@@ -25,7 +25,7 @@ test('using a Homestead control changes the icon', async ({ page }) => {
   // Homestead's menu opens by itself when the bar loads, on its Spa dashboard.
   const menu = page.locator('.hm-menu').first();
   await menu.getByLabel(/^Dashboard/).click();
-  await menu.getByRole('menuitemradio', { name: 'Den' }).click();
+  await menu.getByRole('radio', { name: 'Den' }).click();
   await menu.getByRole('switch', { name: 'Ceiling Fan' }).first().click();
   await expect.poll(() => page.evaluate(() => (window as any).menumonHero.getState('homestead'))).not.toBe(before);
 });
@@ -68,4 +68,17 @@ test('fits a phone', async ({ page }) => {
   await openBar(page);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
+});
+
+test('the menu closes when the bar scrolls away', async ({ page }) => {
+  await openBar(page);
+  await expect(page.locator('.hm-menu').first()).toBeVisible();
+  await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; scrollTo(0, 0); });
+  await expect(page.locator('.hm-menu')).toHaveCount(0);
+});
+
+test('no menu opens by itself while the bar is out of view', async ({ page }) => {
+  await page.goto('/#contact');
+  await page.waitForTimeout(1200);
+  await expect(page.locator('.hm-menu')).toHaveCount(0);
 });

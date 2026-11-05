@@ -12,7 +12,7 @@ const WORDS = [
   <div class="popup" data-word-popup aria-live="polite"></div>
   <div class="line" lang="zh-Hans">
     {WORDS.map((w) => (
-      <button type="button" data-meaning={w.meaning} data-hanzi={w.hanzi} data-pinyin={w.pinyin} aria-label={`${w.hanzi}, ${w.pinyin}`} aria-expanded="false">
+      <button type="button" data-meaning={w.meaning} data-hanzi={w.hanzi} data-pinyin={w.pinyin} aria-expanded="false">
         <span class="pinyin" lang="zh-Latn">{w.pinyin}</span>
         <span class="hanzi">{w.hanzi}</span>
       </button>
