@@ -85,11 +85,13 @@ These are stand-ins for the real products, built for this site. Label sample dat
 
 Reproduce the interactive menu bar from the hero of https://menumon.nicksmith.software: the Mac menu bar with every app's animated icon, each icon opening its working mock menu, with menus able to change their icon.
 
-The source is `~/Code/widgets.nicksmith.software/site/`: `hero.js`, `hero-menus.js` (62 KB), the matching rules in `style.css`, `img/hero/` (`bar.png`, `anim.json`, sprite strips). `index.html` holds the markup. That repo is private, so CI cannot read it. Copy the files into this repo and add a small refresh script that recopies them from a sibling checkout, so updates are one command.
+The source is `~/Code/widgets.nicksmith.software/site/`: `hero.js`, `hero-menus.js` (62 KB), the matching rules in `style.css`, `img/hero/` (`bar.png`, `anim.json`, sprite strips). `index.html` holds the markup. That repo is private, so CI cannot read it. Decided by Nicholas: copy the files into this repo once and clean them here. Later updates to the Menumon site do not flow in automatically, and the Menumon repo is not changed.
 
-**Keep it clean for a business reader.** Mac Daddy's default vocabulary uses "Pimp" and "Hoes" wording. `hero-menus.js` already has a Normal Mode: start it with `pimp: false`. Before launch, grep every Menumon string and asset shipped by this site for that vocabulary, and do not show the Pimp Mode toggle or the Menu Pimp mascot. The bar image and Mac Daddy's sprites show Pimp Mode's icon, so regenerate them with the Normal Mode icon, or crop or replace that slot.
+**Keep it clean for a business reader.** Mac Daddy's default vocabulary uses "Pimp" and "Hoes" wording, and this repo is public, so the clean-up covers the shipped files, not just what a reader sees. Reduce `hero-menus.js` to Normal Mode's wording and remove the Pimp Mode strings, keys, comments and toggle. Replace Menu Pimp in `bar.png`, `anim-mac-daddy.png` and `state-mac-daddy.png` with the Normal Mode sparkles icon (drawn in `mac-daddy-menubar/Sources/MacDaddy/main.swift`, around line 139). The app keeps the name Mac Daddy. Before launch, grep everything shipped for that vocabulary.
 
 Do not copy the site's goth wording either ("daemons", "vessels", "Crypt"). Describe Menumon here as a family of Mac apps. Apollo Monitor and Homestead are told within this section rather than as separate projects.
+
+Decided by Nicholas: Menumon is a homepage section only. It gets no `/work` page, and nothing on this site links to menumon.nicksmith.software, because that site still carries the slang.
 
 On a phone, follow the Menumon site's own phone behaviour, which already exists in `hero-menus.js`.
 
@@ -97,7 +99,7 @@ Load Menumon's code and images only as the reader nears that section.
 
 ## Project pages
 
-Each project also gets its own page at `/work/<project>`, in plain language: the problem, what Nicholas did, the result, then a link to the live product where one exists. Each page opens with a sentence a business owner would care about.
+Every project except Menumon also gets its own page at `/work/<project>`, in plain language: the problem, what Nicholas did, the result, then a link to the live product where one exists. Each page opens with a sentence a business owner would care about.
 
 - Results come only from facts Nicholas can stand behind. If a personal project has no measured result, describe what it does for its user and leave numbers out.
 - DisasterMaps is a team project (about 300 of 543 commits are his). Its page states his role and credits the team. Its public site is an under-construction page, so images must come from the app itself.
@@ -106,8 +108,8 @@ Each project also gets its own page at `/work/<project>`, in plain language: the
 
 ## Other pages
 
-- **Resume** at `/resume`: real HTML text, with a link to the PDF at `frontend/public/resume/Nicholas_Smith_Resume_2026.pdf`. Generate the page from one structured source so that it can't drift from the rest of the site.
-- **Contact**: email, LinkedIn and the booking link `https://cal.com/nicholas-p-smith`, in the Late section and reachable from everywhere. Wording covers both a job and contract work through Bright Logic Digital.
+- **Resume** at `/resume`: the full resume as real HTML text, with a link to the PDF at `frontend/public/resume/Nicholas_Smith_Resume_2026.pdf`. Its skills and technical wording stay, as the one exception to the no-jargon rule, because it is a formal document a reader chooses to open. Keep its content in one structured file so the experience shown elsewhere on the site can't drift from it. The PDF remains a static file.
+- **Contact**: `me@nicksmith.software` (decided by Nicholas, and it matches the resume), LinkedIn and the booking link `https://cal.com/nicholas-p-smith`, in the Late section and reachable from everywhere. Wording covers both a job and contract work through Bright Logic Digital.
 - **Mac Classic** at `/mac-classic`: kept as a hidden extra, not in the navigation. It iframes `https://jamesfriend.com.au/pce-js/pce-js-apps/`. Restyle it to match.
 - **Link to nicksmith.software** in the footer, for technical readers.
 - **404 page** in the site's style.
@@ -124,12 +126,12 @@ Old URLs `/about`, `/contact`, `/projects` and `/experience` redirect to the mat
 ## Quality requirements
 
 - Name, what he does and contact are in the HTML without JavaScript. With JavaScript off, every section is readable on a fixed sky and every page works.
-- `prefers-reduced-motion`: no swaying or scroll-linked animation. Each section shows its own still sky, so the idea survives. Interactive pieces keep working.
+- `prefers-reduced-motion`: no swaying or scroll-linked animation. Each section shows its own still sky, so the idea survives. Interactive pieces keep working. For everyone else, the swaying logo gets a visible pause control.
 - WCAG 2.2 AA, including text contrast at every point of the sky. The sky is decorative.
 - Works from 320 px wide up, with a 16 px side gutter and no horizontal scrolling. Phones are a primary case, since cards and LinkedIn get opened there.
 - Core Web Vitals at the good thresholds: LCP 2.5 s, INP 200 ms, CLS 0.1. Aim for about 500 KB on first load, with Menumon lazy loaded beyond that. Scrolling stays smooth on a mid-range phone.
 - Every page has a title, description and Open Graph image, with `Person` structured data, a sitemap and a canonical apex domain.
-- Cookieless analytics via Cloudflare Web Analytics, to see whether anyone reaches the projects and the contact links.
+- Cookieless analytics via Cloudflare Web Analytics. Page views only: visits to `/work/<project>` pages show interest, and scroll depth and contact clicks are not measured.
 
 ## Current failures to fix
 
@@ -156,6 +158,8 @@ These are Claude's calls, approved in the summary Nicholas read:
 - Project pages live under `/work/<project>`.
 - The contact form is removed in favour of email and a booking link. The form sends through a third party and exposes his Gmail address in the code.
 - Cloudflare's block on AI crawlers is left as it is.
+- `/resume` is the full resume, jargon included.
+- Analytics measure page views only.
 
 ## Left to the builder
 
