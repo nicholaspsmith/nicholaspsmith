@@ -7,7 +7,7 @@ import displayFont from '@fontsource-variable/fraunces/files/fraunces-latin-opsz
 type Props = { title: string; description: string; image?: string; noindex?: boolean };
 
 const { title, description, image = '/og.png', noindex = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/', Astro.site);
+const canonical = new URL(Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/', Astro.site);
 const ogImage = new URL(image, Astro.site);
 const beacon = import.meta.env.PUBLIC_CF_BEACON;
 ---

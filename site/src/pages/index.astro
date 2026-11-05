@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import Sky from '../components/Sky.astro';
 import { PROJECTS } from '../data/projects';
+import { RESUME } from '../data/resume';
 import DayNightHouse from '../interactive/DayNightHouse.astro';
 import DoseCalendar from '../interactive/DoseCalendar.astro';
 import FabricPicker from '../interactive/FabricPicker.astro';
@@ -13,6 +14,20 @@ import HazardLayers from '../interactive/HazardLayers.astro';
 import MenumonBar from '../interactive/MenumonBar.astro';
 import RecipeScaler from '../interactive/RecipeScaler.astro';
 import SubtitleWords from '../interactive/SubtitleWords.astro';
+
+const EXPERIENCE = RESUME.jobs.filter((job) => 'highlight' in job && job.highlight);
+
+const PERSON = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Nicholas P Smith',
+  url: 'https://nicholaspsmith.com/',
+  email: 'mailto:me@nicksmith.software',
+  jobTitle: 'Senior Software Engineer',
+  image: 'https://nicholaspsmith.com/og.png',
+  address: { '@type': 'PostalAddress', addressLocality: 'Charleston', addressRegion: 'SC', addressCountry: 'US' },
+  sameAs: ['https://www.linkedin.com/in/nps90/', 'https://github.com/nicholaspsmith', 'https://nicksmith.software'],
+};
 
 const TRY: Record<string, any> = {
   'powells-upholstery': FabricPicker,
@@ -28,6 +43,7 @@ const TRY: Record<string, any> = {
   title="Nicholas P Smith | Software engineer and designer"
   description="I design and build software people enjoy using. Senior software engineer in Charleston, SC, with experience at MongoDB and Cisco."
 >
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(PERSON)} />
   <Nav />
   <Sky />
   <main id="main">
@@ -53,9 +69,18 @@ const TRY: Record<string, any> = {
         <MenumonBar slot="try" />
       </DaySection>
     </div>
-    <DaySection stop="late" id="contact" heading="Still up? Let's talk." palm>
+    <DaySection stop="late" id="contact" heading="Still up? Let's talk.">
       <p>Whether you're hiring or need something built through Bright Logic Digital, I'd like to hear about it.</p>
       <ContactLinks />
+      <div slot="try" class="experience">
+        <h3>Where I've worked</h3>
+        <ul data-experience>
+          {EXPERIENCE.map((job) => (
+            <li><b>{job.company}</b><span>{job.title}</span><span class="dates">{job.dates}</span></li>
+          ))}
+        </ul>
+        <p><a class="link-arrow" href="/resume">Full resume</a></p>
+      </div>
     </DaySection>
   </main>
   <Footer />
@@ -64,4 +89,10 @@ const TRY: Record<string, any> = {
 <style>
   .one-line { font-size: 1.3rem; line-height: 1.4; }
   .more { margin-top: 1rem; }
+  .experience { max-width: 34rem; margin-left: auto; }
+  .experience h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .experience ul { list-style: none; margin: 0 0 1rem; padding: 0; }
+  .experience li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 1rem; padding: 0.6rem 0; border-top: 1px solid #ffffff33; }
+  .experience li span:not(.dates) { grid-row: 2; }
+  .experience .dates { font-size: 0.95rem; color: #d5dbe8; font-variant-numeric: tabular-nums; }
 </style>

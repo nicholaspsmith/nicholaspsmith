@@ -1,6 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import DaySection from '../components/DaySection.astro';
 ---
-<Base title="Page not found | Nicholas P Smith" description="This page doesn't exist." noindex>
-  <main id="main"><h1>Page not found</h1><a href="/">Back to the start of the day</a></main>
+<Base title="Page not found | Nicholas P Smith" description="This page doesn't exist, but there is plenty more to see." noindex>
+  <main id="main">
+    <DaySection stop="night" level={1} heading="Lost in the dark?" palm>
+      <p>That page doesn't exist.</p>
+      <p class="home"><a class="link-arrow" href="/">Back to the start of the day</a></p>
+    </DaySection>
+  </main>
 </Base>
+
+<style>
+  .home { margin-top: 1.25rem; }
+</style>

@@ -83,14 +83,20 @@ export function skyAt(p: number) {
   };
 }
 
-export function progressAt(y: number, centres: number[]): number {
-  if (y <= centres[0]) return 0;
-  const last = centres.length - 1;
-  if (y >= centres[last]) return last;
-  let i = 0;
-  while (y >= centres[i + 1]) i++;
-  const span = centres[i + 1] - centres[i];
-  return span > 0 ? i + (y - centres[i]) / span : i;
+/**
+ * Where the day has got to. The sky holds still while the focus is inside a
+ * section and crossfades across each edge between sections.
+ */
+export function progressAt(y: number, edges: number[], zone: number): number {
+  for (let k = 0; k < edges.length; k++) {
+    const edge = edges[k];
+    const before = k > 0 ? edge - edges[k - 1] : Infinity;
+    const after = k < edges.length - 1 ? edges[k + 1] - edge : Infinity;
+    const reach = Math.min(zone, before / 2, after / 2);
+    if (y < edge - reach) return k;
+    if (y <= edge + reach) return reach > 0 ? k + (y - (edge - reach)) / (2 * reach) : k + 1;
+  }
+  return edges.length;
 }
 
 export function formatClock(minutes: number): string {

@@ -30,7 +30,7 @@ const prefix = home ? '' : '/';
     font-size: 1rem;
     font-weight: 500;
   }
-  :global(.sky-live) .nav { position: fixed; background: var(--veil); }
+  :global(.sky-live) .nav { position: fixed; background: var(--veil); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
   a { text-decoration: none; }
   .nav__links a:hover { text-decoration: underline; text-underline-offset: 0.25em; }
   .nav__id { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; white-space: nowrap; }
@@ -42,6 +42,9 @@ const prefix = home ? '' : '/';
   }
   .nav__links { display: flex; gap: clamp(0.9rem, 3vw, 2rem); list-style: none; margin: 0; padding: 0; }
   .nav__links a { display: inline-block; padding: 0.5rem 0; }
+  @media print {
+    .nav { display: none; }
+  }
   @media (max-width: 26rem) {
     .nav__id span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   }

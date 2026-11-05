@@ -43,13 +43,30 @@ describe('contrast', () => {
 });
 
 describe('progressAt', () => {
-  const centres = [100, 300, 500, 700];
+  const edges = [1000, 2000, 3000];
+  const zone = 100;
 
-  it('clamps above the first centre', () => expect(progressAt(0, centres)).toBe(0));
-  it('clamps below the last centre', () => expect(progressAt(9999, centres)).toBe(3));
-  it('sits halfway between the second and third', () => expect(progressAt(400, centres)).toBe(1.5));
-  it('copes with sections that have zero height between them', () => {
-    expect(progressAt(300, [100, 300, 300, 500])).toBeGreaterThanOrEqual(1);
+  it('holds a stop while the focus is inside its section', () => {
+    expect(progressAt(0, edges, zone)).toBe(0);
+    expect(progressAt(1500, edges, zone)).toBe(1);
+    expect(progressAt(2500, edges, zone)).toBe(2);
+    expect(progressAt(9999, edges, zone)).toBe(3);
+  });
+
+  it('crossfades across the edge between two sections', () => {
+    expect(progressAt(1000, edges, zone)).toBe(0.5);
+    expect(progressAt(950, edges, zone)).toBe(0.25);
+    expect(progressAt(2050, edges, zone)).toBe(1.75);
+  });
+
+  it('shrinks the crossfade to fit short sections', () => {
+    const p = progressAt(1500, [1000, 1100], 300);
+    expect(p).toBe(2);
+    expect(progressAt(1050, [1000, 1100], 300)).toBe(1);
+  });
+
+  it('copes with two edges in the same place', () => {
+    expect(Number.isFinite(progressAt(1000, [1000, 1000], 100))).toBe(true);
   });
 });
 

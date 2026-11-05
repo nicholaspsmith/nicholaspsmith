@@ -24,6 +24,7 @@ import { STOPS } from '../lib/sky';
 
   const root = document.documentElement;
   const KEY = 'palm-paused';
+  const BLEND = 0.35; // Crossfade over this share of the screen, either side of an edge.
 
   function remember(paused: boolean) {
     try {
@@ -53,21 +54,18 @@ import { STOPS } from '../lib/sky';
 
     root.classList.add('sky-live');
 
-    let centres: number[] = [];
+    let edges: number[] = [];
     const navOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
     let queued = false;
 
     const measure = () => {
-      centres = sections.map((el) => {
-        const box = el.getBoundingClientRect();
-        return box.top + scrollY + box.height / 2;
-      });
+      edges = sections.slice(1).map((el) => el.getBoundingClientRect().top + scrollY);
     };
 
     const paint = () => {
       queued = false;
       // Anchors stop below the nav, so look that far past the middle of the screen.
-      const p = progressAt(scrollY + innerHeight / 2 + navOffset, centres);
+      const p = progressAt(scrollY + innerHeight / 2 + navOffset, edges, innerHeight * BLEND);
       const s = skyAt(p);
       layers.forEach((layer, i) => {
         layer.style.opacity = i === s.index ? '1' : i === s.index + 1 ? String(s.t) : '0';
