@@ -55,6 +55,30 @@ test.describe('the live sky', () => {
     await expect.poll(() => lateOpacity(page)).toBe('1');
   });
 
+  test('jumps straight to an anchor instead of flying through the day', async ({ page }) => {
+    await page.addInitScript(() => {
+      const samples: number[] = [];
+      (window as any).__samples = samples;
+      const sample = () => {
+        samples.push(scrollY);
+        requestAnimationFrame(sample);
+      };
+      requestAnimationFrame(sample);
+    });
+    await page.goto('/#contact');
+    await expect.poll(() => lateOpacity(page)).toBe('1');
+    await page.waitForTimeout(1600);
+    const { samples, end } = await page.evaluate(() => ({ samples: (window as any).__samples as number[], end: scrollY }));
+    const inBetween = samples.filter((y) => y > end * 0.05 && y < end * 0.95);
+    expect(inBetween).toEqual([]);
+  });
+
+  test('still scrolls smoothly for links clicked on the page', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    await expect.poll(() => page.locator('html').evaluate((el) => getComputedStyle(el).scrollBehavior)).toBe('smooth');
+  });
+
   test('follows the sections when the viewport changes', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/#zimu');

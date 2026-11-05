@@ -1,3 +1,5 @@
+/* hero.js's overlays: sprite strips laid exactly over the bar's own icons. */
+.bar-anim { position: absolute; background-repeat: no-repeat; background-position: 0% 0; pointer-events: none; }
 .hm-hit { position: absolute; z-index: 2; margin: 0; padding: 0; border: 0; border-radius: 5px; background: transparent;
   cursor: default; -webkit-tap-highlight-color: transparent; }
 /* macOS's selected-item pill; `screen` keeps the icon bright, as if drawn behind it. */

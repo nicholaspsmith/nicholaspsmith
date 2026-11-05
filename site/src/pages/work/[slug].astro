@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Footer from '../../components/Footer.astro';
 import Nav from '../../components/Nav.astro';
@@ -12,8 +12,9 @@ export function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 const sky = STOPS.find((s) => s.id === project.stop)!;
+const share = await getImage({ src: project.image, width: 1200, format: 'jpeg', quality: 80 });
 ---
-<Base title={`${project.name} | Nicholas P Smith`} description={project.summary} image={project.image.src}>
+<Base title={`${project.name} | Nicholas P Smith`} description={project.summary} image={share.src}>
   <div class="page" style={`--top:${sky.top};--bottom:${sky.bottom};--ink:${sky.ink}`}>
     <Nav />
     <main id="main" class="project">

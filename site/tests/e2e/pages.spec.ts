@@ -75,6 +75,16 @@ test.describe('metadata', () => {
     expect(await (await request.get('/robots.txt')).text()).toContain('sitemap-index.xml');
   });
 
+  test('project pages share an image small enough for link previews', async ({ page, request }) => {
+    for (const slug of ['chs-irrigation-lighting', 'powells-upholstery']) {
+      await page.goto(`/work/${slug}`);
+      const image = await page.locator('meta[property="og:image"]').getAttribute('content');
+      const body = await (await request.get(new URL(image!).pathname)).body();
+      expect(body.length).toBeGreaterThan(1000);
+      expect(body.length).toBeLessThan(500_000);
+    }
+  });
+
   test('the share image exists', async ({ request }) => {
     const res = await request.get('/og.png');
     expect(res.status()).toBe(200);

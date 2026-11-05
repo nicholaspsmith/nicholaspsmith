@@ -36,6 +36,9 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON;
       document.documentElement.classList.add('js');
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('sky-capable');
+        addEventListener('load', () => {
+          setTimeout(() => document.documentElement.classList.add('smooth'), 100);
+        });
       }
     </script>
     <slot name="head" />

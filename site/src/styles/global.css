@@ -12,7 +12,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-height) + 1rem);
   -webkit-text-size-adjust: 100%;
 }
@@ -36,6 +35,9 @@ h1, h2, h3 {
   line-height: 1.05;
   margin: 0;
 }
+
+/* Added after load: a page opened at an anchor should land there, not fly there. */
+html.smooth { scroll-behavior: smooth; }
 
 img, svg { display: block; max-width: 100%; }
 img { height: auto; }
@@ -86,6 +88,6 @@ a { color: inherit; }
 html:not(.js) .needs-js { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html.smooth { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }

@@ -27,6 +27,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: npm run test:e2e
+      - run: npm run build
+        env:
+          PUBLIC_CF_BEACON: ${{ vars.PUBLIC_CF_BEACON }}
       - run: npm run check:vocabulary
       - run: npm run check:budget
 

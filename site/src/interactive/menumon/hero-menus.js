@@ -1125,11 +1125,13 @@
     }
     if (!inMenu) return;
     if (e.key === "Tab") {
-      // Tab cycles through everything in the menu, flyouts included.
+      // Tab walks through everything in the menu, flyouts included. Past either
+      // end, the menu closes and Tab carries on from its icon.
       const list = focusables(cur.el);
-      const i = list.indexOf(a);
+      const next = list.indexOf(a) + (e.shiftKey ? -1 : 1);
+      if (next < 0 || next >= list.length) return closeMenu(true);
       e.preventDefault();
-      list[(i + (e.shiftKey ? -1 : 1) + list.length) % list.length]?.focus();
+      list[next]?.focus();
       return;
     }
     if (a.tagName === "INPUT") return; // sliders own their arrow keys

@@ -30,6 +30,35 @@ test('using a Homestead control changes the icon', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => (window as any).menumonHero.getState('homestead'))).not.toBe(before);
 });
 
+test('the icon overlays sit over the bar and change with the menus', async ({ page }) => {
+  await openBar(page);
+  const overlays = page.locator('.bar-anim');
+  await expect(overlays.first()).toBeAttached();
+  const boxes = await overlays.evaluateAll((els) => els.map((el) => {
+    const box = el.getBoundingClientRect();
+    return { position: getComputedStyle(el).position, width: box.width, height: box.height };
+  }));
+  for (const box of boxes) {
+    expect(box.position).toBe('absolute');
+    expect(box.width).toBeGreaterThan(0);
+    expect(box.height).toBeGreaterThan(0);
+  }
+});
+
+test('Tab moves on past the end of an open menu', async ({ page }) => {
+  await openBar(page);
+  const button = page.getByRole('button', { name: 'Battery Time menu' });
+  await button.click();
+  await expect(page.locator('.hm-menu').first()).toBeVisible();
+  for (let i = 0; i < 60; i++) {
+    await page.keyboard.press('Tab');
+    if ((await page.locator('.hm-menu').count()) === 0) break;
+  }
+  await expect(page.locator('.hm-menu')).toHaveCount(0);
+  const inBar = await page.evaluate(() => document.activeElement?.closest('.hm-menu') !== null);
+  expect(inBar).toBe(false);
+});
+
 test('Mac Daddy speaks plainly', async ({ page }) => {
   await openBar(page);
   await page.getByRole('button', { name: 'Mac Daddy menu' }).click();

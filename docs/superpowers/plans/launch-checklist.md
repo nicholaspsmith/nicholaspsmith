@@ -27,7 +27,7 @@ The rebuilt site is on branch `rebuild-charleston-day`. Nothing below has happen
    - `https://www.nicholaspsmith.com` passes TLS and redirects to the apex.
    - `https://nicholaspsmith.com/resume` and `/work/zimu` load directly.
 6. Turn off GitHub Pages for the repository.
-7. Create a Cloudflare Web Analytics site, and set its token as `PUBLIC_CF_BEACON` for the build.
+7. Create a Cloudflare Web Analytics site, set its token as the repository variable `PUBLIC_CF_BEACON`, and re-run the deploy.
 
 ## Rollback
 
