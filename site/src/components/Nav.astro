@@ -1,0 +1,48 @@
+---
+const home = Astro.url.pathname === '/' || Astro.url.pathname === '/index.html';
+const prefix = home ? '' : '/';
+---
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main">
+  <a class="nav__id" href="/" aria-label="Nicholas P Smith, home">
+    <span class="nav__logo" aria-hidden="true"></span>
+    <span>Nicholas P Smith</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href={`${prefix}#work`}>Work</a></li>
+    <li><a href="/resume">Resume</a></li>
+    <li><a href={`${prefix}#contact`}>Contact</a></li>
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 30;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 var(--gutter);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  :global(.sky-live) .nav { position: fixed; background: var(--veil); }
+  a { text-decoration: none; }
+  .nav__links a:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+  .nav__id { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; white-space: nowrap; }
+  .nav__logo {
+    width: 1.75rem;
+    height: 2rem;
+    background: currentColor;
+    mask: url(/musictree.svg) center / contain no-repeat;
+  }
+  .nav__links { display: flex; gap: clamp(0.9rem, 3vw, 2rem); list-style: none; margin: 0; padding: 0; }
+  .nav__links a { display: inline-block; padding: 0.5rem 0; }
+  @media (max-width: 26rem) {
+    .nav__id span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  }
+</style>
