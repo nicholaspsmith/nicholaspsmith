@@ -1,0 +1,86 @@
+---
+const WORDS = [
+  { hanzi: '你', pinyin: 'nǐ', meaning: 'you' },
+  { hanzi: '今天', pinyin: 'jīntiān', meaning: 'today' },
+  { hanzi: '想', pinyin: 'xiǎng', meaning: 'to want to; to think' },
+  { hanzi: '去', pinyin: 'qù', meaning: 'to go' },
+  { hanzi: '哪儿', pinyin: 'nǎr', meaning: 'where' },
+  { hanzi: '吃饭', pinyin: 'chīfàn', meaning: 'to eat a meal' },
+];
+---
+<div class="player" data-subtitle>
+  <div class="popup" data-word-popup aria-live="polite"></div>
+  <div class="line" lang="zh-Hans">
+    {WORDS.map((w) => (
+      <button type="button" data-meaning={w.meaning} data-hanzi={w.hanzi} data-pinyin={w.pinyin} aria-label={`${w.hanzi}, ${w.pinyin}`} aria-expanded="false">
+        <span class="pinyin" lang="zh-Latn">{w.pinyin}</span>
+        <span class="hanzi">{w.hanzi}</span>
+      </button>
+    ))}
+  </div>
+  <p class="english">Where do you want to eat today?</p>
+  <p class="prompt needs-js">Click a word</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-subtitle]').forEach((root) => {
+    const popup = root.querySelector<HTMLElement>('[data-word-popup]')!;
+    const words = [...root.querySelectorAll<HTMLButtonElement>('button')];
+
+    const close = () => {
+      popup.replaceChildren();
+      words.forEach((w) => w.setAttribute('aria-expanded', 'false'));
+    };
+
+    const open = (word: HTMLButtonElement) => {
+      const { hanzi, pinyin, meaning } = word.dataset;
+      const title = document.createElement('p');
+      const big = document.createElement('b');
+      big.textContent = hanzi ?? '';
+      big.lang = 'zh-Hans';
+      title.append(big, ` ${pinyin}`);
+      const body = document.createElement('p');
+      body.textContent = meaning ?? '';
+      popup.replaceChildren(title, body);
+      words.forEach((w) => w.setAttribute('aria-expanded', String(w === word)));
+    };
+
+    words.forEach((word) => word.addEventListener('click', () => open(word)));
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+  });
+</script>
+
+<style>
+  .player {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1.25rem 0.75rem 1.5rem;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    color: #fff;
+    background:
+      radial-gradient(120% 90% at 20% 10%, #28406a, transparent 60%),
+      radial-gradient(90% 80% at 85% 25%, #5a2b73, transparent 60%),
+      #0b1020;
+    box-shadow: 0 1.5rem 3.5rem #00000059;
+  }
+  .line { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.15rem; padding: 0.4rem 0.6rem; border-radius: 0.5rem; background: #000000b3; }
+  button { display: flex; flex-direction: column; align-items: center; min-width: 2.75rem; padding: 0.15rem 0.4rem; border-radius: 0.35rem; transition: background 120ms; }
+  button:hover, button[aria-expanded='true'] { background: #ffffff33; }
+  .pinyin { font-size: 0.8rem; }
+  .hanzi { font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif; font-size: clamp(1.4rem, 2.8vw, 2.1rem); line-height: 1.2; }
+  .english { margin-top: 0.4rem; padding: 0.1rem 0.5rem; border-radius: 0.3rem; background: #000000b3; font-size: 1rem; }
+  .prompt { position: absolute; top: 0.9rem; left: 1rem; font-size: 0.95rem; font-weight: 700; }
+  .popup:empty { display: none; }
+  .popup { position: absolute; left: 50%; top: 18%; translate: -50% 0; min-width: 14rem; max-width: calc(100% - 2rem); padding: 0.75rem 1rem; border-radius: 0.6rem; background: #f7f6f2; color: #16171f; font-size: 1rem; box-shadow: 0 1rem 2.5rem #0000008c; }
+  .popup :global(b) { font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', sans-serif; font-size: 1.6rem; font-weight: 500; }
+</style>

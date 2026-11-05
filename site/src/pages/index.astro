@@ -6,6 +6,15 @@ import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import Sky from '../components/Sky.astro';
 import { PROJECTS } from '../data/projects';
+import FabricPicker from '../interactive/FabricPicker.astro';
+import RecipeScaler from '../interactive/RecipeScaler.astro';
+import SubtitleWords from '../interactive/SubtitleWords.astro';
+
+const TRY: Record<string, any> = {
+  'powells-upholstery': FabricPicker,
+  'from-tired-to-iron': RecipeScaler,
+  zimu: SubtitleWords,
+};
 
 ---
 <Base
@@ -22,12 +31,16 @@ import { PROJECTS } from '../data/projects';
       </p>
     </DaySection>
     <div id="work">
-      {PROJECTS.map((project) => (
-        <DaySection stop={project.stop} id={project.slug} heading={project.name}>
-          <p class="one-line">{project.oneLine}</p>
-          <p class="more"><a class="link-arrow" href={`/work/${project.slug}`}>The full story</a></p>
-        </DaySection>
-      ))}
+      {PROJECTS.map((project) => {
+        const Try = TRY[project.slug];
+        return (
+          <DaySection stop={project.stop} id={project.slug} heading={project.name}>
+            <p class="one-line">{project.oneLine}</p>
+            <p class="more"><a class="link-arrow" href={`/work/${project.slug}`}>The full story</a></p>
+            {Try && <Try slot="try" />}
+          </DaySection>
+        );
+      })}
       <DaySection stop="night" id="menumon" heading="Menumon">
         <p class="one-line">A family of small Mac apps, each with its own character.</p>
       </DaySection>
