@@ -69,3 +69,52 @@ test.describe('without JavaScript', () => {
     await expect(page.locator('[data-fabric-picker] [data-prompt]')).toBeHidden();
   });
 });
+
+test.describe('day and night house', () => {
+  test('switches between by day and after dark', async ({ page }) => {
+    await page.goto('/#chs-irrigation-lighting');
+    const house = page.locator('[data-house]');
+    await expect(house).toHaveAttribute('data-mode', 'day');
+    const dark = house.getByRole('button', { name: 'After dark' });
+    await dark.click();
+    await expect(dark).toHaveAttribute('aria-pressed', 'true');
+    await expect(house.getByRole('button', { name: 'By day' })).toHaveAttribute('aria-pressed', 'false');
+    await expect(house).toHaveAttribute('data-mode', 'night');
+  });
+});
+
+test.describe('hazard layers', () => {
+  test('hides and shows a layer and describes the map', async ({ page }) => {
+    await page.goto('/#disaster-maps');
+    const map = page.locator('[data-hazards]');
+    const flooding = map.getByRole('checkbox', { name: 'Flooding' });
+    await expect(map.locator('[data-layer="flooding"]')).toBeVisible();
+    await flooding.uncheck();
+    await expect(map.locator('[data-layer="flooding"]')).toBeHidden();
+    await expect(map.locator('[data-summary]')).not.toContainText('flooding');
+    await expect(map.locator('[data-summary]')).toContainText('road closures');
+    await expect(map).toContainText('Illustration');
+  });
+
+  test('says so when every layer is off', async ({ page }) => {
+    await page.goto('/#disaster-maps');
+    const map = page.locator('[data-hazards]');
+    for (const box of await map.getByRole('checkbox').all()) await box.uncheck();
+    await expect(map.locator('[data-summary]')).toContainText('No hazards shown');
+  });
+});
+
+test.describe('dose calendar', () => {
+  test('counts pills as doses are ticked and unticked', async ({ page }) => {
+    await page.goto('/#petdoses');
+    const calendar = page.locator('[data-doses]');
+    const left = calendar.locator('[data-left]');
+    const before = Number(await left.textContent());
+    const dose = calendar.getByRole('checkbox', { name: 'Thursday morning' });
+    await dose.check();
+    await expect(left).toHaveText(String(before - 1));
+    await dose.uncheck();
+    await expect(left).toHaveText(String(before));
+    await expect(calendar).toContainText('Sample');
+  });
+});

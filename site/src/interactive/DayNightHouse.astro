@@ -1,0 +1,93 @@
+<figure class="house" data-house data-mode="day">
+  <svg viewBox="0 0 640 380" role="img" aria-label="A house with a green lawn, lit by landscape lighting after dark">
+    <defs>
+      <linearGradient id="house-day" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8ccdf0" /><stop offset="1" stop-color="#e8f6f6" /></linearGradient>
+      <linearGradient id="house-night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1838" /><stop offset="1" stop-color="#3b2c5e" /></linearGradient>
+      <radialGradient id="glow"><stop offset="0" stop-color="#ffc95c" stop-opacity="0.75" /><stop offset="1" stop-color="#ffc95c" stop-opacity="0" /></radialGradient>
+    </defs>
+    <rect width="640" height="380" fill="url(#house-day)" />
+    <rect class="night" width="640" height="380" fill="url(#house-night)" />
+    <circle class="day-only" cx="540" cy="70" r="30" fill="#fff0b8" />
+    <g class="night">
+      <circle cx="90" cy="60" r="1.6" fill="#fff" /><circle cx="170" cy="36" r="1.2" fill="#fff" /><circle cx="470" cy="50" r="1.5" fill="#fff" /><circle cx="590" cy="96" r="1.2" fill="#fff" />
+    </g>
+
+    <path d="M60 290c20-90 60-120 80-120s60 30 70 120zM500 290c10-70 40-110 60-110s50 40 60 110z" class="trees" />
+    <path d="M0 290c120-16 220-16 320-10s220 10 320-4v104H0z" class="lawn" />
+    <path d="M300 380c6-30 14-70 18-92h22c6 22 16 62 26 92z" class="drive" />
+
+    <g class="body">
+      <path d="M180 184 320 96l140 88z" class="roof" />
+      <rect x="196" y="184" width="248" height="106" class="walls" />
+      <rect x="302" y="226" width="38" height="64" class="door" />
+    </g>
+    <g class="windows">
+      <rect x="222" y="204" width="46" height="46" rx="2" />
+      <rect x="372" y="204" width="46" height="46" rx="2" />
+    </g>
+
+    <g class="night glows">
+      <circle cx="222" cy="290" r="70" fill="url(#glow)" />
+      <circle cx="418" cy="290" r="70" fill="url(#glow)" />
+      <circle cx="321" cy="300" r="56" fill="url(#glow)" />
+      <circle cx="140" cy="280" r="74" fill="url(#glow)" />
+      <circle cx="560" cy="280" r="74" fill="url(#glow)" />
+    </g>
+    <g class="night lamps">
+      <rect x="221" y="286" width="3" height="8" /><rect x="417" y="286" width="3" height="8" /><rect x="296" y="322" width="3" height="8" /><rect x="346" y="322" width="3" height="8" />
+    </g>
+
+    <g class="day-only sprays" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-opacity="0.85">
+      <path d="M110 330c20-46 54-46 76-8" /><path d="M110 330c10-36 34-40 52-12" /><path d="M530 330c-20-46-54-46-76-8" /><path d="M530 330c-10-36-34-40-52-12" />
+    </g>
+  </svg>
+  <figcaption>
+    <div class="toggle needs-js" role="group" aria-label="Time of day">
+      <button type="button" data-set="day" aria-pressed="true">By day</button>
+      <button type="button" data-set="night" aria-pressed="false">After dark</button>
+    </div>
+    <p>Illustration of what the company does</p>
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-house]').forEach((house) => {
+    const buttons = [...house.querySelectorAll<HTMLButtonElement>('[data-set]')];
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        house.dataset.mode = button.dataset.set;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      });
+    });
+  });
+</script>
+
+<style>
+  .house { margin: 0; border-radius: 0.9rem; overflow: hidden; background: #fffdf7; color: #14231d; box-shadow: 0 1.5rem 3.5rem #0e1f2840; }
+  svg { width: 100%; height: auto; }
+  svg * { transition: fill 500ms ease-in-out, opacity 500ms ease-in-out; }
+  .night { opacity: 0; }
+  .day-only { opacity: 1; }
+  [data-mode='night'] .night { opacity: 1; }
+  [data-mode='night'] .day-only { opacity: 0; }
+  .lawn { fill: #5fae5b; }
+  .trees { fill: #2f7a4d; }
+  .drive { fill: #d9d2c3; }
+  .roof { fill: #57616b; }
+  .walls { fill: #f3ece0; }
+  .door { fill: #2c4a48; }
+  .windows rect { fill: #b9dbe9; }
+  .lamps { fill: #ffe9b0; }
+  [data-mode='night'] .lawn { fill: #17331f; }
+  [data-mode='night'] .trees { fill: #123022; }
+  [data-mode='night'] .drive { fill: #5a5560; }
+  [data-mode='night'] .roof { fill: #1c2233; }
+  [data-mode='night'] .walls { fill: #6f6578; }
+  [data-mode='night'] .door { fill: #1b2a2a; }
+  [data-mode='night'] .windows rect { fill: #ffd36e; }
+  figcaption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem 1rem; padding: 0.85rem 1.25rem; font-size: 0.95rem; }
+  .toggle { display: flex; gap: 0.25rem; padding: 0.2rem; border-radius: 0.6rem; background: #0e1f2814; }
+  html:not(.js) .toggle { display: none; }
+  button { padding: 0.45rem 0.9rem; border-radius: 0.45rem; font-weight: 600; font-size: 1rem; }
+  button[aria-pressed='true'] { background: #14231d; color: #fff; }
+</style>

@@ -1,0 +1,73 @@
+---
+const LAYERS = [
+  { id: 'flooding', label: 'Flooding', phrase: 'flooding', colour: '#2f7fd6' },
+  { id: 'closures', label: 'Road closures', phrase: 'road closures', colour: '#d3362b' },
+  { id: 'warnings', label: 'Warnings', phrase: 'warnings', colour: '#e6a100' },
+];
+---
+<figure class="map" data-hazards>
+  <svg viewBox="0 0 640 400" role="img" aria-labelledby="hazard-summary">
+    <rect width="640" height="400" fill="#bfe0ef" />
+    <path class="land" d="M0 0h262c-14 44-8 96 8 136 14 36 28 66 58 92 8-34 22-64 44-92 26-34 52-78 56-136h212v300c-60-14-114-6-168 22-44 22-104 34-170 26-74-10-114-40-168-50-52-10-92-6-134 8z" />
+    <path class="land" d="M0 330c60-14 120 0 176 26 62 28 142 40 226 12 80-28 150-40 238-16v48H0z" />
+    <g class="roads">
+      <path d="M0 70c90 10 170 40 300 170" /><path d="M640 60c-90 14-180 60-300 180" /><path d="M120 400c34-70 110-130 200-150" /><path d="M300 0c10 90 16 170 28 228" />
+    </g>
+    <g data-layer="flooding" class="flooding">
+      <path d="M232 170c30-22 72-6 80 26s-22 50-54 42-52-46-26-68z" />
+      <path d="M420 110c26-12 60 2 62 28s-30 40-56 30-32-46-6-58z" />
+      <path d="M92 250c26-16 68-8 74 18s-30 38-58 30-42-34-16-48z" />
+    </g>
+    <g data-layer="closures" class="closures">
+      <path d="M204 142c26 16 52 40 74 62" />
+      <path d="M520 86c-34 12-70 34-98 58" />
+      <path d="M176 300c22-20 50-36 80-44" />
+    </g>
+    <g data-layer="warnings" class="warnings">
+      <path d="M332 62l18 32h-36z" /><path d="M556 180l18 32h-36z" /><path d="M64 150l18 32H46z" />
+    </g>
+  </svg>
+  <figcaption>
+    <fieldset class="needs-js">
+      <legend class="sr-only">Map layers</legend>
+      {LAYERS.map((l) => (
+        <label><input type="checkbox" checked data-toggle={l.id} data-phrase={l.phrase} style={`accent-color:${l.colour}`} /> {l.label}</label>
+      ))}
+    </fieldset>
+    <p class="map__note"><span id="hazard-summary" data-summary aria-live="polite">Charleston map showing flooding, road closures and warnings.</span> Illustration.</p>
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hazards]').forEach((map) => {
+    const boxes = [...map.querySelectorAll<HTMLInputElement>('[data-toggle]')];
+    const summary = map.querySelector<HTMLElement>('[data-summary]')!;
+
+    const update = () => {
+      const on = boxes.filter((b) => b.checked).map((b) => b.dataset.phrase);
+      boxes.forEach((b) => {
+        const layer = map.querySelector<SVGElement>(`[data-layer="${b.dataset.toggle}"]`)!;
+        layer.style.display = b.checked ? '' : 'none';
+      });
+      const list = on.length > 1 ? `${on.slice(0, -1).join(', ')} and ${on.at(-1)}` : on[0];
+      summary.textContent = on.length ? `Charleston map showing ${list}.` : 'No hazards shown on this Charleston map.';
+    };
+
+    boxes.forEach((box) => box.addEventListener('change', update));
+  });
+</script>
+
+<style>
+  .map { margin: 0; border-radius: 0.9rem; overflow: hidden; background: #fff; color: #10242c; box-shadow: 0 1.5rem 3.5rem #0e1f2840; }
+  svg { width: 100%; height: auto; }
+  .land { fill: #eef1ea; stroke: #cdd8d0; }
+  .roads { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; }
+  .flooding { fill: #2f7fd6; fill-opacity: 0.42; stroke: #2f7fd6; stroke-width: 2; }
+  .closures { fill: none; stroke: #d3362b; stroke-width: 7; stroke-linecap: round; stroke-dasharray: 2 12; }
+  .warnings { fill: #f5b301; stroke: #7a5500; stroke-width: 2; stroke-linejoin: round; }
+  figcaption { padding: 0.85rem 1.25rem 1rem; font-size: 1rem; }
+  fieldset { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; border: 0; margin: 0; padding: 0; }
+  label { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2rem; font-weight: 600; cursor: pointer; }
+  input { width: 1.15rem; height: 1.15rem; margin: 0; }
+  .map__note { margin-top: 0.35rem; font-size: 0.9rem; color: #3f5560; }
+</style>

@@ -1,0 +1,51 @@
+---
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const PILLS = 14;
+const DONE = 6; // Three days already given.
+---
+<div class="doses" data-doses>
+  <div class="doses__head">
+    <h3>Biscuit's tablets</h3>
+    <p><span data-left>{PILLS - DONE}</span> left this week</p>
+  </div>
+  <div class="doses__grid">
+    {DAYS.map((day, i) => (
+      <div class="day">
+        <span class="day__name" aria-hidden="true">{day.slice(0, 3)}</span>
+        {['morning', 'evening'].map((time, t) => (
+          <label class={`dose dose--${time}`}>
+            <input type="checkbox" checked={i * 2 + t < DONE} aria-label={`${day} ${time}`} />
+            <span aria-hidden="true">{time === 'morning' ? 'AM' : 'PM'}</span>
+          </label>
+        ))}
+      </div>
+    ))}
+  </div>
+  <p class="doses__note">Sample data. Tick a dose.</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-doses]').forEach((root) => {
+    const boxes = [...root.querySelectorAll<HTMLInputElement>('input')];
+    const left = root.querySelector<HTMLElement>('[data-left]')!;
+    const update = () => { left.textContent = String(boxes.filter((b) => !b.checked).length); };
+    boxes.forEach((box) => box.addEventListener('change', update));
+  });
+</script>
+
+<style>
+  .doses { padding: 1.25rem; border-radius: 0.9rem; background: #141416; color: #f4f4f5; box-shadow: 0 1.5rem 3.5rem #00000059; }
+  .doses__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.25rem 1rem; margin-bottom: 1rem; }
+  h3 { font-family: var(--sans); font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; }
+  .doses__head p { font-size: 1rem; color: #c9c9cf; }
+  [data-left] { font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+  .doses__grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.35rem; }
+  .day { display: grid; gap: 0.35rem; }
+  .day__name { text-align: center; font-size: 0.85rem; color: #c9c9cf; }
+  .dose { position: relative; display: grid; place-items: center; aspect-ratio: 1; min-height: 2.25rem; border-radius: 0.5rem; background: #27272b; font-size: 0.8rem; font-weight: 600; color: #d4d4d8; cursor: pointer; transition: background 120ms; }
+  .dose:hover { background: #33333a; }
+  .dose input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+  .dose:has(input:checked) { background: #05df72; color: #06170f; }
+  .dose:has(input:focus-visible) { outline: 3px solid #fff; outline-offset: 2px; }
+  .doses__note { margin-top: 0.8rem; font-size: 0.9rem; color: #c9c9cf; }
+</style>

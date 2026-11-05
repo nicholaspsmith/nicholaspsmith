@@ -6,14 +6,20 @@ import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import Sky from '../components/Sky.astro';
 import { PROJECTS } from '../data/projects';
+import DayNightHouse from '../interactive/DayNightHouse.astro';
+import DoseCalendar from '../interactive/DoseCalendar.astro';
 import FabricPicker from '../interactive/FabricPicker.astro';
+import HazardLayers from '../interactive/HazardLayers.astro';
 import RecipeScaler from '../interactive/RecipeScaler.astro';
 import SubtitleWords from '../interactive/SubtitleWords.astro';
 
 const TRY: Record<string, any> = {
   'powells-upholstery': FabricPicker,
+  'chs-irrigation-lighting': DayNightHouse,
+  'disaster-maps': HazardLayers,
   'from-tired-to-iron': RecipeScaler,
   zimu: SubtitleWords,
+  petdoses: DoseCalendar,
 };
 
 ---
