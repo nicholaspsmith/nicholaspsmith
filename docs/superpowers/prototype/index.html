@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three prototypes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Fraunces:SOFT,opsz,wght@100,9..144,300;100,9..144,500;100,9..144,700&family=Hanken+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{--bar:52px;--green:#05DF72;--ink:#0C1613}
+  *{box-sizing:border-box}
+  html{scroll-behavior:auto}
+  body{margin:0;font-family:'Hanken Grotesk',system-ui,sans-serif;background:#0C1613;color:#fff;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--green);outline-offset:3px}
+
+  .switch{position:fixed;inset:0 0 auto 0;height:var(--bar);z-index:100;display:flex;align-items:center;gap:6px;padding:0 16px;background:#111;border-bottom:1px solid #fff2;font-size:14px}
+  .switch .hint{margin-right:auto;color:#aaa}
+  .switch button{padding:7px 14px;border-radius:7px;color:#ccc}
+  .switch button.on{background:#fff;color:#111;font-weight:700}
+  .concept{display:none;padding-top:var(--bar)}
+  .concept.on{display:block}
+  .palm{display:block;background:currentColor;-webkit-mask:url(musictree_green.svg) center/contain no-repeat;mask:url(musictree_green.svg) center/contain no-repeat}
+
+  /* ---------- A: Before and after ---------- */
+  .ba{--x:72%;position:relative;height:calc(100vh - var(--bar));min-height:560px;overflow:hidden;cursor:ew-resize;touch-action:pan-y;user-select:none}
+  .ba .layer{position:absolute;inset:0}
+  .tmpl{background:#fff;color:#333;font-family:Arial,sans-serif;text-align:center}
+  .tmpl nav{display:flex;justify-content:space-between;padding:22px 40px;font-size:14px;border-bottom:1px solid #eee}
+  .tmpl .stock{height:46%;background:linear-gradient(#cfd5da,#b3bbc2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;letter-spacing:.06em}
+  .tmpl h2{font-size:34px;font-weight:400;margin:34px 0 8px}
+  .tmpl p{margin:0 0 22px;color:#777}
+  .tmpl .btn{display:inline-block;background:#333;color:#fff;padding:12px 26px;font-size:13px;letter-spacing:.08em}
+  .real{background:var(--ink);clip-path:inset(0 0 0 var(--x));overflow:hidden}
+  .real .palm{position:absolute;right:-5vw;bottom:-12vh;height:118vh;width:60vw;color:#123326}
+  .real .inner{position:absolute;inset:0;padding:clamp(24px,5vw,72px);display:flex;flex-direction:column;justify-content:flex-end}
+  .real .top{position:absolute;top:26px;left:clamp(24px,5vw,72px);right:clamp(24px,5vw,72px);display:flex;justify-content:space-between;font-size:15px;align-items:center}
+  .real .top b{display:flex;gap:10px;align-items:center;font-weight:500}
+  .real .top .palm{position:static;width:26px;height:30px;color:var(--green)}
+  .real h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(46px,9.2vw,148px);line-height:.94;letter-spacing:-.035em;margin:0 0 26px;max-width:11ch}
+  .real h1 em{font-style:normal;color:var(--green)}
+  .real .sub{display:flex;gap:48px;align-items:flex-end;flex-wrap:wrap;font-size:18px;color:#C7D3CE}
+  .real .sub p{margin:0;max-width:44ch}
+  .real .sub small{font-size:14px;color:#8FA39B}
+  .handle{position:absolute;top:0;bottom:0;left:var(--x);width:2px;background:var(--green);z-index:5}
+  .handle span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:var(--green);color:var(--ink);display:grid;place-items:center;font-size:20px;font-weight:700;box-shadow:0 0 0 8px #05df7226}
+  .handle i{position:absolute;top:calc(50% + 48px);left:50%;transform:translateX(-50%);white-space:nowrap;font-style:normal;font-size:13px;background:var(--ink);padding:4px 10px;border-radius:99px;color:var(--green)}
+  .index{padding:clamp(40px,8vw,110px) clamp(24px,5vw,72px);background:var(--ink);position:relative}
+  .index>small{color:#8FA39B;font-size:15px}
+  .index a{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:baseline;padding:18px 0;border-top:1px solid #fff2;color:#fff;text-decoration:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(30px,5.2vw,76px);letter-spacing:-.025em;line-height:1.05;transition:color .18s,padding-left .22s ease-out}
+  .index a span{font:400 15px 'Hanken Grotesk';letter-spacing:0;color:#8FA39B}
+  .index:hover a{color:#4c5c56}
+  .index a:hover{color:var(--green);padding-left:18px}
+  .peek{position:fixed;width:min(38vw,520px);aspect-ratio:16/10;border-radius:10px;overflow:hidden;pointer-events:none;opacity:0;transform:scale(.94);transition:opacity .18s,transform .22s ease-out;z-index:20;box-shadow:0 30px 70px #000a}
+  .peek.show{opacity:1;transform:none}
+  .peek img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+  /* ---------- B: Try the work ---------- */
+  .b-hero{min-height:calc(100vh - var(--bar));display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vw,90px);background:#F4F1EA;color:var(--ink);position:relative;overflow:hidden}
+  .b-hero .palm{position:absolute;right:4vw;top:50%;transform:translateY(-50%);height:70vh;width:34vw;color:#DCE7DF}
+  .b-hero h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(42px,7.6vw,118px);line-height:.98;letter-spacing:-.03em;margin:0 0 20px;max-width:12ch;position:relative}
+  .b-hero p{font-size:19px;max-width:46ch;margin:0;position:relative}
+  .b-hero .who{font-weight:700;margin-bottom:22px}
+  .demo{min-height:100vh;display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.5fr);gap:clamp(24px,5vw,72px);align-items:center;padding:clamp(40px,6vw,90px)}
+  .demo h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.4vw,62px);line-height:1;letter-spacing:-.025em;margin:6px 0 14px}
+  .demo .kick{font-size:14px;font-weight:700;letter-spacing:.02em;opacity:.7}
+  .demo p{font-size:17px;line-height:1.5;margin:0;max-width:42ch}
+  .demo .try{margin-top:22px;font-weight:700;font-size:15px}
+  /* powells */
+  .pw{background:#EFE9DF;color:#2A2520}
+  .pw .room{background:linear-gradient(#E4DCCF 72%,#C9B79F 72%);border-radius:12px;padding:0;overflow:hidden}
+  .pw svg{display:block;width:100%;height:auto}
+  .pw .up{transition:fill .35s ease-out}
+  .swatches{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+  .swatches button{width:58px;height:58px;border-radius:50%;box-shadow:inset 0 0 0 1px #0002;transition:transform .15s ease-out}
+  .swatches button:hover{transform:translateY(-2px)}
+  .swatches button[aria-pressed=true]{outline:2px solid #2A2520;outline-offset:3px}
+  .fabname{margin-top:12px;font-size:15px}
+  /* zimu */
+  .zm{background:#0D0E18;color:#EDEDF4}
+  .screen{position:relative;aspect-ratio:16/10;border-radius:12px;background:radial-gradient(120% 90% at 20% 10%,#28406a,transparent 60%),radial-gradient(90% 80% at 85% 25%,#5a2b73,transparent 60%),#0b1020;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:7%}
+  .line{display:flex;gap:4px;background:#000a;padding:10px 14px 8px;border-radius:8px}
+  .line button{display:flex;flex-direction:column;align-items:center;padding:4px 6px;border-radius:6px;transition:background .12s}
+  .line button:hover,.line button.on{background:#ffffff26}
+  .line b{font:500 clamp(20px,2.6vw,34px) 'Noto Sans SC',sans-serif}
+  .line u{text-decoration:none;font-size:13px;opacity:.8}
+  .en{font-size:15px;margin-top:8px;opacity:.85}
+  .pop{position:absolute;left:50%;bottom:calc(7% + 132px);transform:translateX(-50%);min-width:250px;background:#F7F6F2;color:#16171f;border-radius:10px;padding:12px 16px;box-shadow:0 18px 40px #0009;opacity:0;transition:opacity .15s}
+  .pop.show{opacity:1}
+  .pop b{font:500 28px 'Noto Sans SC',sans-serif;margin-right:8px}
+  .pop span{color:#5a5a66}
+  .pop p{margin:4px 0 0;font-size:15px}
+  /* homestead */
+  .hs{background:#DFE8EC;color:#16242B}
+  .mac{border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#7fa8c0,#3d6680);position:relative;min-height:440px;box-shadow:0 20px 50px #0003}
+  .menubar{height:30px;background:#0003;backdrop-filter:blur(12px);display:flex;justify-content:flex-end;align-items:center;gap:14px;padding:0 12px;color:#fff;font-size:13px}
+  .menubar svg{height:22px;width:auto}
+  .menu{position:absolute;right:58px;top:36px;width:270px;background:#F6F6F4F0;border-radius:11px;padding:6px;box-shadow:0 14px 34px #0005;font-size:14px;color:#1b1b1b}
+  .menu label{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;border-radius:6px;cursor:pointer}
+  .menu label:hover{background:#0000000f}
+  .menu input{appearance:none;width:32px;height:19px;border-radius:99px;background:#c8c8c8;position:relative;margin:0;transition:background .15s;cursor:pointer}
+  .menu input::after{content:"";position:absolute;width:15px;height:15px;left:2px;top:2px;border-radius:50%;background:#fff;transition:transform .15s ease-out}
+  .menu input:checked{background:#2f9e5f}
+  .menu input:checked::after{transform:translateX(13px)}
+  .menu h4{margin:4px 9px 6px;font-size:12px;color:#777;font-weight:500}
+  .bighouse{position:absolute;left:5%;bottom:6%;width:44%}
+  .bighouse svg{width:100%;height:auto;overflow:visible}
+  .win{transition:fill .25s}
+  .fan{transform-origin:center;transform-box:fill-box}
+  .spin .fan{animation:spin 1s linear infinite}
+  .raining .drop{opacity:1;animation:fall .7s linear infinite}
+  .drop{opacity:0;stroke:#dbeeff;stroke-width:2;stroke-linecap:round}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fall{from{transform:translateY(-12px)}to{transform:translateY(16px)}}
+  /* iron */
+  .ir{background:#121417;color:#EEF0F2}
+  .phone{width:min(330px,100%);margin:auto;background:#000;border-radius:40px;padding:12px;box-shadow:0 0 0 2px #333,0 30px 70px #0009}
+  .phone .app{background:#1B1E22;border-radius:30px;padding:26px 20px 22px;min-height:520px}
+  .phone h3{margin:0 0 14px;font-size:21px}
+  .stepper{display:flex;align-items:center;justify-content:space-between;background:#262A30;border-radius:12px;padding:8px 10px;margin-bottom:16px}
+  .stepper button{width:40px;height:40px;border-radius:10px;background:#FF7A3D;color:#111;font-size:22px;font-weight:700}
+  .stepper b{font-size:17px}
+  .phone ul{list-style:none;margin:0 0 16px;padding:0;font-size:15px}
+  .phone ul li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #fff1}
+  .phone li b{font-variant-numeric:tabular-nums;color:#FF9A68}
+  .phone ol{margin:0;padding-left:18px;font-size:14.5px;line-height:1.45;color:#C9CDD2}
+  .phone ol b{color:#FF9A68;font-weight:500}
+  .b-end{padding:clamp(50px,9vw,120px) clamp(24px,6vw,90px);background:var(--ink)}
+  .b-end h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(38px,6vw,90px);letter-spacing:-.03em;margin:0 0 16px;line-height:1}
+  .b-end p{color:#B9C6C1;font-size:18px;margin:0}
+
+  /* ---------- C: Charleston time ---------- */
+  #c{--ink2:#fff}
+  .sky{position:fixed;inset:var(--bar) 0 0 0;--ox:46%;--oy:92%;z-index:0;overflow:hidden;background:linear-gradient(var(--s1,#2b3a67),var(--s2,#f6b38a))}
+  .orb{position:absolute;width:13vmin;height:13vmin;border-radius:50%;left:var(--ox,20%);top:var(--oy,70%);transform:translate(-50%,-50%);background:var(--orb,#fff3c9);box-shadow:0 0 90px 30px var(--glow,#ffd99a88)}
+  .stars{position:absolute;inset:0;opacity:var(--night,0);background-image:radial-gradient(1.4px 1.4px at 12% 18%,#fff,transparent),radial-gradient(1.2px 1.2px at 31% 9%,#fff,transparent),radial-gradient(1.6px 1.6px at 48% 26%,#fff,transparent),radial-gradient(1.1px 1.1px at 64% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 79% 30%,#fff,transparent),radial-gradient(1.2px 1.2px at 90% 8%,#fff,transparent),radial-gradient(1.3px 1.3px at 22% 40%,#fff,transparent),radial-gradient(1.1px 1.1px at 56% 44%,#fff,transparent)}
+  .marsh{position:absolute;left:0;right:0;bottom:0;width:100%;height:22vh;color:var(--land,#16302a)}
+  .bigpalm{position:absolute;right:3vw;bottom:6vh;width:40vw;height:88vh;color:var(--land,#16302a);transform-origin:50% 100%;animation:sway 7s ease-in-out infinite alternate}
+  @keyframes sway{from{transform:rotate(-.8deg) skewX(.4deg)}to{transform:rotate(1deg) skewX(-.5deg)}}
+  .clock{position:fixed;right:18px;top:calc(var(--bar) + 14px);z-index:5;font-size:14px;color:var(--ink2);background:#0002;backdrop-filter:blur(8px);padding:6px 12px;border-radius:99px;font-variant-numeric:tabular-nums}
+  .day{position:relative;z-index:2;color:var(--ink2);min-height:100vh;padding:clamp(40px,8vw,110px) clamp(24px,6vw,90px);display:flex;flex-direction:column;justify-content:center;max-width:980px}
+  .day h1,.day h2{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-.02em;line-height:1.02;margin:0}
+  .day h1{font-size:clamp(46px,8.4vw,128px);font-variation-settings:'SOFT' 100}
+  .day h2{font-size:clamp(34px,5vw,72px);margin-top:6px}
+  .day .t{font-size:15px;opacity:.85;margin-bottom:6px}
+  .day p{font-size:19px;line-height:1.5;max-width:44ch;margin:16px 0 0}
+  .day .pic{margin-top:26px;width:min(620px,100%);aspect-ratio:16/10;border-radius:10px;overflow:hidden;box-shadow:0 24px 60px #0006}
+  .day .pic img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+  @media (max-width:760px){.demo{grid-template-columns:1fr}.bigpalm{opacity:.35}.b-hero .palm{opacity:.5}}
+  @media (prefers-reduced-motion:reduce){.bigpalm,.spin .fan,.raining .drop{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="switch options">
+  <span class="hint">Three working prototypes. Drag, click and scroll them.</span>
+  <button class="option on" data-choice="a" onclick="toggleSelect(this);show('a')">A. Before &amp; after</button>
+  <button class="option" data-choice="b" onclick="toggleSelect(this);show('b')">B. Try the work</button>
+  <button class="option" data-choice="c" onclick="toggleSelect(this);show('c')">C. Charleston time</button>
+</div>
+
+<!-- A -->
+<section class="concept on" id="a">
+  <div class="ba" id="ba" role="slider" tabindex="0" aria-label="Compare a template with a designed site" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4">
+    <div class="layer tmpl">
+      <nav><span>YOUR LOGO HERE</span><span>Home &nbsp; About &nbsp; Services &nbsp; Contact</span></nav>
+      <div class="stock">STOCK PHOTO OF PEOPLE IN A MEETING</div>
+      <h2>Welcome to Our Website</h2>
+      <p>Professional solutions for all your business needs.</p>
+      <span class="btn">LEARN MORE</span>
+    </div>
+    <div class="layer real">
+      <span class="palm"></span>
+      <div class="top"><b><span class="palm"></span>Nicholas P Smith</b><span>Work &nbsp;&nbsp; About &nbsp;&nbsp; Resume &nbsp;&nbsp; Contact</span></div>
+      <div class="inner">
+        <h1>People can <em>feel</em> the difference.</h1>
+        <div class="sub"><p>I'm a software engineer who designs what I build, from first sketch to launch.</p><small>MongoDB · Cisco · Bright Logic Digital</small></div>
+      </div>
+    </div>
+    <div class="handle"><span aria-hidden="true">↔</span><i>Drag me</i></div>
+  </div>
+  <div class="index" id="index">
+    <small>Selected work</small>
+    <a href="#" data-img="powells"><b style="font-weight:inherit">Powell's Upholstery</b><span>Website &amp; AI fabric preview</span></a>
+    <a href="#" data-img="chs"><b style="font-weight:inherit">CHS Irrigation &amp; Lighting</b><span>Website</span></a>
+    <a href="#" data-img="zimu"><b style="font-weight:inherit">Zimu</b><span>Language learning</span></a>
+    <a href="#" data-img="menumon"><b style="font-weight:inherit">Menumon</b><span>Mac apps</span></a>
+    <a href="#" data-img="disastermaps"><b style="font-weight:inherit">DisasterMaps</b><span>Disaster response</span></a>
+    <a href="#" data-img="petdoses"><b style="font-weight:inherit">PetDoses</b><span>Web app</span></a>
+  </div>
+  <div class="peek" id="peek"><img alt=""></div>
+</section>
+
+<!-- B -->
+<section class="concept" id="b">
+  <div class="b-hero">
+    <span class="palm"></span>
+    <p class="who">Nicholas P Smith</p>
+    <h1>Don't take my word for it. Try it.</h1>
+    <p>I design and build software. Every project below is a small working piece of the real thing, so go ahead and touch it. Scroll down.</p>
+  </div>
+
+  <div class="demo pw">
+    <div><span class="kick">Powell's Upholstery</span><h2>See it on your sofa.</h2><p>Choosing from 16,000+ fabrics is hard, so customers can preview them on their own furniture.</p><p class="try">Pick a fabric →</p></div>
+    <div>
+      <div class="room">
+        <svg viewBox="0 0 640 380" role="img" aria-label="A sofa that changes fabric">
+          <defs>
+            <pattern id="weave" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0H5M0 2.5H5" stroke="#fff" stroke-opacity=".09"/><path d="M0 0V5M2.5 0V5" stroke="#000" stroke-opacity=".08"/></pattern>
+            <pattern id="herring" width="24" height="16" patternUnits="userSpaceOnUse"><path d="M0 16L12 0L24 16" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="3"/></pattern>
+            <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".12"/><stop offset="1" stop-color="#000" stop-opacity=".26"/></linearGradient>
+            <g id="sofa">
+              <rect x="110" y="96" width="420" height="150" rx="34"/>
+              <rect x="60" y="150" width="96" height="150" rx="36"/>
+              <rect x="484" y="150" width="96" height="150" rx="36"/>
+              <rect x="146" y="214" width="174" height="80" rx="20"/>
+              <rect x="320" y="214" width="174" height="80" rx="20"/>
+              <rect x="146" y="282" width="348" height="34" rx="12"/>
+            </g>
+            <mask id="sofaMask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="380"><use href="#sofa" fill="#fff"/></mask>
+          </defs>
+          <ellipse cx="320" cy="340" rx="280" ry="18" fill="#0003"/>
+          <rect x="112" y="312" width="16" height="30" rx="4" fill="#5d4633"/><rect x="512" y="312" width="16" height="30" rx="4" fill="#5d4633"/>
+          <use href="#sofa" class="up" id="upholstery" fill="#d9cfbd"/>
+          <g mask="url(#sofaMask)"><rect id="tex" x="50" y="90" width="540" height="240" fill="url(#weave)"/></g>
+          <g mask="url(#sofaMask)"><rect x="50" y="90" width="540" height="240" fill="url(#shade)"/></g>
+          <g fill="none" stroke="#000" stroke-opacity=".2"><rect x="146" y="214" width="174" height="80" rx="20"/><rect x="320" y="214" width="174" height="80" rx="20"/><rect x="60" y="150" width="96" height="150" rx="36"/><rect x="484" y="150" width="96" height="150" rx="36"/></g>
+        </svg>
+      </div>
+      <div class="swatches" id="sw"></div>
+      <div class="fabname" id="fabname"></div>
+    </div>
+  </div>
+
+  <div class="demo zm">
+    <div><span class="kick">Zimu</span><h2>Learn Mandarin from what you watch.</h2><p>Every subtitle becomes a lesson: click any word and get its meaning without losing your place in the show.</p><p class="try">Click a word →</p></div>
+    <div class="screen">
+      <div class="pop" id="pop"><b id="ph"></b><span id="pp"></span><p id="pm"></p></div>
+      <div class="line" id="zline"></div>
+      <div class="en">Where do you want to eat today?</div>
+    </div>
+  </div>
+
+  <div class="demo hs">
+    <div><span class="kick">Homestead · part of Menumon</span><h2>Your whole house in one tiny icon.</h2><p>A cottage in the Mac's menu bar. Its windows light with your real lights, a fan turns when yours does, and it rains when it's raining.</p><p class="try">Flip a switch →</p></div>
+    <div class="mac" id="mac">
+      <div class="menubar"><span id="tiny"></span><span>Thu 3:20 PM</span></div>
+      <div class="menu">
+        <h4>Downstairs</h4>
+        <label>Living room lights <input type="checkbox" id="l1" checked></label>
+        <label>Kitchen lights <input type="checkbox" id="l2"></label>
+        <label>Ceiling fan <input type="checkbox" id="f1"></label>
+        <h4>Weather</h4>
+        <label>Rain <input type="checkbox" id="r1"></label>
+      </div>
+      <div class="bighouse" id="big"></div>
+    </div>
+  </div>
+
+  <div class="demo ir">
+    <div><span class="kick">From Tired to Iron</span><h2>Dinner does its own maths.</h2><p>One training and nutrition app across iPhone, Apple Watch and the web. Change the servings and every amount follows, even inside the cooking steps.</p><p class="try">Tap + or − →</p></div>
+    <div class="phone"><div class="app">
+      <h3>Chicken &amp; rice bowls</h3>
+      <div class="stepper"><button id="minus" aria-label="Fewer servings">−</button><b id="serv"></b><button id="plus" aria-label="More servings">+</button></div>
+      <ul id="ing"></ul>
+      <ol id="steps"></ol>
+    </div></div>
+  </div>
+
+  <div class="b-end"><h2>Imagine what I'd build for you.</h2><p>12+ years. MongoDB, Cisco, Bright Logic Digital. Resume · Email · LinkedIn</p></div>
+</section>
+
+<!-- C -->
+<section class="concept" id="c">
+  <div class="sky" id="sky">
+    <div class="stars"></div>
+    <div class="orb"></div>
+    <span class="palm bigpalm"></span>
+    <svg class="marsh" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 120C160 90 300 140 480 118S820 86 980 112s300 26 460-4V200H0Z"/></svg>
+  </div>
+  <div class="clock" id="clock"></div>
+  <div class="day"><div class="t">Dawn, Charleston SC</div><h1>Good work takes all day.</h1><p>I'm Nicholas P Smith, a software engineer who designs what I build. Scroll through a day of my work.</p></div>
+  <div class="day"><div class="t">Morning</div><h2>Powell's Upholstery</h2><p>16,000+ fabrics, previewed on your own furniture.</p><div class="pic"><img src="powells.jpg" alt=""></div></div>
+  <div class="day"><div class="t">Midday</div><h2>CHS Irrigation &amp; Lighting</h2><p>A website for an owner-operated Charleston company.</p><div class="pic"><img src="chs.jpg" alt=""></div></div>
+  <div class="day"><div class="t">Sunset</div><h2>Zimu</h2><p>Learn Mandarin from the shows you already watch.</p><div class="pic"><img src="zimu.jpg" alt=""></div></div>
+  <div class="day"><div class="t">Night</div><h2>Menumon</h2><p>A family of Mac apps, each with its own character.</p><div class="pic"><img src="menumon.jpg" alt=""></div></div>
+  <div class="day"><div class="t">Late</div><h1>Still up. Say hello.</h1><p>12+ years. MongoDB, Cisco, Bright Logic Digital.</p></div>
+</section>
+
+<script>window.toggleSelect = window.toggleSelect || (() => {});
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+
+function show(id) {
+  document.querySelectorAll('.concept').forEach(c => c.classList.toggle('on', c.id === id));
+  document.querySelectorAll('.switch button').forEach(b => b.classList.toggle('on', b.dataset.choice === id));
+  scrollTo(0, 0);
+  if (id === 'c') paint();
+}
+
+/* A: slider */
+const ba = $('#ba');
+const setX = p => { p = Math.max(0, Math.min(100, p)); ba.style.setProperty('--x', p + '%'); ba.setAttribute('aria-valuenow', Math.round(p)); };
+let dragging = false, touched = false;
+const fromEvent = e => { const r = ba.getBoundingClientRect(); setX((e.clientX - r.left) / r.width * 100); };
+ba.addEventListener('pointerdown', e => { dragging = touched = true; ba.setPointerCapture(e.pointerId); fromEvent(e); });
+ba.addEventListener('pointermove', e => dragging && fromEvent(e));
+ba.addEventListener('pointerup', () => dragging = false);
+ba.addEventListener('keydown', e => {
+  const now = +ba.getAttribute('aria-valuenow');
+  if (e.key === 'ArrowLeft') { touched = true; setX(now - 4); }
+  if (e.key === 'ArrowRight') { touched = true; setX(now + 4); }
+});
+if (!reduce) {
+  const t0 = performance.now();
+  (function nudge(t) {
+    if (touched) return;
+    const k = Math.min(1, (t - t0) / 1800), e = 1 - Math.pow(1 - k, 3);
+    setX(72 - 68.5 * e);
+    if (k < 1) requestAnimationFrame(nudge);
+  })(t0);
+} else setX(3.5);
+
+const peek = $('#peek');
+document.querySelectorAll('#index a').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+  a.addEventListener('mouseenter', () => { peek.firstChild.src = '' + a.dataset.img + '.jpg'; peek.classList.add('show'); });
+  a.addEventListener('mouseleave', () => peek.classList.remove('show'));
+  a.addEventListener('mousemove', e => { peek.style.left = Math.min(innerWidth - peek.offsetWidth - 20, e.clientX + 24) + 'px'; peek.style.top = Math.max(60, e.clientY - peek.offsetHeight / 2) + 'px'; });
+});
+
+/* B: fabrics */
+const fabrics = [
+  ['Oatmeal linen', '#d9cfbd', 'weave'], ['Indigo velvet', '#28365f', 'weave'], ['Sage boucle', '#8c9b82', 'weave'],
+  ['Rust chenille', '#a9522f', 'weave'], ['Charcoal herringbone', '#3b3d42', 'herring'],
+];
+fabrics.forEach(([name, color, tex], i) => {
+  const b = document.createElement('button');
+  b.style.background = color; b.setAttribute('aria-label', name); b.setAttribute('aria-pressed', i === 0);
+  b.onclick = () => {
+    $('#upholstery').setAttribute('fill', color); $('#tex').setAttribute('fill', `url(#${tex})`);
+    $('#fabname').textContent = name + ' · one of 16,000+';
+    [...$('#sw').children].forEach(x => x.setAttribute('aria-pressed', x === b));
+  };
+  $('#sw').append(b);
+});
+$('#fabname').textContent = fabrics[0][0] + ' · one of 16,000+';
+
+/* B: zimu */
+const words = [
+  ['你', 'nǐ', 'you'], ['今天', 'jīntiān', 'today'], ['想', 'xiǎng', 'to want to; to think'],
+  ['去', 'qù', 'to go'], ['哪儿', 'nǎr', 'where'], ['吃饭', 'chīfàn', 'to eat a meal'],
+];
+words.forEach(([h, p, m]) => {
+  const b = document.createElement('button');
+  b.innerHTML = `<b>${h}</b><u>${p}</u>`;
+  b.onclick = () => {
+    [...$('#zline').children].forEach(x => x.classList.toggle('on', x === b));
+    $('#ph').textContent = h; $('#pp').textContent = p; $('#pm').textContent = m;
+    $('#pop').classList.add('show');
+  };
+  $('#zline').append(b);
+});
+
+/* B: homestead */
+const house = (s) => `<svg viewBox="0 0 120 110" aria-hidden="true">
+  <path d="M12 54 60 14l48 40z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="22" y="50" width="76" height="52" rx="3" fill="#fff"/>
+  <rect class="win w1" x="32" y="58" width="22" height="22" rx="2" fill="#40535f"/>
+  <rect class="win w2" x="66" y="58" width="22" height="22" rx="2" fill="#40535f"/>
+  <g class="fan" style="display:none"><path d="M77 69l-7-7h14zM77 69l7 7H70z" fill="#40535f"/></g>
+  ${[4, 12, 108, 116, -4, 124, 8, 112, 0, 120].map((x, i) => `<line class="drop" x1="${x}" y1="${34 + (i * 17) % 62}" x2="${x - 3}" y2="${44 + (i * 17) % 62}" style="animation-delay:${i * .09}s"/>`).join('')}
+</svg>`;
+$('#big').innerHTML = house(); $('#tiny').innerHTML = house();
+function sync() {
+  const a = $('#l1').checked, k = $('#l2').checked, f = $('#f1').checked, r = $('#r1').checked;
+  document.querySelectorAll('.w1').forEach(w => w.setAttribute('fill', a ? '#FFC84A' : '#40535f'));
+  document.querySelectorAll('.w2').forEach(w => w.setAttribute('fill', k ? '#FFC84A' : '#40535f'));
+  document.querySelectorAll('.fan').forEach(x => x.style.display = f ? '' : 'none');
+  $('#mac').classList.toggle('spin', f); $('#mac').classList.toggle('raining', r);
+  $('#mac').style.background = r ? 'linear-gradient(160deg,#5b6b78,#2f3e4b)' : '';
+}
+['l1', 'l2', 'f1', 'r1'].forEach(i => $('#' + i).onchange = sync); sync();
+
+/* B: recipe */
+const ing = [['Chicken thigh', 150, 'g'], ['Jasmine rice', .5, 'cup'], ['Broccoli', 1, 'cup'], ['Soy sauce', 1, 'tbsp']];
+const frac = n => { const w = Math.floor(n + 1e-6), f = n - w; const m = { .25: '¼', .5: '½', .75: '¾' }[Math.round(f * 4) / 4] || ''; return (w || !m ? w : '') + m; };
+const fmt = (n, u) => u === 'g' ? (n >= 1000 ? (n / 1000).toFixed(1) + ' kg' : n + ' g') : frac(n) + ' ' + u + (u === 'cup' && n > 1 ? 's' : '');
+let serv = 2;
+function recipe() {
+  $('#serv').textContent = serv + (serv === 1 ? ' serving' : ' servings');
+  const q = i => fmt(ing[i][1] * serv, ing[i][2]);
+  $('#ing').innerHTML = ing.map(([n], i) => `<li><span>${n}</span><b>${q(i)}</b></li>`).join('');
+  $('#steps').innerHTML = `<li>Rinse <b>${q(1)}</b> of rice and cook.</li><li>Sear <b>${q(0)}</b> of chicken with <b>${q(3)}</b> of soy.</li><li>Steam <b>${q(2)}</b> of broccoli and serve.</li>`;
+}
+$('#minus').onclick = () => { serv = Math.max(1, serv - 1); recipe(); };
+$('#plus').onclick = () => { serv = Math.min(12, serv + 1); recipe(); }; recipe();
+
+/* C: the day */
+const stops = [ // at, sky top, sky bottom, ink, land, night, label minutes
+  [0.00, '#2b3a67', '#f6b38a', '#ffffff', '#16302a', .35, 390],
+  [0.20, '#6fbbe0', '#fdeccd', '#10241d', '#1f4a3a', 0, 570],
+  [0.40, '#3f9fdc', '#c5e8f6', '#0c2230', '#1f5a44', 0, 750],
+  [0.60, '#3a1c5a', '#f2704e', '#ffffff', '#1b1426', .1, 1080],
+  [0.80, '#050a1c', '#12264a', '#ffffff', '#040811', 1, 1290],
+  [1.00, '#03060f', '#0b1730', '#ffffff', '#02040a', 1, 1430],
+];
+const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mix = (a, b, t) => { const x = hex(a), y = hex(b); return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(',')})`; };
+function paint() {
+  if (!$('#c').classList.contains('on')) return;
+  const max = document.documentElement.scrollHeight - innerHeight, p = max > 0 ? Math.min(1, scrollY / max) : 0;
+  let i = 0; while (i < stops.length - 2 && p > stops[i + 1][0]) i++;
+  const A = stops[i], B = stops[i + 1], t = (p - A[0]) / (B[0] - A[0]);
+  const s = $('#sky').style, root = $('#c').style;
+  s.setProperty('--s1', mix(A[1], B[1], t)); s.setProperty('--s2', mix(A[2], B[2], t));
+  s.setProperty('--land', mix(A[4], B[4], t)); s.setProperty('--night', A[5] + (B[5] - A[5]) * t);
+  root.setProperty('--ink2', mix(A[3], B[3], t));
+  const sun = Math.min(1, p / .68), night = p > .68;
+  const q = night ? (p - .68) / .32 : sun;
+  s.setProperty('--ox', 46 + q * 46 + '%'); s.setProperty('--oy', 92 - Math.sin(q * Math.PI) * 78 + '%');
+  s.setProperty('--orb', night ? '#EEF2FF' : '#FFF3C9'); s.setProperty('--glow', night ? '#cfd8ff33' : '#ffd99a88');
+  const m = A[6] + (B[6] - A[6]) * t, hh = Math.floor(m / 60), mm = Math.floor(m % 60);
+  $('#clock').textContent = `${(hh + 11) % 12 + 1}:${String(mm).padStart(2, '0')} ${hh < 12 ? 'AM' : 'PM'} in Charleston`;
+}
+addEventListener('scroll', () => requestAnimationFrame(paint), { passive: true });
+addEventListener('resize', paint);
+</script>
+</body>
+</html>
