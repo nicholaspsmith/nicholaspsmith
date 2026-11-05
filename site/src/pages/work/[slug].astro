@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Footer from '../../components/Footer.astro';
+import Nav from '../../components/Nav.astro';
+import { PROJECTS, type Project } from '../../data/projects';
+import { STOPS } from '../../lib/sky';
+
+export function getStaticPaths() {
+  return PROJECTS.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const sky = STOPS.find((s) => s.id === project.stop)!;
+---
+<Base title={`${project.name} | Nicholas P Smith`} description={project.summary} image={project.image.src}>
+  <div class="page" style={`--top:${sky.top};--bottom:${sky.bottom};--ink:${sky.ink}`}>
+    <Nav />
+    <main id="main" class="project">
+      <a class="project__back" href={`/#${project.slug}`}>← Back to the day</a>
+      <h1>{project.name}</h1>
+      <p class="project__lede">{project.summary}</p>
+      <figure class:list={['project__figure', { 'project__figure--portrait': project.portrait }]}>
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          format="webp"
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 64rem) 100vw, 64rem"
+        />
+      </figure>
+      <div class="project__story">
+        <section><h2>The problem</h2><p>{project.problem}</p></section>
+        <section><h2>What I did</h2><p>{project.did}</p></section>
+        <section><h2>The result</h2><p>{project.result}</p></section>
+      </div>
+      {project.live && <p class="project__live"><a class="link-arrow" href={project.live.href}>{project.live.label}</a></p>}
+    </main>
+    <div class="page__foot"><Footer /></div>
+  </div>
+</Base>
+
+<style>
+  .page { min-height: 100svh; color: var(--ink); background: linear-gradient(var(--top), var(--bottom)); }
+  .project { max-width: 64rem; margin: 0 auto; padding: calc(var(--nav-height) + 2.5rem) var(--gutter) 4rem; }
+  .project__back { font-size: 1rem; }
+  h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); margin: 1rem 0 0.75rem; }
+  .project__lede { font-size: 1.3rem; max-width: 40rem; }
+  .project__figure { margin: 2.5rem 0; }
+  .project__figure img { width: 100%; border-radius: 0.6rem; box-shadow: 0 1.25rem 3rem #0000004d; }
+  .project__figure--portrait img { width: min(22rem, 100%); margin: 0 auto; border-radius: 1.75rem; }
+  .project__story { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  h2 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .project__live { margin-top: 2.5rem; font-size: 1.2rem; }
+  .page__foot { padding: 1.5rem var(--gutter) 2rem; }
+  @media (max-width: 52rem) { .project__story { grid-template-columns: minmax(0, 1fr); } }
+</style>

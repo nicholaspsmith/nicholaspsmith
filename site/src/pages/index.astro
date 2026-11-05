@@ -5,16 +5,8 @@ import DaySection from '../components/DaySection.astro';
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import Sky from '../components/Sky.astro';
+import { PROJECTS } from '../data/projects';
 
-const WORK = [
-  ['early', 'powells-upholstery', "Powell's Upholstery"],
-  ['morning', 'chs-irrigation-lighting', 'CHS Irrigation & Lighting'],
-  ['midday', 'disaster-maps', 'DisasterMaps'],
-  ['afternoon', 'from-tired-to-iron', 'From Tired to Iron'],
-  ['sunset', 'zimu', 'Zimu'],
-  ['dusk', 'petdoses', 'PetDoses'],
-  ['night', 'menumon', 'Menumon'],
-] as const;
 ---
 <Base
   title="Nicholas P Smith | Software engineer and designer"
@@ -30,7 +22,15 @@ const WORK = [
       </p>
     </DaySection>
     <div id="work">
-      {WORK.map(([stop, id, name]) => <DaySection stop={stop} id={id} heading={name} />)}
+      {PROJECTS.map((project) => (
+        <DaySection stop={project.stop} id={project.slug} heading={project.name}>
+          <p class="one-line">{project.oneLine}</p>
+          <p class="more"><a class="link-arrow" href={`/work/${project.slug}`}>The full story</a></p>
+        </DaySection>
+      ))}
+      <DaySection stop="night" id="menumon" heading="Menumon">
+        <p class="one-line">A family of small Mac apps, each with its own character.</p>
+      </DaySection>
     </div>
     <DaySection stop="late" id="contact" heading="Still up? Let's talk." palm>
       <p>Whether you're hiring or need something built through Bright Logic Digital, I'd like to hear about it.</p>
@@ -39,3 +39,8 @@ const WORK = [
   </main>
   <Footer />
 </Base>
+
+<style>
+  .one-line { font-size: 1.3rem; line-height: 1.4; }
+  .more { margin-top: 1rem; }
+</style>
