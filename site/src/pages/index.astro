@@ -10,6 +10,7 @@ import DayNightHouse from '../interactive/DayNightHouse.astro';
 import DoseCalendar from '../interactive/DoseCalendar.astro';
 import FabricPicker from '../interactive/FabricPicker.astro';
 import HazardLayers from '../interactive/HazardLayers.astro';
+import MenumonBar from '../interactive/MenumonBar.astro';
 import RecipeScaler from '../interactive/RecipeScaler.astro';
 import SubtitleWords from '../interactive/SubtitleWords.astro';
 
@@ -47,8 +48,9 @@ const TRY: Record<string, any> = {
           </DaySection>
         );
       })}
-      <DaySection stop="night" id="menumon" heading="Menumon">
-        <p class="one-line">A family of small Mac apps, each with its own character.</p>
+      <DaySection stop="night" id="menumon" heading="Menumon" wide>
+        <p class="one-line">Ten small Mac apps, each with its own character. This is a working copy of the menu bar. Click an icon and try one.</p>
+        <MenumonBar slot="try" />
       </DaySection>
     </div>
     <DaySection stop="late" id="contact" heading="Still up? Let's talk." palm>

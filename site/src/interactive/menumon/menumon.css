@@ -1,0 +1,117 @@
+.hm-hit { position: absolute; z-index: 2; margin: 0; padding: 0; border: 0; border-radius: 5px; background: transparent;
+  cursor: default; -webkit-tap-highlight-color: transparent; }
+/* macOS's selected-item pill; `screen` keeps the icon bright, as if drawn behind it. */
+.hm-hit.is-open { background: rgba(255,255,255,.26); mix-blend-mode: screen; }
+.hm-hit:focus-visible { outline-offset: 0; }
+
+.hm-menu { position: absolute; z-index: 30; max-width: 100%; padding: 5px 0; color: #f2f2f7; text-align: left;
+  font: 13px/1.3 system-ui, -apple-system, "Segoe UI", sans-serif; letter-spacing: 0; user-select: none; -webkit-user-select: none;
+  background: rgba(36,36,40,.82); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,.16); border-radius: 10px;
+  box-shadow: 0 0 0 .5px rgba(0,0,0,.9), 0 14px 40px rgba(0,0,0,.6); transition: opacity .12s ease-out; }
+.hm-menu:focus { outline: none; }
+.hm-enter { opacity: 0; }
+/* Opaque: a backdrop-filter inside another one blurs nothing, and the parent's rows would show through. */
+.hm-fly { background: rgba(40,40,44,.97); top: -6px; left: calc(100% - 3px); width: max-content; min-width: 230px; max-width: min(320px, calc(100vw - 40px)); }
+.hm-fly.hm-left { left: auto; right: calc(100% - 3px); }
+.hm-fly.hm-below { top: calc(100% - 2px); left: 28px; }
+.hm-subwrap { position: relative; }
+
+.hm-row { position: relative; display: flex; align-items: center; gap: 6px; min-height: 22px; margin: 0 5px;
+  padding: 2px 10px 2px 22px; border-radius: 5px; }
+button.hm-row { width: calc(100% - 10px); border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: default; }
+.hm-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-val, .hm-detail, .hm-key, .hm-dim { color: rgba(235,235,245,.55); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.hm-key { margin-left: auto; padding-left: 12px; }
+.hm-arrow { margin-left: auto; font-size: 17px; line-height: 1; }
+.hm-act:hover, .hm-menu .hm-act:focus-visible, .hm-act.is-sub-open { background: #0a64d9; color: #fff; outline: none; }
+.hm-act:hover :is(.hm-val, .hm-detail, .hm-key), .hm-act:focus-visible :is(.hm-val, .hm-detail, .hm-key),
+.hm-act.is-sub-open :is(.hm-val, .hm-detail, .hm-key) { color: rgba(255,255,255,.8); }
+.hm-row[aria-checked="true"]::before { content: "✓"; position: absolute; left: 8px; font-size: 12px; }
+.hm-dis, .hm-dis .hm-val { color: rgba(235,235,245,.38); }
+.hm-bold .hm-label { font-weight: 700; }
+.hm-sep { height: 1px; margin: 5px 14px; background: rgba(255,255,255,.13); }
+.hm-head { padding: 4px 15px 1px 22px; font-size: 11px; font-weight: 600; letter-spacing: .03em; color: rgba(235,235,245,.42); }
+.hm-head.hm-strong { padding-top: 2px; font-size: 13px; font-weight: 700; letter-spacing: 0; color: #fff; }
+.hm-title .hm-label { font-weight: 500; }
+.hm-flush { padding-left: 14px; }
+.hm-ico { display: inline-flex; flex: none; width: 15px; height: 15px; color: rgba(235,235,245,.7); }
+.hm-ico svg { width: 100%; height: 100%; display: block; }
+.hm-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; }
+
+/* macOS small slider: thin grey track, white pill knob. */
+.hm-slide { gap: 8px; }
+.hm-indent { padding-left: 32px; }
+.hm-name { flex: none; width: 76px; }
+.hm-range { -webkit-appearance: none; appearance: none; flex: 1 1 auto; min-width: 0; height: 18px; margin: 0; background: transparent; }
+.hm-range::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: rgba(255,255,255,.17); }
+.hm-range::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 13px; margin-top: -4.5px; border-radius: 7px;
+  background: #e9e9ec; box-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.hm-range::-moz-range-track { height: 4px; border-radius: 2px; background: rgba(255,255,255,.17); }
+.hm-range::-moz-range-thumb { width: 20px; height: 13px; border: 0; border-radius: 7px; background: #e9e9ec; box-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.hm-slide .hm-val { flex-shrink: 0; min-width: 34px; text-align: right; }
+
+/* Small controls: switch, buttons, chips, segmented control. */
+.hm-switch { position: relative; flex: none; width: 32px; height: 18px; margin-left: 4px; padding: 0; border: 0; border-radius: 9px;
+  background: rgba(255,255,255,.2); cursor: default; transition: background .12s; }
+.hm-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 14px; border-radius: 7px;
+  background: #f2f2f4; box-shadow: 0 1px 2px rgba(0,0,0,.4); transition: left .12s; }
+.hm-switch[aria-checked="true"] { background: #0a84ff; }
+.hm-switch[aria-checked="true"]::after { left: 12px; }
+.hm-btn, .hm-chip { flex: none; min-width: 24px; height: 20px; padding: 0 7px; border: 0; border-radius: 5px; color: #f2f2f7;
+  background: rgba(255,255,255,.13); font: inherit; font-size: 12px; line-height: 20px; cursor: default; }
+.hm-btn:hover, .hm-chip:hover { background: rgba(255,255,255,.22); }
+.hm-btn:active, .hm-btn.is-hit { background: #0a84ff; }
+.hm-btn:disabled { opacity: .4; }
+.hm-btn.hm-warn { background: #d6452f; }
+.hm-btn svg { width: 12px; height: 12px; display: block; margin: auto; }
+.hm-chip { font-variant-numeric: tabular-nums; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+/* Panes's layout grid: 8×8 half-cells, unlabelled, centred at the display's
+   aspect; the front window's cells in the accent colour, the window behind
+   lightly, a drag's selection bright. */
+.pn-wrap { padding: 4px 14px; justify-content: center; }
+.pn-grid { display: grid; width: 100%; aspect-ratio: 1512 / 1323; /* as wide as the separators, 40% taller than the display (Panes 1.6.0) */ grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr); gap: 2px; padding: 3px; border-radius: 6px;
+  background: rgba(255,255,255,.08); touch-action: none; user-select: none; -webkit-user-select: none; }
+.pn-cell { min-width: 0; min-height: 0; padding: 0; border: 0; border-radius: 2px; background: rgba(255,255,255,.1); cursor: default; }
+.pn-cell.pn-back { background: rgba(10,132,255,.28); }
+.pn-cell.pn-front { background: #2f74d0; }
+.pn-cell.pn-sel { background: #0a84ff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.6); }
+.pn-cell:hover { box-shadow: inset 0 0 0 1px rgba(255,255,255,.45); }
+.hm-chip[aria-pressed="true"] { background: #0a84ff; box-shadow: none; }
+.hm-steps { display: inline-flex; gap: 3px; margin-left: 4px; }
+.hm-seg { display: flex; margin: 3px 15px 4px; padding: 2px; border-radius: 7px; background: rgba(255,255,255,.1); }
+.hm-seg button { flex: 1; height: 20px; padding: 0; border: 0; border-radius: 5px; color: #f2f2f7; background: none; font: inherit; font-size: 12px; cursor: default; }
+.hm-seg button[aria-checked="true"] { background: rgba(255,255,255,.3); box-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.hm-menu :is(.hm-switch, .hm-btn, .hm-chip, .hm-seg button, .hm-range, .hm-swatch input):focus-visible { outline: 2px solid #3a8dff; outline-offset: 1px; }
+.hm-swatch { position: relative; flex: none; width: 13px; height: 13px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
+.hm-swatch input { position: absolute; inset: -3px; width: calc(100% + 6px); height: calc(100% + 6px); padding: 0; border: 0; opacity: 0; cursor: pointer; }
+.hm-grid { display: grid; grid-template-columns: repeat(3, 36px); gap: 4px; justify-content: center; padding: 3px 0 5px; }
+.hm-grid .hm-btn { height: 24px; }
+.hm-transport { justify-content: center; gap: 10px; padding-left: 10px; }
+.hm-transport .hm-btn { min-width: 34px; }
+.hm-picker { padding-left: 14px; font-size: 14px; }
+.hm-picker .hm-ico { width: 16px; height: 16px; transition: transform .12s; }
+.hm-picker[aria-expanded="true"] .hm-ico { transform: rotate(180deg); }
+/* Folding headings (Panes's displays, Night Shift and Shortcuts; Homestead's
+   later views): the chevron points down while folded and up while open. */
+.hm-disc .hm-ico { width: 13px; height: 13px; margin-left: auto; opacity: .6; transition: transform .12s; }
+.hm-disc[aria-expanded="true"] .hm-ico { transform: rotate(180deg); }
+.hm-disc .hm-label { flex: 0 1 auto; }
+.hm-disc .hm-detail { margin-left: 8px; }
+
+/* Mac Daddy's sparkline, Claude Usage's meters. */
+.hm-spark { padding-top: 0; padding-bottom: 0; }
+.hm-spark .hm-sparkline { display: block; width: 100%; height: 20px; }
+.hm-spark svg { display: block; width: 100%; height: 20px; }
+.hm-meter { margin: 0 5px; padding: 3px 10px 3px 14px; }
+.hm-meter-top { display: flex; justify-content: space-between; }
+.hm-bar { height: 6px; margin: 3px 0 2px; border-radius: 3px; background: rgba(255,255,255,.18); overflow: hidden; }
+.hm-bar span { display: block; height: 100%; border-radius: 3px; }
+.hm-small { font-size: 12px; }
+.hm-refresh { width: 22px; padding: 0; background: none; }
+.hm-refresh:hover { background: rgba(255,255,255,.14); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-menu, .hm-switch, .hm-switch::after, .hm-picker .hm-ico { transition: none; }
+}

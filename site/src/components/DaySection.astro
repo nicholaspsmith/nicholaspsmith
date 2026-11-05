@@ -1,16 +1,16 @@
 ---
 import { STOPS } from '../lib/sky';
 
-type Props = { stop: string; id?: string; heading: string; level?: 1 | 2; palm?: boolean };
+type Props = { stop: string; id?: string; heading: string; level?: 1 | 2; palm?: boolean; wide?: boolean };
 
-const { stop, id, heading, level = 2, palm = false } = Astro.props;
+const { stop, id, heading, level = 2, palm = false, wide = false } = Astro.props;
 const sky = STOPS.find((s) => s.id === stop);
 if (!sky) throw new Error(`Unknown sky stop: ${stop}`);
 const Heading = `h${level}`;
 const hasTry = Astro.slots.has('try');
 ---
 <section
-  class:list={['day', { 'day--try': hasTry, 'day--palm': palm, 'day--hero': level === 1 }]}
+  class:list={['day', { 'day--try': hasTry, 'day--palm': palm, 'day--hero': level === 1, 'day--wide': wide }]}
   data-stop={stop}
   id={id}
   style={`--top:${sky.top};--bottom:${sky.bottom};--section-ink:${sky.ink};--section-land:${sky.land}`}
@@ -37,6 +37,8 @@ const hasTry = Astro.slots.has('try');
     overflow: clip;
   }
   .day--try { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  /* Wide sections hold a menu that hangs below its panel, so nothing clips it. */
+  .day--wide { grid-template-columns: minmax(0, 1fr); overflow: visible; z-index: 3; }
   .day__copy { max-width: 34rem; position: relative; z-index: 1; }
   .day__time { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .day__heading { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: 1rem; }
