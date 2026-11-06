@@ -9,6 +9,7 @@ test.describe('without JavaScript', () => {
     await page.goto('/');
     const text = await page.locator('body').innerText();
     expect(text).toContain('Nicholas P Smith');
+    expect(text).toContain('I design and build software people love.');
     expect(text).toMatch(/software engineer/i);
     expect(text).toContain('MongoDB');
     expect(text).toContain('Cisco');
