@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { contrast } from '../../src/lib/sky';
 import { BOATS, HOUSES, boatX, cables, deckY, houseWindows } from '../../src/lib/scene';
 
 describe('the bridge', () => {
@@ -26,6 +27,10 @@ describe('Rainbow Row', () => {
 
   it('gives every house its own colour', () => {
     expect(new Set(HOUSES.map((h) => h.colour)).size).toBe(HOUSES.length);
+  });
+
+  it('keeps the shutters gentle against the walls, so the row sits back', () => {
+    for (const house of HOUSES) expect(contrast(house.colour, house.shutter)).toBeLessThan(2);
   });
 
   it('mirrors each facade about its centre', () => {

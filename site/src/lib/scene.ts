@@ -9,9 +9,9 @@ const BRIDGE_CENTRE = 1005;
 
 export const ROW_TOP = STREET - 176 * ROW_SCALE;
 
-const TRIM = '#f6f1e6';
-const IRON = '#39444b';
-const GLASS = '#55666f';
+const TRIM = '#ece6da';
+const IRON = '#7c868b';
+const GLASS = '#9aa8ae';
 const HOUSE_WIDTH = 80;
 
 const STREET_PATH = 'M0 346h622c50 0 80 8 112 20 40 14 80 26 130 32H0z';
@@ -20,9 +20,9 @@ const WALL_PATH = 'M760 420c40-22 110-38 240-44 170-8 360-8 560-6v50z';
 export type House = { x: number; width: number; height: number; colour: string; shutter: string; index: number };
 type Box = { x: number; y: number; width: number; height: number };
 
-const COLOURS = ['#e9b9bd', '#bcd6e3', '#f0dca0', '#bfd9bd', '#dcc3dc', '#f0c7a6', '#b7d5cf', '#efb9a6', '#cdd5ec'];
+const COLOURS = ['#e4c8c8', '#c8d6dd', '#e6dcb9', '#c9d6c6', '#d8cbd8', '#e6cfb9', '#c3d5d0', '#e5c7bb', '#ccd3e2'];
 const HEIGHTS = [128, 138, 132, 142, 134, 142, 132, 138, 128];
-const SHUTTERS = ['#3f5a52', '#46525e', '#5b4a44'];
+const SHUTTERS = ['#9aa89f', '#9ca6ae', '#a89c94'];
 
 export const HOUSES: House[] = HEIGHTS.map((height, index) => ({
   x: index * HOUSE_WIDTH,
@@ -82,10 +82,10 @@ function houseMarkup(house: House): string {
   const parts: string[] = [];
 
   for (const c of chimneys(house)) {
-    parts.push(`<rect x="${c}" y="${top - 31}" width="8" height="22" fill="#8d5f4d"/>`);
-    parts.push(`<rect x="${c - 1}" y="${top - 33}" width="10" height="3" fill="#6e4a3d"/>`);
+    parts.push(`<rect x="${c}" y="${top - 31}" width="8" height="22" fill="#b09a8e"/>`);
+    parts.push(`<rect x="${c - 1}" y="${top - 33}" width="10" height="3" fill="#9c8679"/>`);
   }
-  parts.push(`<path d="${roof(house)}" fill="#5e656c"/>`);
+  parts.push(`<path d="${roof(house)}" fill="#979ca1"/>`);
   if (index % 2 === 0) {
     parts.push(`<rect x="${cx - 6}" y="${top - 14}" width="12" height="12" fill="${TRIM}"/>`);
     parts.push(`<rect x="${cx - 4}" y="${top - 12}" width="8" height="9" fill="${GLASS}"/>`);
@@ -115,7 +115,7 @@ function houseMarkup(house: House): string {
   const gy = STREET - 40;
   parts.push(`<path d="M${cx - 8} ${STREET - 4}V${gy + 8}a8 8 0 0 1 16 0V${STREET - 4}Z" fill="${TRIM}"/>`);
   parts.push(`<path d="M${cx - 6} ${STREET - 4}V${gy + 8}a6 6 0 0 1 12 0V${STREET - 4}Z" fill="${shutter}"/>`);
-  parts.push(`<path d="M${cx - 6} ${gy + 8}a6 6 0 0 1 12 0Z" fill="#cfd8da"/>`);
+  parts.push(`<path d="M${cx - 6} ${gy + 8}a6 6 0 0 1 12 0Z" fill="#dfe4e4"/>`);
   parts.push(`<rect x="${cx - 10}" y="${STREET - 4}" width="20" height="2" fill="#cbc3b4"/>`);
   parts.push(`<rect x="${cx - 12}" y="${STREET - 2}" width="24" height="2" fill="#b8b0a2"/>`);
   return parts.join('');
@@ -127,7 +127,7 @@ export function foregroundMarkup(): string {
   return [
     '<defs>',
     '<pattern id="cobble" width="26" height="16" patternUnits="userSpaceOnUse">',
-    '<ellipse cx="7" cy="5" rx="6" ry="3.6" fill="#ffffff22"/><ellipse cx="20" cy="12" rx="6" ry="3.6" fill="#ffffff22"/>',
+    '<ellipse cx="7" cy="5" rx="6" ry="3.6" fill="#ffffff14"/><ellipse cx="20" cy="12" rx="6" ry="3.6" fill="#ffffff14"/>',
     '</pattern>',
     '<linearGradient id="stucco" x1="0" y1="0" x2="1" y2="0">',
     '<stop offset="0" stop-color="#000" stop-opacity=".07"/><stop offset=".12" stop-color="#fff" stop-opacity=".08"/>',
@@ -135,8 +135,8 @@ export function foregroundMarkup(): string {
     '</linearGradient>',
     '</defs>',
     `<g transform="${rowTransform}">${HOUSES.map(houseMarkup).join('')}</g>`,
-    `<path d="${STREET_PATH}" fill="#6b655e"/><path d="${STREET_PATH}" fill="url(#cobble)"/>`,
-    `<path d="${WALL_PATH}" fill="#9a9284"/>`,
+    `<path d="${STREET_PATH}" fill="#8f8a83"/><path d="${STREET_PATH}" fill="url(#cobble)"/>`,
+    `<path d="${WALL_PATH}" fill="#aaa499"/>`,
   ].join('');
 }
 

@@ -107,6 +107,19 @@ test.describe('the live sky', () => {
     await expect(page.locator('.sky__marsh')).toHaveCount(0);
   });
 
+  for (const [width, height] of [[1440, 900], [1920, 800], [2560, 1080], [3440, 1440], [3440, 1000], [1728, 700]]) {
+    test(`keeps the whole bridge in view at ${width}x${height}`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto('/');
+      const clipped = await page.evaluate(() => {
+        const scene = document.querySelector('.scene')!.getBoundingClientRect();
+        const bridge = document.querySelector('#bridge-art')!.getBoundingClientRect();
+        return scene.top - bridge.top;
+      });
+      expect(clipped).toBeLessThanOrEqual(0);
+    });
+  }
+
   test('sails the boats as the reader scrolls, and only then', async ({ page }) => {
     await page.goto('/');
     const place = () => page.locator('[data-boat]').first().getAttribute('transform');
