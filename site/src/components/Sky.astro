@@ -1,4 +1,5 @@
 ---
+import Scene from './Scene.astro';
 import { STOPS } from '../lib/sky';
 ---
 <div class="sky" aria-hidden="true">
@@ -7,28 +8,31 @@ import { STOPS } from '../lib/sky';
   ))}
   <div class="sky__stars"></div>
   <div class="sky__orbit"><div class="sky__orb"></div></div>
+  <div class="cloud" style="top:9vh;width:30vw;animation-duration:150s;animation-delay:-40s"></div>
+  <div class="cloud" style="top:19vh;width:22vw;animation-duration:210s;animation-delay:-130s;opacity:.12"></div>
+  <div class="cloud" style="top:30vh;width:36vw;animation-duration:260s;animation-delay:-60s;opacity:.1"></div>
+  <Scene />
   <div class="sky__palm"></div>
-  <svg class="sky__marsh" viewBox="0 0 1440 200" preserveAspectRatio="none">
-    <path fill="currentColor" d="M0 120C160 90 300 140 480 118S820 86 980 112s300 26 460-4V200H0Z" />
-  </svg>
 </div>
 <div class="chip needs-js">
   <span data-clock></span>
-  <button type="button" data-pause aria-pressed="false" aria-label="Pause the palm tree">
-    <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2 1h3v10H2zM7 1h3v10H7z" /></svg>
+  <button type="button" data-sky-toggle aria-pressed="true" aria-label="Moving background">
+    <svg class="chip__on" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2 1h3v10H2zM7 1h3v10H7z" /></svg>
+    <svg class="chip__off" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2.5 1l8 5-8 5z" /></svg>
   </button>
 </div>
 
 <script>
-  import { STOPS, formatClock, progressAt, skyAt } from '../lib/sky';
+  import { BOATS, ROW_TOP, VIEW, WATERLINE, boatTransform } from '../lib/scene';
+  import { STOPS, formatClock, mix, progressAt, skyAt } from '../lib/sky';
 
   const root = document.documentElement;
-  const KEY = 'palm-paused';
+  const KEY = 'moving-background-off';
   const BLEND = 0.35; // Crossfade over this share of the screen, either side of an edge.
 
-  function remember(paused: boolean) {
+  function remember(off: boolean) {
     try {
-      localStorage.setItem(KEY, paused ? '1' : '0');
+      localStorage.setItem(KEY, off ? '1' : '0');
     } catch {
       // Storage can be blocked. The choice then lasts for this visit only.
     }
@@ -48,18 +52,33 @@ import { STOPS } from '../lib/sky';
     const stars = document.querySelector<HTMLElement>('.sky__stars')!;
     const orb = document.querySelector<HTMLElement>('.sky__orb')!;
     const clock = document.querySelector<HTMLElement>('[data-clock]')!;
-    const marsh = document.querySelector<HTMLElement>('.sky__marsh')!;
+    const scene = document.querySelector<HTMLElement>('.scene')!;
+    const water = document.querySelector<HTMLElement>('.scene__water')!;
+    const glitter = document.querySelector<SVGElement>('.scene__glitter')!;
+    const glitterGroup = document.querySelector<SVGGElement>('[data-glitter]')!;
+    const bridgeNight = document.querySelector<HTMLElement>('.scene__bridge-night')!;
+    const boats = document.querySelector<SVGElement>('.scene__boats')!;
+    const boatGroups = [...document.querySelectorAll<SVGGElement>('[data-boat]')];
+    const tintLayer = document.querySelector<HTMLElement>('.scene__tint')!;
+    const lights = document.querySelector<HTMLElement>('.scene__lights')!;
+    const copies = [...document.querySelectorAll<HTMLElement>('.day__copy')];
     const palm = document.querySelector<HTMLElement>('.sky__palm')!;
-    const pause = document.querySelector<HTMLButtonElement>('[data-pause]')!;
-
-    root.classList.add('sky-live');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-sky-toggle]')!;
 
     let edges: number[] = [];
+    let sceneScale = 1;
+    let sceneLeft = 0;
+    let rowHeight = 0;
     const navOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
     let queued = false;
 
     const measure = () => {
       edges = sections.slice(1).map((el) => el.getBoundingClientRect().top + scrollY);
+      const box = scene.getBoundingClientRect();
+      sceneScale = Math.max(box.width / VIEW.width, box.height / VIEW.height);
+      sceneLeft = box.left + (box.width - VIEW.width * sceneScale) / 2;
+      rowHeight = (VIEW.height - ROW_TOP) * sceneScale;
+      water.style.height = `${(VIEW.height - WATERLINE) * sceneScale}px`;
     };
 
     const paint = () => {
@@ -75,8 +94,24 @@ import { STOPS } from '../lib/sky';
       const alpha = Math.round(s.veil * 255).toString(16).padStart(2, '0');
       root.style.setProperty('--veil', s.veil > 0 ? `${s.inverse}${alpha}` : 'transparent');
       stars.style.opacity = String(s.night);
-      marsh.style.color = s.land;
       palm.style.backgroundColor = s.land;
+      water.style.backgroundColor = mix(mix(s.top, s.bottom, 0.75), s.land, 0.18);
+      bridgeNight.style.opacity = String(s.tint);
+      tintLayer.style.opacity = String(s.tint);
+      lights.style.opacity = String(s.night > 0.25 ? Math.min(1, s.night * 1.2) : 0);
+
+      boatGroups.forEach((group, i) => group.setAttribute('transform', boatTransform(BOATS[i], p)));
+      boats.style.setProperty('--sail', mix('#fff9ee', s.land, s.tint));
+      boats.style.setProperty('--hull', mix('#26343d', s.land, s.tint * 0.6));
+      boats.style.setProperty('--lamp', s.night > 0.25 ? String(s.night) : '0');
+
+      // Text keeps a backing while it crosses the houses.
+      const limit = innerHeight - rowHeight;
+      root.style.setProperty('--plate', `${s.inverse}d9`);
+      copies.forEach((copy) => {
+        const box = copy.getBoundingClientRect();
+        copy.classList.toggle('is-over-scene', box.bottom > limit && box.top < innerHeight);
+      });
       clock.textContent = `${formatClock(s.minutes)} in Charleston`;
       root.dataset.sky = STOPS[Math.round(p)].id;
 
@@ -85,9 +120,15 @@ import { STOPS } from '../lib/sky';
       const MOONRISE = 5.6;
       const moon = p > MOONRISE;
       const q = moon ? (p - MOONRISE) / (8 - MOONRISE) : Math.min(1, p / SUNSET);
-      const x = 54 + q * (moon ? 26 : 40);
-      const y = 90 - Math.sin(q * Math.PI * (moon ? 0.5 : 1)) * 76;
+      const x = 58 + q * (moon ? 22 : 36);
+      const y = 62 - Math.sin(q * Math.PI * (moon ? 0.5 : 1)) * 50;
       orb.style.transform = `translate(calc(${x}vw - 50%), calc(${y}vh - 50%))`;
+
+      const glow = !moon && p > SUNSET ? 0 : moon ? 0.35 : Math.max(0.15, 1 - Math.sin(q * Math.PI));
+      glitter.style.opacity = String(glow);
+      glitter.style.setProperty('--glint', moon ? '#dfe6ff' : '#fff0c4');
+      const under = ((x / 100) * innerWidth - sceneLeft) / sceneScale;
+      glitterGroup.setAttribute('transform', `translate(${under.toFixed(1)} 0)`);
       orb.classList.toggle('sky__orb--moon', moon);
       orb.style.opacity = !moon && p > SUNSET ? '0' : '1';
     };
@@ -104,17 +145,19 @@ import { STOPS } from '../lib/sky';
       queue();
     };
 
-    const setPaused = (paused: boolean) => {
-      palm.style.animationPlayState = paused ? 'paused' : 'running';
-      pause.setAttribute('aria-pressed', String(paused));
+    // Off, the page falls back to each section's own still sky, the same one
+    // readers get with reduced motion or without JavaScript.
+    const setLive = (live: boolean) => {
+      root.classList.toggle('sky-live', live);
+      toggle.setAttribute('aria-pressed', String(live));
     };
 
-    pause.addEventListener('click', () => {
-      const paused = pause.getAttribute('aria-pressed') !== 'true';
-      setPaused(paused);
-      remember(paused);
+    toggle.addEventListener('click', () => {
+      const live = toggle.getAttribute('aria-pressed') !== 'true';
+      setLive(live);
+      remember(!live);
     });
-    setPaused(recall());
+    setLive(!recall());
 
     addEventListener('scroll', queue, { passive: true });
     addEventListener('resize', refresh);
@@ -156,7 +199,7 @@ import { STOPS } from '../lib/sky';
     width: clamp(4.5rem, 12vmin, 8rem);
     aspect-ratio: 1;
     border-radius: 50%;
-    transform: translate(calc(54vw - 50%), calc(90vh - 50%));
+    transform: translate(calc(58vw - 50%), calc(62vh - 50%));
     will-change: transform;
     background: #fff3c9;
     box-shadow: 0 0 5rem 1.75rem #ffd99a88;
@@ -166,16 +209,23 @@ import { STOPS } from '../lib/sky';
   .sky__palm {
     position: absolute;
     right: 2vw;
-    bottom: 6vh;
-    width: min(38vw, 32rem);
-    height: min(80vh, 36.25rem);
+    bottom: 3vh;
+    width: min(30vw, 27rem);
+    height: min(68vh, 31rem);
     background: #2c4a48;
     mask: url(/musictree.svg) right bottom / contain no-repeat;
     transform-origin: 72% 100%;
     animation: sway 7s ease-in-out infinite alternate;
     will-change: transform;
   }
-  .sky__marsh { position: absolute; left: 0; bottom: 0; width: 100%; height: 20vh; color: #2c4a48; }
+  .cloud { position: absolute; left: 0; height: 9vh; border-radius: 50%; background: #fff; filter: blur(14px); opacity: 0.16; animation: drift linear infinite; will-change: transform; }
+  .cloud::before, .cloud::after { content: ''; position: absolute; border-radius: 50%; background: inherit; }
+  .cloud::before { width: 55%; height: 130%; left: 12%; top: -55%; }
+  .cloud::after { width: 42%; height: 100%; left: 48%; top: -35%; }
+  @keyframes drift {
+    from { transform: translateX(-40vw); }
+    to { transform: translateX(110vw); }
+  }
   @keyframes sway {
     from { transform: rotate(-0.8deg) skewX(0.4deg); }
     to { transform: rotate(1deg) skewX(-0.5deg); }
@@ -195,10 +245,12 @@ import { STOPS } from '../lib/sky';
     font-size: 0.875rem;
     font-variant-numeric: tabular-nums;
   }
-  :global(.sky-live) .chip { display: flex; }
+  :global(.sky-capable) .chip { display: flex; }
   .chip button { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; }
   .chip button:hover { background: #ffffff26; }
-  .chip button[aria-pressed='true'] { background: #fff; color: #0e1f28; }
+  .chip__off { display: none; }
+  .chip button[aria-pressed='false'] .chip__on { display: none; }
+  .chip button[aria-pressed='false'] .chip__off { display: block; }
   @media (max-width: 56rem) {
     .sky__orbit { opacity: 0.3; }
     .sky__palm { opacity: 0.35; }
