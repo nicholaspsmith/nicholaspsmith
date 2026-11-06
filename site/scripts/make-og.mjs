@@ -9,7 +9,7 @@ const html = `<!doctype html><body style="margin:0;width:1200px;height:630px;pos
     -webkit-mask:url(data:image/svg+xml;base64,${svg}) right bottom/contain no-repeat"></div>
   <div style="position:absolute;left:70px;top:150px;width:680px">
     <div style="font-size:92px;line-height:1;letter-spacing:-2px">Nicholas P Smith</div>
-    <div style="font-size:38px;margin-top:28px;line-height:1.25">I design and build software people enjoy using.</div>
+    <div style="font-size:38px;margin-top:28px;line-height:1.25">I design and build software people love.</div>
   </div></body>`;
 
 const browser = await chromium.launch({ channel: 'chrome' });
