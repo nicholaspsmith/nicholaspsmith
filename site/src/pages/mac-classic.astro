@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="Mac Classic | Nicholas P Smith" description="A classic Macintosh Plus running in your browser." noindex>
+  <div class="page">
+    <Nav />
+    <main id="main" class="mac">
+      <h1>You found the Mac Classic</h1>
+      <p>A Macintosh Plus running in your browser, with MacPaint, MacDraw and Kid Pix. Powered by <a href="https://jamesfriend.com.au/pce-js/">PCE.js</a> by James Friend.</p>
+      <div class="mac__screen">
+        <iframe src="https://jamesfriend.com.au/pce-js/pce-js-apps/" title="Mac Classic emulator" loading="lazy" allow="autoplay" allowfullscreen></iframe>
+      </div>
+      <p class="mac__keys">Click the screen to use the mouse. Press Esc to let go of it, and Esc with the arrow keys to zoom.</p>
+    </main>
+    <div class="page__foot"><Footer /></div>
+  </div>
+</Base>
+
+<style>
+  .page { min-height: 100svh; background: linear-gradient(#050a1c, #12264a); color: #fff; --ink: #fff; }
+  .mac { max-width: 56rem; margin: 0 auto; padding: calc(var(--nav-height) + 2rem) var(--gutter) 3rem; }
+  h1 { font-size: clamp(2.25rem, 6vw, 4rem); margin-bottom: 0.75rem; }
+  .mac__screen { margin-top: 1.5rem; aspect-ratio: 4 / 3; border-radius: 0.6rem; overflow: hidden; background: #000; }
+  iframe { width: 100%; height: 100%; border: 0; }
+  .mac__keys { margin-top: 1rem; font-size: 1rem; }
+  .page__foot { padding: 1.5rem var(--gutter) 2rem; }
+</style>

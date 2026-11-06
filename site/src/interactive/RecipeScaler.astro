@@ -1,0 +1,68 @@
+---
+import { recipeFor } from '../lib/recipe';
+
+const START = 2;
+const { ingredients, steps } = recipeFor(START);
+---
+<div class="phone">
+  <div class="screen" data-recipe>
+    <p class="sample">Sample recipe</p>
+    <h3>Chicken &amp; rice bowls</h3>
+    <div class="stepper">
+      <button class="needs-js" type="button" aria-label="Fewer servings" data-step="-1">−</button>
+      <span aria-live="polite" data-servings>{START} servings</span>
+      <button class="needs-js" type="button" aria-label="More servings" data-step="1">+</button>
+    </div>
+    <ul data-list>
+      {ingredients.map((i) => <li><span>{i.name}</span><b>{i.amount}</b></li>)}
+    </ul>
+    <ol data-steps>
+      {steps.map((s) => <li>{s}</li>)}
+    </ol>
+  </div>
+</div>
+
+<script>
+  import { recipeFor } from '../lib/recipe';
+
+  const MIN = 1;
+  const MAX = 12;
+
+  document.querySelectorAll<HTMLElement>('[data-recipe]').forEach((root) => {
+    let servings = 2;
+    const label = root.querySelector<HTMLElement>('[data-servings]')!;
+    const list = root.querySelector<HTMLElement>('[data-list]')!;
+    const steps = root.querySelector<HTMLElement>('[data-steps]')!;
+
+    const render = () => {
+      const recipe = recipeFor(servings);
+      label.textContent = `${servings} serving${servings === 1 ? '' : 's'}`;
+      list.querySelectorAll('b').forEach((b, i) => { b.textContent = recipe.ingredients[i].amount; });
+      steps.querySelectorAll('li').forEach((li, i) => { li.textContent = recipe.steps[i]; });
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((button) => {
+      button.addEventListener('click', () => {
+        servings = Math.max(MIN, Math.min(MAX, servings + Number(button.dataset.step)));
+        render();
+      });
+    });
+  });
+</script>
+
+<style>
+  .phone { width: min(21rem, 100%); margin: 0 auto; padding: 0.6rem; border-radius: 2.6rem; background: #0b0c0e; box-shadow: 0 0 0 2px #2b2e33, 0 1.5rem 3.5rem #0e1f2859; }
+  .screen { min-height: 30rem; padding: 2rem 1.25rem 1.5rem; border-radius: 2.1rem; background: #f2f2f7; color: #15171a; font-size: 1rem; }
+  .sample { font-size: 0.85rem; color: #5b6068; }
+  h3 { font-family: var(--sans); font-size: 1.6rem; font-weight: 700; letter-spacing: -0.015em; margin: 0.15rem 0 0.9rem; }
+  .stepper { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem; border-radius: 1rem; background: #fff; font-weight: 600; margin-bottom: 0.9rem; }
+  html:not(.js) .stepper { justify-content: center; padding: 0.9rem; }
+  .stepper button { width: 2.75rem; height: 2.75rem; border-radius: 0.8rem; background: #e3f4e6; color: #1a6b33; font-size: 1.4rem; font-weight: 700; }
+  .stepper button:hover { background: #cfeed6; }
+  ul { list-style: none; margin: 0 0 0.9rem; padding: 0.25rem 1rem; border-radius: 1rem; background: #fff; }
+  ul li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0; }
+  ul li + li { border-top: 1px solid #0000000f; }
+  ul b { font-variant-numeric: tabular-nums; }
+  ol { margin: 0; padding-left: 1.25rem; font-size: 0.95rem; color: #3c4047; }
+  ol li + li { margin-top: 0.3rem; }
+</style>

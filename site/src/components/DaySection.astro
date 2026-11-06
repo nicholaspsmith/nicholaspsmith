@@ -1,0 +1,73 @@
+---
+import { STOPS } from '../lib/sky';
+
+type Props = { stop: string; id?: string; heading: string; level?: 1 | 2; palm?: boolean; wide?: boolean };
+
+const { stop, id, heading, level = 2, palm = false, wide = false } = Astro.props;
+const sky = STOPS.find((s) => s.id === stop);
+if (!sky) throw new Error(`Unknown sky stop: ${stop}`);
+const Heading = (level === 1 ? 'h1' : 'h2') as 'h1' | 'h2';
+const hasTry = Astro.slots.has('try');
+---
+<section
+  class:list={['day', { 'day--try': hasTry, 'day--palm': palm, 'day--hero': level === 1, 'day--wide': wide }]}
+  data-stop={stop}
+  id={id}
+  style={`--top:${sky.top};--bottom:${sky.bottom};--section-ink:${sky.ink};--section-land:${sky.land}`}
+>
+  <div class="day__copy">
+    <p class="day__time">{sky.label}</p>
+    <Heading class="day__heading">{heading}</Heading>
+    <slot />
+  </div>
+  {hasTry && <div class="day__try"><slot name="try" /></div>}
+</section>
+
+<style>
+  .day {
+    position: relative;
+    z-index: 2;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding: calc(var(--nav-height) + 2rem) var(--gutter) clamp(3rem, 8vh, 6rem);
+    color: var(--section-ink);
+    background: linear-gradient(var(--top), var(--bottom));
+    overflow: clip;
+  }
+  .day--try { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  /* Wide sections hold a menu that hangs below its panel, so nothing clips it. */
+  .day--wide { grid-template-columns: minmax(0, 1fr); overflow: visible; z-index: 3; }
+  .day__copy { max-width: 34rem; position: relative; z-index: 1; }
+  .day__time { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .day__heading { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: 1rem; }
+  .day--hero .day__copy { max-width: min(46rem, 52vw); }
+  .day--hero .day__heading { font-size: clamp(2.9rem, 8.2vw, 7.25rem); line-height: 0.98; }
+  .day__try { min-width: 0; position: relative; z-index: 1; }
+
+  /* The still version of the palm: no JavaScript, or reduced motion. */
+  .day--palm::after {
+    content: '';
+    position: absolute;
+    right: 3vw;
+    bottom: 0;
+    width: min(38vw, 32rem);
+    height: min(80%, 36.25rem);
+    background: var(--section-land);
+    mask: url(/musictree.svg) right bottom / contain no-repeat;
+    opacity: 0.9;
+  }
+
+  :global(.sky-live) .day { background: none; color: var(--ink); }
+  :global(.sky-live) .day--palm::after { display: none; }
+  :global(.sky-live) .day__copy { background: var(--veil); box-shadow: 0 0 0 0.75rem var(--veil); border-radius: 0.25rem; }
+
+  @media (max-width: 56rem) {
+    .day { min-height: 0; padding-block: calc(var(--nav-height) + 1rem) 4rem; }
+    .day--try { grid-template-columns: minmax(0, 1fr); }
+    .day--hero { min-height: 100svh; align-content: center; }
+    .day--hero .day__copy { max-width: none; }
+    .day--palm::after { opacity: 0.3; }
+  }
+</style>

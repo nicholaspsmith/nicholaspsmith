@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /mac-classic
+
+Sitemap: https://nicholaspsmith.com/sitemap-index.xml

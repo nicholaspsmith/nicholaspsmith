@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import { MENUMON_APPS } from '../data/menumon';
+---
+<div class="menumon">
+  <figure class="display" data-menumon-bar aria-label="A Mac menu bar with the Menumon apps in a row">
+    <div class="bezel">
+      <div class="bar-wrap">
+        <img
+          class="bar"
+          src="/menumon/bar.png"
+          alt="A Mac menu bar showing Panes, KeyLight, VPN & DNS, Mac Daddy, Claude Usage, SoundChain, Homestead and Battery Time"
+          width="1000"
+          height="28"
+          loading="lazy"
+        />
+      </div>
+      <div class="wallpaper"></div>
+    </div>
+  </figure>
+  <ul class="library" data-library>
+    {MENUMON_APPS.map((app) => (
+      <li>
+        <Image src={app.image} alt="" width={56} height={56} format="webp" densities={[1, 2]} loading="lazy" />
+        <div><h3>{app.name}</h3><p>{app.does}</p></div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  const bar = document.querySelector('[data-menumon-bar]');
+  if (bar) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          observer.disconnect();
+          import('./menumon/index.js').catch(() => {
+            // The still picture of the bar and the app list stand on their own.
+          });
+        }
+      },
+      { rootMargin: '600px 0px' },
+    );
+    observer.observe(bar);
+  }
+</script>
+
+<style>
+  .menumon { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .display { margin: 0; position: relative; }
+  .bezel { border-radius: 0.75rem; overflow: hidden; background: #0c0e1c; box-shadow: 0 1.5rem 3.5rem #0000008c; }
+  .bar-wrap { position: relative; }
+  .bar { display: block; width: 100%; height: auto; }
+  .wallpaper { height: 20rem; background: linear-gradient(170deg, #1f2c52, #0c1226 70%); }
+  @media (max-width: 719px) {
+    .bezel { overflow-x: auto; direction: rtl; scrollbar-width: none; }
+    .bezel::-webkit-scrollbar { display: none; }
+    .bezel > * { direction: ltr; }
+    .bar-wrap, .wallpaper { width: 820px; max-width: none; }
+    .wallpaper { height: 23rem; }
+  }
+  .library { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr)); gap: 1.25rem 2rem; }
+  .library li { display: flex; gap: 0.85rem; align-items: flex-start; }
+  .library img { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 0.8rem; }
+  h3 { font-family: var(--sans); font-size: 1.05rem; font-weight: 700; letter-spacing: 0; }
+  .library p { font-size: 0.95rem; line-height: 1.4; }
+</style>

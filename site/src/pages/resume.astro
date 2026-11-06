@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
+import { PDF_PATH, RESUME } from '../data/resume';
+---
+<Base
+  title="Resume | Nicholas P Smith"
+  description="Resume of Nicholas Smith, senior software engineer in Charleston, SC: MongoDB, Cisco, Handsome and Bright Logic Digital."
+>
+  <div class="page">
+    <Nav />
+    <main id="main" class="resume">
+      <header>
+        <h1>{RESUME.name}</h1>
+        <p class="resume__title">{RESUME.title}</p>
+        <p>{RESUME.place} · <a href="mailto:me@nicksmith.software">me@nicksmith.software</a></p>
+        <p class="resume__pdf"><a class="link-arrow" href={PDF_PATH}>Download the PDF</a></p>
+      </header>
+
+      <section><h2>Summary</h2><p>{RESUME.summary}</p></section>
+
+      <section>
+        <h2>Skills</h2>
+        <dl class="skills">
+          {RESUME.skills.map(([group, list]) => <div><dt>{group}</dt><dd>{list}</dd></div>)}
+        </dl>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        {RESUME.jobs.map((job) => (
+          <article class="job">
+            <div class="job__head">
+              <h3>{job.title}</h3>
+              <p class="job__dates">{job.dates}</p>
+            </div>
+            <p class="job__at">{job.company}, {job.place}</p>
+            {job.intro && <p>{job.intro}</p>}
+            {job.points.length > 0 && <ul>{job.points.map((point) => <li>{point}</li>)}</ul>}
+          </article>
+        ))}
+      </section>
+
+      <section>
+        <h2>Projects</h2>
+        <ul class="plain">
+          {RESUME.projects.map((p) => (
+            <li><strong>{p.href ? <a href={p.href}>{p.name}</a> : p.name}:</strong> {p.text}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Education &amp; interests</h2>
+        <ul class="plain">{RESUME.education.map((line) => <li>{line}</li>)}</ul>
+      </section>
+    </main>
+    <div class="page__foot"><Footer /></div>
+  </div>
+</Base>
+
+<style>
+  .page { min-height: 100svh; background: #fbf7f0; color: #14231d; --ink: #14231d; }
+  .resume { max-width: 46rem; margin: 0 auto; padding: calc(var(--nav-height) + 2.5rem) var(--gutter) 3rem; font-size: 1.05rem; }
+  h1 { font-size: clamp(2.5rem, 7vw, 4rem); }
+  .resume__title { font-size: 1.3rem; margin-top: 0.4rem; }
+  .resume__pdf { margin-top: 1rem; }
+  section { margin-top: 2.5rem; }
+  h2 { font-size: 1.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid #14231d33; margin-bottom: 1rem; }
+  .skills { margin: 0; display: grid; gap: 0.5rem; }
+  .skills dt { font-weight: 700; display: inline; }
+  .skills dt::after { content: ': '; }
+  .skills dd { display: inline; margin: 0; }
+  .job { margin-bottom: 1.75rem; break-inside: avoid; }
+  .job__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; align-items: baseline; }
+  h3 { font-family: var(--sans); font-size: 1.15rem; font-weight: 700; letter-spacing: 0; }
+  .job__at { color: #38504a; margin-bottom: 0.3rem; }
+  .job__dates { color: #38504a; font-variant-numeric: tabular-nums; }
+  ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+  li + li { margin-top: 0.3rem; }
+  .plain { list-style: none; padding: 0; }
+  .page__foot { padding: 1.5rem var(--gutter) 2rem; }
+
+  @media print {
+    .page { background: none; }
+    .resume { padding: 0; font-size: 10.5pt; max-width: none; }
+    .page__foot, .resume__pdf { display: none; }
+    :global(.nav), :global(.skip) { display: none; }
+    section { margin-top: 1rem; }
+  }
+</style>

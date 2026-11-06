@@ -1,0 +1,93 @@
+---
+const FABRICS = [
+  { name: 'Navy paisley', tile: 'C2627' },
+  { name: 'Crimson damask', tile: 'B2108' },
+  { name: 'Slate blue floral', tile: 'B9806' },
+  { name: 'Ember marble', tile: 'S3635' },
+  { name: 'Garden botanical', tile: 'S4837' },
+];
+
+const PARTS = [
+  { x: 112, y: 92, w: 416, h: 150, r: 30 },
+  { x: 136, y: 112, w: 182, h: 112, r: 22 },
+  { x: 322, y: 112, w: 182, h: 112, r: 22 },
+  { x: 96, y: 262, w: 448, h: 56, r: 14 },
+  { x: 128, y: 214, w: 192, h: 62, r: 18 },
+  { x: 320, y: 214, w: 192, h: 62, r: 18 },
+  { x: 58, y: 166, w: 88, h: 152, r: 34 },
+  { x: 494, y: 166, w: 88, h: 152, r: 34 },
+];
+---
+<figure class="picker" data-fabric-picker>
+  <svg viewBox="0 0 640 380" role="img" aria-label="A sofa upholstered in the chosen fabric">
+    <defs>
+      <pattern id="fabric" width="210" height="210" patternUnits="userSpaceOnUse">
+        <image data-fabric-tile href={`/fabrics/${FABRICS[0].tile}-tile.jpg`} width="210" height="210" />
+      </pattern>
+      <linearGradient id="fold" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="0.14" />
+        <stop offset="0.5" stop-color="#000" stop-opacity="0" />
+        <stop offset="1" stop-color="#000" stop-opacity="0.34" />
+      </linearGradient>
+    </defs>
+    <rect width="640" height="290" fill="#e9e1d4" />
+    <rect y="290" width="640" height="90" fill="#b99c7a" />
+    <path d="M0 290H640" stroke="#0000001f" />
+    <ellipse cx="320" cy="340" rx="290" ry="16" fill="#00000038" />
+    <path d="M118 318l-8 30h12l8-30zM522 318l8 30h-12l-8-30z" fill="#4a3526" />
+    {PARTS.map((p) => (
+      <>
+        <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={p.r} fill="url(#fabric)" />
+        <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={p.r} fill="url(#fold)" stroke="#00000040" />
+      </>
+    ))}
+  </svg>
+  <figcaption>
+    <div class="picker__swatches">
+      {FABRICS.map((f, i) => (
+        <button
+          class="needs-js"
+          type="button"
+          aria-label={f.name}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          data-tile={f.tile}
+        >
+          <img src={`/fabrics/${f.tile}-tile.jpg`} alt="" width="56" height="56" loading="lazy" />
+        </button>
+      ))}
+    </div>
+    <p class="picker__line">
+      <span><span data-fabric-name>{FABRICS[0].name}</span>, one of 16,000+</span>
+      <span class="picker__prompt needs-js" data-prompt>Pick a fabric</span>
+    </p>
+  </figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-fabric-picker]').forEach((picker) => {
+    const tile = picker.querySelector<SVGImageElement>('[data-fabric-tile]')!;
+    const name = picker.querySelector<HTMLElement>('[data-fabric-name]')!;
+    const buttons = [...picker.querySelectorAll<HTMLButtonElement>('button')];
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        tile.setAttribute('href', `/fabrics/${button.dataset.tile}-tile.jpg`);
+        name.textContent = button.getAttribute('aria-label');
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      });
+    });
+  });
+</script>
+
+<style>
+  .picker { margin: 0; border-radius: 0.9rem; overflow: hidden; background: #fbf7f0; color: #2a2520; box-shadow: 0 1.5rem 3.5rem #0e1f2840; }
+  svg { width: 100%; height: auto; }
+  figcaption { padding: 1rem 1.25rem 1.25rem; }
+  .picker__swatches { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  button { border-radius: 50%; }
+  button img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; transition: transform 140ms ease-out; }
+  button:hover img { transform: scale(1.06); }
+  button[aria-pressed='true'] { outline: 2px solid #2a2520; outline-offset: 2px; }
+  .picker__line { margin-top: 0.75rem; font-size: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 1rem; }
+  .picker__prompt { font-weight: 700; }
+  html:not(.js) .picker__swatches { display: none; }
+</style>
