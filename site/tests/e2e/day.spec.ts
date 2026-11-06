@@ -17,6 +17,14 @@ test.describe('without JavaScript', () => {
     await expect(page.locator('a[href="mailto:me@nicksmith.software"]').first()).toBeAttached();
   });
 
+  test('does not label the sections with the time of day', async ({ page }) => {
+    await page.goto('/');
+    const text = await page.locator('main').innerText();
+    for (const label of ['Dawn', 'Early morning', 'Morning', 'Midday', 'Afternoon', 'Sunset', 'Dusk', 'Night', 'Late']) {
+      expect(text).not.toMatch(new RegExp(`^${label}$`, 'm'));
+    }
+  });
+
   test('gives every section its own sky', async ({ page }) => {
     await page.goto('/');
     const sections = page.locator('[data-stop]');

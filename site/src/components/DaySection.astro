@@ -16,7 +16,6 @@ const hasTry = Astro.slots.has('try');
   style={`--top:${sky.top};--bottom:${sky.bottom};--section-ink:${sky.ink};--section-land:${sky.land}`}
 >
   <div class="day__copy">
-    <p class="day__time">{sky.label}</p>
     <Heading class="day__heading">{heading}</Heading>
     <slot />
   </div>
@@ -40,7 +39,6 @@ const hasTry = Astro.slots.has('try');
   /* Wide sections hold a menu that hangs below its panel, so nothing clips it. */
   .day--wide { grid-template-columns: minmax(0, 1fr); overflow: visible; z-index: 3; }
   .day__copy { max-width: 34rem; position: relative; z-index: 1; }
-  .day__time { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .day__heading { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: 1rem; }
   .day--hero .day__copy { max-width: min(46rem, 52vw); }
   .day--hero .day__heading { font-size: clamp(2.9rem, 8.2vw, 7.25rem); line-height: 0.98; }
