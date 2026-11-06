@@ -1,6 +1,6 @@
 # Launch checklist
 
-The rebuilt site is on branch `rebuild-charleston-day`. Nothing below has happened. Today the site still runs from `frontend/` on GitHub Pages, and merging this branch is what starts the move.
+Launched 2026-11-06: the site runs on the Cloudflare Worker `nicholaspsmith-com`, and pushes to `main` deploy it. The steps below are kept for the record. Still open: the Before launch items and Cloudflare Web Analytics.
 
 ## Before launch
 

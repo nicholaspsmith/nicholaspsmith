@@ -8,6 +8,10 @@
     "binding": "ASSETS",
     "run_worker_first": true,
     "not_found_handling": "404-page"
-  }
-  // Custom domain routes are added at launch: see the launch checklist.
+  },
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "nicholaspsmith.com", "custom_domain": true },
+    { "pattern": "www.nicholaspsmith.com", "custom_domain": true }
+  ]
 }
