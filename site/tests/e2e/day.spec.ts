@@ -172,48 +172,13 @@ test.describe('the live sky', () => {
     await expect.poll(() => clock.textContent()).not.toBe(first);
   });
 
-  test('the button turns the moving background off and back on', async ({ page }) => {
-    await page.goto('/#zimu');
-    const toggle = page.getByRole('button', { name: 'Moving background' });
-    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
-    const scrolled = await page.evaluate(() => scrollY);
-
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
-    await expect(page.locator('html')).not.toHaveClass(/sky-live/);
-    await expect(page.locator('.sky')).toBeHidden();
-    const image = await page.locator('#zimu').evaluate((el) => getComputedStyle(el).backgroundImage);
-    expect(image).toContain('gradient');
-    expect(await page.evaluate(() => scrollY)).toBe(scrolled);
-    await expect(toggle).toBeVisible();
-
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+  test('has no pause or background toggle, and ignores an old saved choice', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('moving-background-off', '1'));
+    await page.goto('/');
+    await expect(page.locator('[data-clock]')).toBeVisible();
+    await expect(page.locator('.chip button')).toHaveCount(0);
+    await expect(page.locator('html')).toHaveClass(/sky-live/);
     await expect(page.locator('.sky')).toBeVisible();
-  });
-
-  test('remembers that the background is off', async ({ page }) => {
-    await page.goto('/');
-    await page.getByRole('button', { name: 'Moving background' }).click();
-    await page.reload();
-    await expect(page.getByRole('button', { name: 'Moving background' })).toHaveAttribute('aria-pressed', 'false');
-    await expect(page.locator('.sky')).toBeHidden();
-  });
-
-  test('the button works when storage is blocked', async ({ page }) => {
-    await page.addInitScript(() => {
-      Object.defineProperty(window, 'localStorage', {
-        get() { throw new Error('blocked'); },
-      });
-    });
-    const errors: string[] = [];
-    page.on('pageerror', (e) => errors.push(e.message));
-    await page.goto('/');
-    const toggle = page.getByRole('button', { name: 'Moving background' });
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
-    await expect(page.locator('.sky')).toBeHidden();
-    expect(errors).toEqual([]);
   });
 
   test('keeps a focused element clear of the navigation', async ({ page }) => {
