@@ -60,8 +60,7 @@ const hasTry = Astro.slots.has('try');
 
   :global(.sky-live) .day { background: none; color: var(--ink); }
   :global(.sky-live) .day--palm::after { display: none; }
-  :global(.sky-live) .day__copy { background: var(--veil); box-shadow: 0 0 0 0.75rem var(--veil); border-radius: 0.25rem; transition: background-color 160ms, box-shadow 160ms; }
-  :global(.sky-live) .day__copy:global(.is-over-scene) { background: var(--plate); box-shadow: 0 0 0 0.75rem var(--plate); }
+  :global(.sky-live) .day__copy { background: var(--veil); box-shadow: 0 0 0 0.75rem var(--veil); border-radius: 0.25rem; }
 
   @media (max-width: 56rem) {
     .day { min-height: 0; padding-block: calc(var(--nav-height) + 1rem) 4rem; }

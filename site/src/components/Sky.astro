@@ -23,7 +23,7 @@ import { STOPS } from '../lib/sky';
 </div>
 
 <script>
-  import { BOATS, ROW_TOP, VIEW, WATERLINE, boatTransform } from '../lib/scene';
+  import { BOATS, VIEW, WATERLINE, boatTransform } from '../lib/scene';
   import { STOPS, formatClock, mix, progressAt, skyAt } from '../lib/sky';
 
   const root = document.documentElement;
@@ -61,14 +61,12 @@ import { STOPS } from '../lib/sky';
     const boatGroups = [...document.querySelectorAll<SVGGElement>('[data-boat]')];
     const tintLayer = document.querySelector<HTMLElement>('.scene__tint')!;
     const lights = document.querySelector<HTMLElement>('.scene__lights')!;
-    const copies = [...document.querySelectorAll<HTMLElement>('.day__copy')];
     const palm = document.querySelector<HTMLElement>('.sky__palm')!;
     const toggle = document.querySelector<HTMLButtonElement>('[data-sky-toggle]')!;
 
     let edges: number[] = [];
     let sceneScale = 1;
     let sceneLeft = 0;
-    let rowHeight = 0;
     const navOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
     let queued = false;
 
@@ -77,7 +75,6 @@ import { STOPS } from '../lib/sky';
       const box = scene.getBoundingClientRect();
       sceneScale = Math.max(box.width / VIEW.width, box.height / VIEW.height);
       sceneLeft = box.left + (box.width - VIEW.width * sceneScale) / 2;
-      rowHeight = (VIEW.height - ROW_TOP) * sceneScale;
       water.style.height = `${(VIEW.height - WATERLINE) * sceneScale}px`;
     };
 
@@ -105,13 +102,6 @@ import { STOPS } from '../lib/sky';
       boats.style.setProperty('--hull', mix('#26343d', s.land, s.tint * 0.6));
       boats.style.setProperty('--lamp', s.night > 0.25 ? String(s.night) : '0');
 
-      // Text keeps a backing while it crosses the houses.
-      const limit = innerHeight - rowHeight;
-      root.style.setProperty('--plate', `${s.inverse}d9`);
-      copies.forEach((copy) => {
-        const box = copy.getBoundingClientRect();
-        copy.classList.toggle('is-over-scene', box.bottom > limit && box.top < innerHeight);
-      });
       clock.textContent = `${formatClock(s.minutes)} in Charleston`;
       root.dataset.sky = STOPS[Math.round(p)].id;
 
