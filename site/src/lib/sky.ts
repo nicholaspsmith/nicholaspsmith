@@ -1,6 +1,5 @@
 export type SkyStop = {
   id: string;
-  label: string;
   top: string;
   bottom: string;
   ink: string;
@@ -15,15 +14,15 @@ export const LIGHT_INK = '#ffffff';
 const TARGET_CONTRAST = 4.5;
 
 export const STOPS: SkyStop[] = [
-  { id: 'dawn', label: 'Dawn', top: '#8ea3cf', bottom: '#ffd6b0', ink: DARK_INK, land: '#2c4a48', night: 0.1, minutes: 390 },
-  { id: 'early', label: 'Early morning', top: '#a9d3ea', bottom: '#ffeccb', ink: DARK_INK, land: '#2f5a4a', night: 0, minutes: 480 },
-  { id: 'morning', label: 'Morning', top: '#79c0e6', bottom: '#dff1f2', ink: DARK_INK, land: '#2a6650', night: 0, minutes: 600 },
-  { id: 'midday', label: 'Midday', top: '#58ade6', bottom: '#c9e9f6', ink: DARK_INK, land: '#256b52', night: 0, minutes: 750 },
-  { id: 'afternoon', label: 'Afternoon', top: '#7db4d8', bottom: '#ffdca6', ink: DARK_INK, land: '#3a5a42', night: 0, minutes: 930 },
-  { id: 'sunset', label: 'Sunset', top: '#2a1446', bottom: '#a23a3e', ink: LIGHT_INK, land: '#1b1426', night: 0.1, minutes: 1095 },
-  { id: 'dusk', label: 'Dusk', top: '#171a45', bottom: '#5d2d63', ink: LIGHT_INK, land: '#120f26', night: 0.5, minutes: 1170 },
-  { id: 'night', label: 'Night', top: '#050a1c', bottom: '#12264a', ink: LIGHT_INK, land: '#040811', night: 1, minutes: 1290 },
-  { id: 'late', label: 'Late', top: '#03060f', bottom: '#0b1730', ink: LIGHT_INK, land: '#02040a', night: 1, minutes: 1430 },
+  { id: 'dawn', top: '#8ea3cf', bottom: '#ffd6b0', ink: DARK_INK, land: '#2c4a48', night: 0.1, minutes: 390 },
+  { id: 'early', top: '#a9d3ea', bottom: '#ffeccb', ink: DARK_INK, land: '#2f5a4a', night: 0, minutes: 480 },
+  { id: 'morning', top: '#79c0e6', bottom: '#dff1f2', ink: DARK_INK, land: '#2a6650', night: 0, minutes: 600 },
+  { id: 'midday', top: '#58ade6', bottom: '#c9e9f6', ink: DARK_INK, land: '#256b52', night: 0, minutes: 750 },
+  { id: 'afternoon', top: '#7db4d8', bottom: '#ffdca6', ink: DARK_INK, land: '#3a5a42', night: 0, minutes: 930 },
+  { id: 'sunset', top: '#2a1446', bottom: '#a23a3e', ink: LIGHT_INK, land: '#1b1426', night: 0.1, minutes: 1095 },
+  { id: 'dusk', top: '#171a45', bottom: '#5d2d63', ink: LIGHT_INK, land: '#120f26', night: 0.5, minutes: 1170 },
+  { id: 'night', top: '#050a1c', bottom: '#12264a', ink: LIGHT_INK, land: '#040811', night: 1, minutes: 1290 },
+  { id: 'late', top: '#03060f', bottom: '#0b1730', ink: LIGHT_INK, land: '#02040a', night: 1, minutes: 1430 },
 ];
 
 const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
