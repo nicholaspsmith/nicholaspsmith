@@ -98,7 +98,35 @@ test.describe('the live sky', () => {
     await expect.poll(() => clock.textContent()).not.toBe(first);
   });
 
-  test('pauses the palm even when storage is blocked', async ({ page }) => {
+  test('the button turns the moving background off and back on', async ({ page }) => {
+    await page.goto('/#zimu');
+    const toggle = page.getByRole('button', { name: 'Moving background' });
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    const scrolled = await page.evaluate(() => scrollY);
+
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('html')).not.toHaveClass(/sky-live/);
+    await expect(page.locator('.sky')).toBeHidden();
+    const image = await page.locator('#zimu').evaluate((el) => getComputedStyle(el).backgroundImage);
+    expect(image).toContain('gradient');
+    expect(await page.evaluate(() => scrollY)).toBe(scrolled);
+    await expect(toggle).toBeVisible();
+
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.sky')).toBeVisible();
+  });
+
+  test('remembers that the background is off', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Moving background' }).click();
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'Moving background' })).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('.sky')).toBeHidden();
+  });
+
+  test('the button works when storage is blocked', async ({ page }) => {
     await page.addInitScript(() => {
       Object.defineProperty(window, 'localStorage', {
         get() { throw new Error('blocked'); },
@@ -107,11 +135,10 @@ test.describe('the live sky', () => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));
     await page.goto('/');
-    const pause = page.getByRole('button', { name: /pause/i });
-    await pause.click();
-    await expect(pause).toHaveAttribute('aria-pressed', 'true');
-    const state = await page.locator('.sky__palm').evaluate((el) => getComputedStyle(el).animationPlayState);
-    expect(state).toBe('paused');
+    const toggle = page.getByRole('button', { name: 'Moving background' });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('.sky')).toBeHidden();
     expect(errors).toEqual([]);
   });
 

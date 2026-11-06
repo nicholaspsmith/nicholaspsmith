@@ -14,8 +14,9 @@ import { STOPS } from '../lib/sky';
 </div>
 <div class="chip needs-js">
   <span data-clock></span>
-  <button type="button" data-pause aria-pressed="false" aria-label="Pause the palm tree">
-    <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2 1h3v10H2zM7 1h3v10H7z" /></svg>
+  <button type="button" data-sky-toggle aria-pressed="true" aria-label="Moving background">
+    <svg class="chip__on" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2 1h3v10H2zM7 1h3v10H7z" /></svg>
+    <svg class="chip__off" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M2.5 1l8 5-8 5z" /></svg>
   </button>
 </div>
 
@@ -23,12 +24,12 @@ import { STOPS } from '../lib/sky';
   import { STOPS, formatClock, progressAt, skyAt } from '../lib/sky';
 
   const root = document.documentElement;
-  const KEY = 'palm-paused';
+  const KEY = 'moving-background-off';
   const BLEND = 0.35; // Crossfade over this share of the screen, either side of an edge.
 
-  function remember(paused: boolean) {
+  function remember(off: boolean) {
     try {
-      localStorage.setItem(KEY, paused ? '1' : '0');
+      localStorage.setItem(KEY, off ? '1' : '0');
     } catch {
       // Storage can be blocked. The choice then lasts for this visit only.
     }
@@ -50,9 +51,7 @@ import { STOPS } from '../lib/sky';
     const clock = document.querySelector<HTMLElement>('[data-clock]')!;
     const marsh = document.querySelector<HTMLElement>('.sky__marsh')!;
     const palm = document.querySelector<HTMLElement>('.sky__palm')!;
-    const pause = document.querySelector<HTMLButtonElement>('[data-pause]')!;
-
-    root.classList.add('sky-live');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-sky-toggle]')!;
 
     let edges: number[] = [];
     const navOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
@@ -104,17 +103,19 @@ import { STOPS } from '../lib/sky';
       queue();
     };
 
-    const setPaused = (paused: boolean) => {
-      palm.style.animationPlayState = paused ? 'paused' : 'running';
-      pause.setAttribute('aria-pressed', String(paused));
+    // Off, the page falls back to each section's own still sky, the same one
+    // readers get with reduced motion or without JavaScript.
+    const setLive = (live: boolean) => {
+      root.classList.toggle('sky-live', live);
+      toggle.setAttribute('aria-pressed', String(live));
     };
 
-    pause.addEventListener('click', () => {
-      const paused = pause.getAttribute('aria-pressed') !== 'true';
-      setPaused(paused);
-      remember(paused);
+    toggle.addEventListener('click', () => {
+      const live = toggle.getAttribute('aria-pressed') !== 'true';
+      setLive(live);
+      remember(!live);
     });
-    setPaused(recall());
+    setLive(!recall());
 
     addEventListener('scroll', queue, { passive: true });
     addEventListener('resize', refresh);
@@ -195,10 +196,12 @@ import { STOPS } from '../lib/sky';
     font-size: 0.875rem;
     font-variant-numeric: tabular-nums;
   }
-  :global(.sky-live) .chip { display: flex; }
+  :global(.sky-capable) .chip { display: flex; }
   .chip button { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; }
   .chip button:hover { background: #ffffff26; }
-  .chip button[aria-pressed='true'] { background: #fff; color: #0e1f28; }
+  .chip__off { display: none; }
+  .chip button[aria-pressed='false'] .chip__on { display: none; }
+  .chip button[aria-pressed='false'] .chip__off { display: block; }
   @media (max-width: 56rem) {
     .sky__orbit { opacity: 0.3; }
     .sky__palm { opacity: 0.35; }
