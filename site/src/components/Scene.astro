@@ -32,7 +32,8 @@ const mask = `-webkit-mask-image:url("${silhouetteUri()}");mask-image:url("${sil
 </div>
 
 <style>
-  .scene { position: absolute; left: 0; right: 0; bottom: 0; height: 46vh; overflow: hidden; }
+  /* Wide, short windows need extra height, or the slice cuts off the bridge towers. */
+  .scene { position: absolute; left: 0; right: 0; bottom: 0; height: max(46vh, 21vw); overflow: hidden; }
   .scene__layer { position: absolute; inset: 0; width: 100%; height: 100%; }
   .scene__water { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; }
   .scene__water::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#ffffff29, #00000038); }
