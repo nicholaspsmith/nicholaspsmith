@@ -24,12 +24,12 @@ test('there is no Menumon project page', async ({ page }) => {
   expect(res?.status()).toBe(404);
 });
 
-test('DisasterMaps states his role and credits the team', async ({ page }) => {
+test('DisasterMaps states his role and credits the team without naming anyone', async ({ page }) => {
   await page.goto('/work/disaster-maps');
   const text = await page.locator('main').innerText();
   expect(text).toMatch(/my role/i);
-  expect(text).toMatch(/Troy Swayney/);
-  expect(text).toMatch(/Chris Edmonds/);
+  expect(text).toMatch(/small team/i);
+  expect(text).not.toMatch(/Troy|Swayney|Chris|Edmonds/);
 });
 
 test('every project section on the home page links to its page', async ({ page }) => {
