@@ -64,7 +64,7 @@ export const PROJECTS: Project[] = [
     problem:
       'In a flood or storm, residents need to know which roads are safe, and response teams need to get supplies to shelters without sending anyone into danger.',
     did:
-      "My role: I designed and built most of what people see, from the public map to the app response teams use for routes, supplies and shelters. I work with Troy Swayney and Chris Edmonds, who lead much of what runs behind it.",
+      "My role: I designed and built most of what people see, from the public map to the app response teams use for routes, supplies and shelters. I'm part of a small team, and my teammates lead much of what runs behind it.",
     result:
       'The pilot covers Charleston County and Summerville. The public site is still in preparation, so the picture here comes from the app itself.',
     image: disasterMaps,
