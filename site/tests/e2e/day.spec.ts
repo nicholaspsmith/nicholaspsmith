@@ -138,6 +138,39 @@ test.describe('the live sky', () => {
     await expect.poll(() => lights.evaluate((el) => Number(getComputedStyle(el).opacity))).toBeGreaterThan(0.8);
   });
 
+  test('sets the sun behind the horizon and raises the moon from it', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => document.documentElement.classList.remove('smooth'));
+    const orb = () => page.evaluate(() => {
+      const box = document.querySelector('.sky__orb')!.getBoundingClientRect();
+      return {
+        top: box.top,
+        horizon: document.querySelector('.scene__water')!.getBoundingClientRect().top,
+        opacity: getComputedStyle(document.querySelector('.sky__orb')!).opacity,
+      };
+    });
+    const goTo = async (selector: string) => {
+      await page.locator(selector).evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+      await page.waitForTimeout(200);
+    };
+
+    await goTo('#about');
+    let seen = await orb();
+    expect(seen.top).toBeLessThan(seen.horizon);
+
+    await goTo('#petdoses');
+    seen = await orb();
+    expect(seen.opacity).toBe('1');
+    expect(seen.top).toBeGreaterThan(seen.horizon);
+    const glint = await page.locator('.scene__glitter').evaluate((el) => getComputedStyle(el).opacity);
+    expect(glint).toBe('0');
+
+    await goTo('#contact');
+    seen = await orb();
+    expect(seen.top).toBeLessThan(seen.horizon);
+    expect(seen.opacity).toBe('1');
+  });
+
   test('adds no backing behind text that crosses the houses', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');

@@ -107,3 +107,22 @@ export function formatClock(minutes: number): string {
   const mins = String(whole % 60).padStart(2, '0');
   return `${((hours + 11) % 12) + 1}:${mins} ${hours % 24 < 12 ? 'AM' : 'PM'}`;
 }
+
+const SUN_UP = -0.75; // Before the page's first stop, so dawn opens with the sun low in the sky.
+const SUN_DOWN = 5.6;
+const MOON_UP = 5.9;
+const MOON_HIGHEST = 8;
+const MOON_PEAK = 0.9;
+
+const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
+
+/** Where the sun or moon is. Altitude 0 is below the horizon and 1 is the top of the sky. */
+export function orbAt(p: number): { moon: boolean; x: number; altitude: number } {
+  const moon = p >= (SUN_DOWN + MOON_UP) / 2;
+  if (moon) {
+    const t = clamp01((p - MOON_UP) / (MOON_HIGHEST - MOON_UP));
+    return { moon, x: 58 + t * 22, altitude: MOON_PEAK * Math.sin((t * Math.PI) / 2) };
+  }
+  const s = clamp01((p - SUN_UP) / (SUN_DOWN - SUN_UP));
+  return { moon, x: 58 + s * 36, altitude: s === 1 ? 0 : Math.sin(s * Math.PI) };
+}
