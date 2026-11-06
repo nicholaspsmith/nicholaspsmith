@@ -68,3 +68,31 @@ test('nothing shifts while the page loads or scrolls', async ({ page }) => {
   );
   expect(cls).toBeLessThan(0.1);
 });
+
+const CLEARANCE = 24; // Room for the palm's sway.
+
+const SCREENS = [
+  [1024, 768], [1180, 820], [1280, 720], [1366, 768], [1440, 900], [1512, 982],
+  [1680, 1050], [1728, 1117], [1920, 1080], [2560, 1440], [3440, 1440], [3840, 2160],
+];
+
+for (const [width, height] of SCREENS) {
+  test(`the palm clears the headline at ${width}x${height}`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    await page.evaluate(() => document.fonts.ready);
+    const clash = await page.evaluate((CLEARANCE) => {
+      const palm = document.querySelector('.sky__palm')!;
+      const box = palm.getBoundingClientRect();
+      const scale = Math.min(palm.clientWidth / 508, palm.clientHeight / 575);
+      const left = box.right - 508 * scale;
+      const top = box.bottom - 575 * scale;
+      const range = document.createRange();
+      range.selectNodeContents(document.querySelector('h1')!);
+      return [...range.getClientRects()]
+        .filter((r) => r.right + CLEARANCE > left && r.bottom > top)
+        .map((r) => `${Math.round(r.right - left)}px past the palm's left edge`);
+    }, CLEARANCE);
+    expect(clash).toEqual([]);
+  });
+}

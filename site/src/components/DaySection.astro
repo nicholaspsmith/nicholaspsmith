@@ -42,7 +42,7 @@ const hasTry = Astro.slots.has('try');
   .day__copy { max-width: 34rem; position: relative; z-index: 1; }
   .day__time { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .day__heading { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: 1rem; }
-  .day--hero .day__copy { max-width: 46rem; }
+  .day--hero .day__copy { max-width: min(46rem, 52vw); }
   .day--hero .day__heading { font-size: clamp(2.9rem, 8.2vw, 7.25rem); line-height: 0.98; }
   .day__try { min-width: 0; position: relative; z-index: 1; }
 
@@ -52,8 +52,8 @@ const hasTry = Astro.slots.has('try');
     position: absolute;
     right: 3vw;
     bottom: 0;
-    width: min(42vw, 34rem);
-    height: 88%;
+    width: min(38vw, 32rem);
+    height: min(80%, 36.25rem);
     background: var(--section-land);
     mask: url(/musictree.svg) right bottom / contain no-repeat;
     opacity: 0.9;
@@ -67,6 +67,7 @@ const hasTry = Astro.slots.has('try');
     .day { min-height: 0; padding-block: calc(var(--nav-height) + 1rem) 4rem; }
     .day--try { grid-template-columns: minmax(0, 1fr); }
     .day--hero { min-height: 100svh; align-content: center; }
+    .day--hero .day__copy { max-width: none; }
     .day--palm::after { opacity: 0.3; }
   }
 </style>
