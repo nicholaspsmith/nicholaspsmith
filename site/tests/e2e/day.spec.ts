@@ -97,6 +97,63 @@ test.describe('the live sky', () => {
     await expect.poll(() => page.locator('html').getAttribute('data-sky')).toBe('sunset');
   });
 
+  test('shows Charleston: the houses, bridge, harbor and boats, with no hills', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.scene__row')).toBeVisible();
+    await expect(page.locator('.scene__bridge')).toBeVisible();
+    await expect(page.locator('.scene__water')).toBeVisible();
+    await expect(page.locator('.scene__boats')).toBeVisible();
+    await expect(page.locator('.cloud')).toHaveCount(3);
+    await expect(page.locator('.sky__marsh')).toHaveCount(0);
+  });
+
+  test('sails the boats as the reader scrolls, and only then', async ({ page }) => {
+    await page.goto('/');
+    const place = () => page.locator('[data-boat]').first().getAttribute('transform');
+    const start = await place();
+    await page.waitForTimeout(400);
+    expect(await place()).toBe(start);
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight / 2));
+    await expect.poll(place).not.toBe(start);
+  });
+
+  test('lights the windows at night and not by day', async ({ page }) => {
+    await page.goto('/');
+    const lights = page.locator('.scene__lights');
+    await expect.poll(() => lights.evaluate((el) => getComputedStyle(el).opacity)).toBe('0');
+    await page.evaluate(() => { document.documentElement.classList.remove('smooth'); scrollTo(0, document.documentElement.scrollHeight); });
+    await expect.poll(() => lights.evaluate((el) => Number(getComputedStyle(el).opacity))).toBeGreaterThan(0.8);
+  });
+
+  test('keeps text readable where it passes over the houses', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto('/');
+    const copy = page.locator('#zimu .day__copy');
+    await page.evaluate(() => {
+      document.documentElement.classList.remove('smooth');
+      const el = document.querySelector('#zimu .day__copy')!;
+      scrollTo(0, el.getBoundingClientRect().bottom + scrollY - innerHeight + 40);
+    });
+    await expect(copy).toHaveClass(/is-over-scene/);
+    await page.evaluate(() => {
+      const el = document.querySelector('#zimu .day__copy')!;
+      scrollTo(0, el.getBoundingClientRect().top + scrollY - 120);
+    });
+    await expect(copy).not.toHaveClass(/is-over-scene/);
+  });
+
+  test('shows the houses and the bridge on a phone', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const visible = await page.evaluate(() => {
+      const box = document.querySelector('.scene__row')!.getBoundingClientRect();
+      const scale = box.width / 1440;
+      const shows = (x: number) => { const px = box.left + x * scale; return px > 0 && px < innerWidth; };
+      return { house: shows(500), tower: shows(860) };
+    });
+    expect(visible).toEqual({ house: true, tower: true });
+  });
+
   test('shows a clock that follows the scroll', async ({ page }) => {
     await page.goto('/');
     const clock = page.locator('[data-clock]');

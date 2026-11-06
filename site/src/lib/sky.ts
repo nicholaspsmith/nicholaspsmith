@@ -5,6 +5,8 @@ export type SkyStop = {
   ink: string;
   land: string;
   night: number;
+  /** How far the evening has darkened the buildings and the bridge. */
+  tint: number;
   minutes: number;
 };
 
@@ -14,15 +16,15 @@ export const LIGHT_INK = '#ffffff';
 const TARGET_CONTRAST = 4.5;
 
 export const STOPS: SkyStop[] = [
-  { id: 'dawn', top: '#8ea3cf', bottom: '#ffd6b0', ink: DARK_INK, land: '#2c4a48', night: 0.1, minutes: 390 },
-  { id: 'early', top: '#a9d3ea', bottom: '#ffeccb', ink: DARK_INK, land: '#2f5a4a', night: 0, minutes: 480 },
-  { id: 'morning', top: '#79c0e6', bottom: '#dff1f2', ink: DARK_INK, land: '#2a6650', night: 0, minutes: 600 },
-  { id: 'midday', top: '#58ade6', bottom: '#c9e9f6', ink: DARK_INK, land: '#256b52', night: 0, minutes: 750 },
-  { id: 'afternoon', top: '#7db4d8', bottom: '#ffdca6', ink: DARK_INK, land: '#3a5a42', night: 0, minutes: 930 },
-  { id: 'sunset', top: '#2a1446', bottom: '#a23a3e', ink: LIGHT_INK, land: '#1b1426', night: 0.1, minutes: 1095 },
-  { id: 'dusk', top: '#171a45', bottom: '#5d2d63', ink: LIGHT_INK, land: '#120f26', night: 0.5, minutes: 1170 },
-  { id: 'night', top: '#050a1c', bottom: '#12264a', ink: LIGHT_INK, land: '#040811', night: 1, minutes: 1290 },
-  { id: 'late', top: '#03060f', bottom: '#0b1730', ink: LIGHT_INK, land: '#02040a', night: 1, minutes: 1430 },
+  { id: 'dawn', top: '#8ea3cf', bottom: '#ffd6b0', ink: DARK_INK, land: '#2c4a48', night: 0.1, tint: 0.05, minutes: 390 },
+  { id: 'early', top: '#a9d3ea', bottom: '#ffeccb', ink: DARK_INK, land: '#2f5a4a', night: 0, tint: 0, minutes: 480 },
+  { id: 'morning', top: '#79c0e6', bottom: '#dff1f2', ink: DARK_INK, land: '#2a6650', night: 0, tint: 0, minutes: 600 },
+  { id: 'midday', top: '#58ade6', bottom: '#c9e9f6', ink: DARK_INK, land: '#256b52', night: 0, tint: 0, minutes: 750 },
+  { id: 'afternoon', top: '#7db4d8', bottom: '#ffdca6', ink: DARK_INK, land: '#3a5a42', night: 0, tint: 0.05, minutes: 930 },
+  { id: 'sunset', top: '#2a1446', bottom: '#a23a3e', ink: LIGHT_INK, land: '#1b1426', night: 0.1, tint: 0.45, minutes: 1095 },
+  { id: 'dusk', top: '#171a45', bottom: '#5d2d63', ink: LIGHT_INK, land: '#120f26', night: 0.5, tint: 0.65, minutes: 1170 },
+  { id: 'night', top: '#050a1c', bottom: '#12264a', ink: LIGHT_INK, land: '#040811', night: 1, tint: 0.8, minutes: 1290 },
+  { id: 'late', top: '#03060f', bottom: '#0b1730', ink: LIGHT_INK, land: '#02040a', night: 1, tint: 0.84, minutes: 1430 },
 ];
 
 const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
@@ -77,6 +79,7 @@ export function skyAt(p: number) {
     inverse,
     land: mix(a.land, b.land, t),
     night: a.night + (b.night - a.night) * t,
+    tint: a.tint + (b.tint - a.tint) * t,
     minutes: a.minutes + (b.minutes - a.minutes) * t,
     veil: veilFor(ink, inverse, top, bottom),
   };

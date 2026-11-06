@@ -41,7 +41,8 @@ const hasTry = Astro.slots.has('try');
   .day__copy { max-width: 34rem; position: relative; z-index: 1; }
   .day__heading { font-size: clamp(2.25rem, 4.6vw, 4.25rem); margin-bottom: 1rem; }
   .day--hero .day__copy { max-width: min(46rem, 52vw); }
-  .day--hero .day__heading { font-size: clamp(2.9rem, 8.2vw, 7.25rem); line-height: 0.98; }
+  .day--hero .day__heading { font-size: clamp(2.9rem, min(8.2vw, 11.5vh), 7.25rem); line-height: 0.98; }
+  .day--hero { align-items: start; }
   .day__try { min-width: 0; position: relative; z-index: 1; }
 
   /* The still version of the palm: no JavaScript, or reduced motion. */
@@ -59,7 +60,8 @@ const hasTry = Astro.slots.has('try');
 
   :global(.sky-live) .day { background: none; color: var(--ink); }
   :global(.sky-live) .day--palm::after { display: none; }
-  :global(.sky-live) .day__copy { background: var(--veil); box-shadow: 0 0 0 0.75rem var(--veil); border-radius: 0.25rem; }
+  :global(.sky-live) .day__copy { background: var(--veil); box-shadow: 0 0 0 0.75rem var(--veil); border-radius: 0.25rem; transition: background-color 160ms, box-shadow 160ms; }
+  :global(.sky-live) .day__copy:global(.is-over-scene) { background: var(--plate); box-shadow: 0 0 0 0.75rem var(--plate); }
 
   @media (max-width: 56rem) {
     .day { min-height: 0; padding-block: calc(var(--nav-height) + 1rem) 4rem; }

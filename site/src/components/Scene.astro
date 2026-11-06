@@ -1,0 +1,50 @@
+---
+import {
+  SHORE_PATH,
+  VIEW,
+  boatMarkup,
+  bridgeMarkup,
+  foregroundMarkup,
+  glitterMarkup,
+  lightsMarkup,
+  silhouetteUri,
+} from '../lib/scene';
+
+const box = `0 0 ${VIEW.width} ${VIEW.height}`;
+const fit = 'xMidYMax slice';
+const mask = `-webkit-mask-image:url("${silhouetteUri()}");mask-image:url("${silhouetteUri()}")`;
+---
+<div class="scene">
+  <div class="scene__water"></div>
+  <svg class="scene__layer scene__glitter" viewBox={box} preserveAspectRatio={fit}><g data-glitter set:html={glitterMarkup()} /></svg>
+  <svg class="scene__layer scene__bridge" viewBox={box} preserveAspectRatio={fit}>
+    <path d={SHORE_PATH} fill="currentColor" opacity="0.72" />
+    <g id="bridge-art" set:html={bridgeMarkup()} />
+  </svg>
+  <svg class="scene__layer scene__bridge-night" viewBox={box} preserveAspectRatio={fit}>
+    <path d={SHORE_PATH} fill="currentColor" />
+    <use href="#bridge-art" />
+  </svg>
+  <svg class="scene__layer scene__boats" viewBox={box} preserveAspectRatio={fit} set:html={boatMarkup()} />
+  <svg class="scene__layer scene__row" viewBox={box} preserveAspectRatio={fit} set:html={foregroundMarkup()} />
+  <div class="scene__layer scene__tint" style={mask}></div>
+  <svg class="scene__layer scene__lights" viewBox={box} preserveAspectRatio={fit} set:html={lightsMarkup()} />
+</div>
+
+<style>
+  .scene { position: absolute; left: 0; right: 0; bottom: 0; height: 46vh; overflow: hidden; }
+  .scene__layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .scene__water { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; }
+  .scene__water::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#ffffff29, #00000038); }
+  .scene__glitter { --glint: #fff0c4; fill: var(--glint); opacity: 0; }
+  .scene__bridge { color: #223b38; }
+  .scene__bridge-night { color: #0a0f18; opacity: 0; will-change: opacity; }
+  .scene__boats { --sail: #fff9ee; --hull: #26343d; --lamp: 0; }
+  .scene__tint { background: #0e0c1e; mask-size: 100% 100%; -webkit-mask-size: 100% 100%; mask-repeat: no-repeat; -webkit-mask-repeat: no-repeat; opacity: 0; will-change: opacity; }
+  .scene__lights { opacity: 0; will-change: opacity; }
+
+  /* Tall screens show the middle of the view, with both the houses and the bridge, at a readable size. */
+  @media (max-aspect-ratio: 1 / 1) {
+    .scene { left: -36vw; right: auto; width: 170vw; height: auto; aspect-ratio: 1440 / 420; }
+  }
+</style>
