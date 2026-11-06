@@ -7,8 +7,6 @@ const ROW_SCALE = 0.85;
 const BRIDGE_SCALE = 0.8;
 const BRIDGE_CENTRE = 1005;
 
-export const ROW_TOP = STREET - 176 * ROW_SCALE;
-
 const TRIM = '#ece6da';
 const IRON = '#7c868b';
 const GLASS = '#9aa8ae';

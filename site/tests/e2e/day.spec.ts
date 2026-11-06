@@ -138,7 +138,7 @@ test.describe('the live sky', () => {
     await expect.poll(() => lights.evaluate((el) => Number(getComputedStyle(el).opacity))).toBeGreaterThan(0.8);
   });
 
-  test('keeps text readable where it passes over the houses', async ({ page }) => {
+  test('adds no backing behind text that crosses the houses', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     const copy = page.locator('#zimu .day__copy');
@@ -147,11 +147,7 @@ test.describe('the live sky', () => {
       const el = document.querySelector('#zimu .day__copy')!;
       scrollTo(0, el.getBoundingClientRect().bottom + scrollY - innerHeight + 40);
     });
-    await expect(copy).toHaveClass(/is-over-scene/);
-    await page.evaluate(() => {
-      const el = document.querySelector('#zimu .day__copy')!;
-      scrollTo(0, el.getBoundingClientRect().top + scrollY - 120);
-    });
+    await page.waitForTimeout(250);
     await expect(copy).not.toHaveClass(/is-over-scene/);
   });
 
