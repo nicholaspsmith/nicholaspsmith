@@ -20,9 +20,11 @@ import { STOPS } from '../lib/sky';
 
 <script>
   import { BOATS, VIEW, WATERLINE, boatTransform } from '../lib/scene';
-  import { STOPS, formatClock, mix, progressAt, skyAt } from '../lib/sky';
+  import { STOPS, formatClock, mix, orbAt, progressAt, skyAt } from '../lib/sky';
 
   const root = document.documentElement;
+  const ORB_PEAK = 0.12; // The top of the orb's arc, as a share of the screen height.
+  const ORB_GLOW = 96; // Pixels past the orb itself, so its glow is hidden too.
   const BLEND = 0.35; // Crossfade over this share of the screen, either side of an edge.
 
   function start() {
@@ -45,6 +47,7 @@ import { STOPS } from '../lib/sky';
     let edges: number[] = [];
     let sceneScale = 1;
     let sceneLeft = 0;
+    let horizon = 0;
     const navOffset = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
     let queued = false;
 
@@ -54,6 +57,7 @@ import { STOPS } from '../lib/sky';
       sceneScale = Math.max(box.width / VIEW.width, box.height / VIEW.height);
       sceneLeft = box.left + (box.width - VIEW.width * sceneScale) / 2;
       water.style.height = `${(VIEW.height - WATERLINE) * sceneScale}px`;
+      horizon = water.getBoundingClientRect().top;
     };
 
     const paint = () => {
@@ -83,22 +87,20 @@ import { STOPS } from '../lib/sky';
       clock.textContent = `${formatClock(s.minutes)} in Charleston`;
       root.dataset.sky = STOPS[Math.round(p)].id;
 
-      // The sun climbs and sets by sunset. The moon follows it up after dusk.
-      const SUNSET = 5.2;
-      const MOONRISE = 5.6;
-      const moon = p > MOONRISE;
-      const q = moon ? (p - MOONRISE) / (8 - MOONRISE) : Math.min(1, p / SUNSET);
-      const x = 58 + q * (moon ? 22 : 36);
-      const y = 62 - Math.sin(q * Math.PI * (moon ? 0.5 : 1)) * 50;
-      orb.style.transform = `translate(calc(${x}vw - 50%), calc(${y}vh - 50%))`;
+      // The water sits above the orb, so a low sun or moon goes behind the horizon.
+      const { moon, x, altitude } = orbAt(p);
+      const peak = innerHeight * ORB_PEAK;
+      const hidden = horizon + orb.offsetHeight / 2 + ORB_GLOW;
+      const y = hidden - altitude * (hidden - peak);
+      orb.style.transform = `translate(calc(${x}vw - 50%), calc(${y.toFixed(1)}px - 50%))`;
 
-      const glow = !moon && p > SUNSET ? 0 : moon ? 0.35 : Math.max(0.15, 1 - Math.sin(q * Math.PI));
+      const showing = y - orb.offsetHeight / 2 < horizon;
+      const glow = !showing ? 0 : moon ? 0.35 : Math.max(0.15, 1 - altitude);
       glitter.style.opacity = String(glow);
       glitter.style.setProperty('--glint', moon ? '#dfe6ff' : '#fff0c4');
       const under = ((x / 100) * innerWidth - sceneLeft) / sceneScale;
       glitterGroup.setAttribute('transform', `translate(${under.toFixed(1)} 0)`);
       orb.classList.toggle('sky__orb--moon', moon);
-      orb.style.opacity = !moon && p > SUNSET ? '0' : '1';
     };
 
     const queue = () => {
@@ -159,7 +161,6 @@ import { STOPS } from '../lib/sky';
     will-change: transform;
     background: #fff3c9;
     box-shadow: 0 0 5rem 1.75rem #ffd99a88;
-    transition: opacity 400ms;
   }
   .sky__orb--moon { background: #eef2ff; box-shadow: 0 0 4rem 1rem #cfd8ff33; }
   .sky__palm {

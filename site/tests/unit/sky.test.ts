@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { STOPS, contrast, formatClock, mix, progressAt, skyAt } from '../../src/lib/sky';
+import { STOPS, contrast, formatClock, mix, orbAt, progressAt, skyAt } from '../../src/lib/sky';
 
 const LAST = STOPS.length - 1;
 
@@ -89,5 +89,38 @@ describe('skyAt', () => {
   it('clamps out-of-range progress', () => {
     expect(skyAt(-3).index).toBe(0);
     expect(skyAt(99).minutes).toBe(STOPS[LAST].minutes);
+  });
+});
+
+describe('orbAt', () => {
+  it('has the sun already up, low in the sky, at dawn', () => {
+    const dawn = orbAt(0);
+    expect(dawn.moon).toBe(false);
+    expect(dawn.altitude).toBeGreaterThan(0.15);
+    expect(dawn.altitude).toBeLessThan(0.4);
+  });
+
+  it('puts the sun at its highest around midday', () => {
+    expect(orbAt(2.6).altitude).toBeGreaterThan(0.95);
+  });
+
+  it('sinks the sun all the way below the horizon', () => {
+    expect(orbAt(5).altitude).toBeGreaterThan(0);
+    expect(orbAt(5.6).altitude).toBe(0);
+  });
+
+  it('starts the moon below the horizon, then rises it through the night', () => {
+    expect(orbAt(5.9).altitude).toBe(0);
+    expect(orbAt(6.5).moon).toBe(true);
+    expect(orbAt(6.5).altitude).toBeGreaterThan(0);
+    expect(orbAt(8).altitude).toBeGreaterThan(0.8);
+  });
+
+  it('never jumps between positions in the sky', () => {
+    for (let n = 1; n <= 800; n++) {
+      const [a, b] = [orbAt((n - 1) / 100), orbAt(n / 100)];
+      expect(Math.abs(a.altitude - b.altitude), `at ${n / 100}`).toBeLessThan(0.02);
+      if (a.moon !== b.moon) expect(a.altitude + b.altitude).toBe(0);
+    }
   });
 });
