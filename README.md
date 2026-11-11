@@ -32,15 +32,4 @@ My Email address: [nicholaspsmith.software@gmail.com](mailto:nicholaspsmith.soft
 ![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
-<!--
-Github Rating
-Unhide when it becomes an A (lol)
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=nicholaspsmith&show_icons=true&theme=radical)
--->
 
-<!--
-This one never works well. Shows languages from 12 years ago that aren't relevant
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=nicholaspsmith&layout=compact)
--->
-
-> _Credit for activity graph: https://github.com/ashutosh00710/github-readme-activity-graph_
