@@ -11,9 +11,6 @@
 ```
 To learn more about me, check out [nicksmith☉software](https://nicksmith.software/)
 
-
-[![GitHub Stats](https://github-stats-extended.vercel.app/api/top-langs?username=nicholaspsmith&layout=donut&hide_title=true&langs_count=7&hide_values=true&theme=great-gatsby)](https://github-stats-extended.vercel.app/api/top-langs?username=nicholaspsmith&layout=donut&hide_title=true&langs_count=7&hide_values=true&theme=great-gatsby)
-
 ---
 
 ### Contact
